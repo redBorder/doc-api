@@ -1,0 +1,1652 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+]>
+<chapter lang="en-US">
+	<title>Full Application Programming Interface</title>
+	 <section>
+		<title>Introduction</title>
+		 <para>
+			The Full Api use a HTTP REST style via https web interface. The query must be expresed in JSON format to specify which values is asking for. For example
+		</para>
+		 
+<screen>{
+    &#34;dataSource&#34;: &#34;rb_flow&#34;,
+    &#34;granularity&#34;: &#34;all&#34;,
+    &#34;namespaces&#34;: [&#34;2584761509592299795&#34;],
+    &#34;intervals&#34;:[&#34;2013-11-21T19:07/2013-11-21T19:30&#34;],
+    &#34;queryType&#34;: &#34;groupBy&#34;,
+    &#34;aggregations&#34;: [
+        {&#34;type&#34;: &#34;longSum&#34;, &#34;name&#34;: &#34;events&#34;, &#34;fieldName&#34;: &#34;events&#34;}
+    ],
+    &#34;dimensions&#34;: [
+        &#34;http_host&#34;,
+        &#34;src&#34;,
+        &#34;http_user_agent&#34;
+    ],
+    &#34;filter&#34;: {
+        &#34;type&#34;: &#34;and&#34;,
+        &#34;fields&#34;: 
+        [ 
+          {
+            &#34;type&#34;: &#34;selector&#34;,
+            &#34;dimension&#34;: &#34;client_mac&#34;,
+            &#34;value&#34;: &#34;8c:58:77:0b:56:fc&#34;
+          }, {
+            &#34;type&#34;: &#34;regex&#34;,
+            &#34;dimension&#34;: &#34;src&#34;,
+            &#34;pattern&#34;: &#34;^10\\.13\\.&#34;
+          }
+        ] 
+    }
+}
+</screen>
+		 <para>
+			This query will return something like:
+		</para>
+		 
+<screen>[
+  {
+    &#34;version&#34;:&#34;v1&#34;,
+    &#34;timestamp&#34;:&#34;2013-11-21T19:07:00.000Z&#34;,
+    &#34;event&#34;:{
+      &#34;count&#34;:198,
+      &#34;http_user_agent&#34;:null,
+      &#34;http_host&#34;:null,
+      &#34;src&#34;:&#34;10.13.209.147&#34;
+    }
+  },
+  {
+    &#34;version&#34;:&#34;v1&#34;,
+    &#34;timestamp&#34;:&#34;2013-11-21T19:07:00.000Z&#34;,
+    &#34;event&#34;:{
+      &#34;count&#34;:1,
+      &#34;http_user_agent&#34;:&#34;Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_3 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/11B511 [FBAN/FBIOS;FBAV/6.7;FBBV/566055;FBDV/iPhone3,3;FBMD/iPhone;FBSN/iPhone OS;FBSV/7.0.3;FBSS/2; FBCR/Verizon;FBID/phone;FBLC/en_US;FBOP/5]&#34;,
+      &#34;http_host&#34;:&#34;ajax.googleapis.com&#34;,
+      &#34;src&#34;:&#34;10.13.209.147&#34;
+    }
+  },
+  {
+    &#34;version&#34;:&#34;v1&#34;,
+    &#34;timestamp&#34;:&#34;2013-11-21T19:07:00.000Z&#34;,
+    &#34;event&#34;: {
+      &#34;count&#34;:1,
+      &#34;http_user_agent&#34;:&#34;Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_3 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/11B511 [FBAN/FBIOS;FBAV/6.7;FBBV/566055;FBDV/iPhone3,3;FBMD/iPhone;FBSN/iPhone OS;FBSV/7.0.3;FBSS/2; FBCR/Verizon;FBID/phone;FBLC/en_US;FBOP/5]&#34;,
+      &#34;http_host&#34;:&#34;busymockingbird.files.wordpress.com&#34;,
+      &#34;src&#34;:&#34;10.13.209.147&#34;
+    }
+  },
+  {
+    &#34;version&#34;:&#34;v1&#34;,
+    &#34;timestamp&#34;:&#34;2013-11-21T19:07:00.000Z&#34;,
+    &#34;event&#34;:{
+      &#34;count&#34;:1,
+      &#34;http_user_agent&#34;:&#34;Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_3 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/11B511 [FBAN/FBIOS;FBAV/6.7;FBBV/566055;FBDV/iPhone3,3;FBMD/iPhone;FBSN/iPhone OS;FBSV/7.0.3;FBSS/2; FBCR/Verizon;FBID/phone;FBLC/en_US;FBOP/5]&#34;,
+      &#34;http_host&#34;:&#34;connect.facebook.net&#34;,
+      &#34;src&#34;:&#34;10.13.209.147&#34;
+    }
+  }
+]
+</screen>
+		 <note>
+			<title>NOTE:</title>
+			 <para>
+				The result has been truncated
+			</para>
+
+		</note>
+
+	</section>
+	
+	 <section>
+		<title>Authentication</title>
+		 <para>
+			Horama Rest API uses an Access Key generated with the Web Graphical Interface. Click on the specific user properties and gerenate an Acces Key code. For example:
+		</para>
+		 
+<screen>             The user: admin@cisco.com has the Access Key: M4X5c4xhwYbPZ3s5xzHU</screen>
+		 <para>
+			This option must be included into the URL:
+		</para>
+		 
+<screen>             https://hostname/api/data?auth_token=M4X5c4xhwYbPZ3s5xzHU</screen>
+		 <para>
+			Every query to the REST api must have this Access Key present and the query will have the user permisions belongs the key.
+		</para>
+		 <para>
+			The rest of params must be provided by the POST payload data. The format of the payload must be JSON as we saw in the previous example. For example if we save the last query in a file called data.body, we can do a simple query like this:
+		</para>
+		 
+<screen>curl --insecure -X POST &#39;https://hostname/api/data?auth_token=M4X5c4xhwYbPZ3s5xzHU&#39; -H &#39;content-type: application/json&#39; -d @data.body</screen>
+
+	</section>
+	
+	 <section>
+		<title>JSON Params</title>
+		 <para>
+			We have the following params:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>dataSource.-</literal> You have three posibilities depends on wich database you need to access to: 
+					<itemizedlist mark="bullet">
+						<listitem>
+							<para>
+								<literal>rb_flow.-</literal>Netflow/sFlow database
+							</para>
+						</listitem>
+						 <listitem>
+							<para>
+								<literal>rb_state.-</literal>Wireless station health obtained via NMSP
+							</para>
+						</listitem>
+						 <listitem>
+							<para>
+								<literal>rb_social.-</literal>Social data from twitter and instagram sensors
+							</para>
+						</listitem>
+						 <listitem>
+							<para>
+								<literal>rb_event.-</literal>IDS/IPS events database
+							</para>
+						</listitem>
+						 <listitem>
+							<para>
+								<literal>rb_monitor.-</literal>SNMP monitoring database
+							</para>
+						</listitem>
+
+					</itemizedlist>
+
+				</para>
+
+			</listitem>
+			<listitem>
+				<para>
+					<literal>namespaces.-</literal> (optional) array of one or more values. It should be the uuids of the namespaces where the data is going to be searched. If this value is not indicated, the dataSource used will be the default.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>granularity.-</literal> The granularity JSON field specifies the bucket size for values. It could be a built-in time interval like &#34;second&#34;, &#34;minute&#34;, &#34;fifteen_minute&#34;, &#34;thirty_minute&#34;, &#34;hour&#34; or &#34;day&#34;. It can also be an expression like {&#34;type&#34;: &#34;period&#34;, &#34;period&#34;:&#34;PT6m&#34;} meaning &#34;6 minute buckets&#34;. In the example, it is set to the special value &#34;all&#34; which means bucket all data points together into the same time bucket
+				</para>
+
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>intervals.-</literal> I specify the time range(s) of the query. The interval must be espcified on iso format and it can include the time zone if desired. See http://en.wikipedia.org/wiki/ISO_8601 to get more information.
+				</para>
+
+			</listitem>
+			<listitem>
+				<para>
+					<literal>queryType.-</literal> This JSON field identifies which kind of query operator is to be used. You have two posibilities: 
+					<itemizedlist mark="bullet">
+						<listitem>
+							<para>
+								<literal>groupBy.-</literal>This the most flexible query, but also has the poorest performance
+							</para>
+						</listitem>
+						 <listitem>
+							<para>
+								<literal>topN.-</literal>This is like a groupBy query but grouping and sorting by a single dimension. This is much faster than groupBy
+							</para>
+						</listitem>
+						 <listitem>
+							<para>
+								<literal>timeseries.-</literal>This is used to generate time series using the specified aggregators.
+							</para>
+						</listitem>
+
+					</itemizedlist>
+
+				</para>
+
+			</listitem>
+			<listitem>
+				<para>
+					<literal>aggregations.-</literal> array of elements. These fields applied to the columns specified by fieldName and the output of the aggregations will be named according to the value in the &#34;name&#34; field. There are different aggregators depends of the dataSource used:
+					<itemizedlist mark="bullet">
+						<listitem>
+							<para>
+								<literal>rb_flow.-</literal> <itemizedlist mark="bullet">
+									<listitem>
+										<para>
+											{type: &#34;longSum&#34;, name: &#34;events&#34;, fieldName: &#34;events&#34;} -&#62; flows count / occurrences
+										</para>
+									</listitem>
+									 <listitem>
+										<para>
+											{type: &#34;longSum&#34;, name: &#34;pkts&#34;, fieldName: &#34;sum_pkts&#34;} -&#62; sum of packets
+										</para>
+									</listitem>
+									 <listitem>
+										<para>
+											{type: &#34;longSum&#34;, name: &#34;bytes&#34;, fieldName: &#34;sum_bytes&#34;} -&#62; sum of bytes
+										</para>
+									</listitem>
+
+								</itemizedlist>
+
+							</para>
+
+						</listitem>
+						 <listitem>
+							<para>
+								<literal>rb_event.-</literal> <itemizedlist mark="bullet">
+									<listitem>
+										<para>
+											{type: &#34;longSum&#34;, name: &#34;events&#34;, fieldName: &#34;events&#34;} -&#62; IPS/IDS events count / occurrences
+										</para>
+									</listitem>
+
+								</itemizedlist>
+
+							</para>
+
+						</listitem>
+						 <listitem>
+							<para>
+								<literal>rb_monitor.-</literal> <itemizedlist mark="bullet">
+									<listitem>
+										<para>
+											{type: &#34;longSum&#34;, name: &#34;events&#34;, fieldName: &#34;events&#34;} -&#62; monitored element result on the specified interval
+										</para>
+									</listitem>
+									 <listitem>
+										<para>
+											{type: &#34;min&#34;, name: &#34;min&#34;, fieldName: &#34;min_value&#34;} -&#62; min value for the monitored param
+										</para>
+									</listitem>
+									 <listitem>
+										<para>
+											{type: &#34;max&#34;, name: &#34;max&#34;, fieldName: &#34;max_value&#34;} -&#62; max value for the monitored param
+										</para>
+									</listitem>
+
+								</itemizedlist>
+
+							</para>
+
+						</listitem>
+
+					</itemizedlist>
+
+				</para>
+
+			</listitem>
+			<listitem>
+				<para>
+					<literal>metric.-</literal> (only for topN queryType) Should be the same value as on the name fields indicated on aggregations. It is used for ordering.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>dimensions.-</literal> (only for groupBy and timeseries queryType) The dimensions JSON field value is an array of zero or more fields. These are used to constrain the grouping. If empty, then one value per time granularity bucket is requested in the groupBy. There are many dimensions available on each dataSource as we will see at the next sections.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>dimension.-</literal> (only for topN queryType) The dimension JSON field value is a single value. There are many dimensions available on each dataSource as we will see at the next sections.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>filter.-</literal> Specifies the filter (the &#34;WHERE&#34; clause in SQL) for the query. We will have an specific section where it will explain the filter format.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>threshold.-</literal> (only for topN queryType) value for limit the result of values returned on topN queries.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>orderBy.-</literal> (only for groupBy queryType) it has the below fields:
+					<itemizedlist mark="bullet">
+						<listitem>
+							<para>
+								{ &#34;type&#34;: &#34;default&#34;, &#34;limit&#34;: 25, &#34;columns&#34;: [ { &#34;dimension&#34;: &#34;bytes&#34;, &#34;direction&#34;: &#34;DESCENDING&#34; } ] }
+							</para>
+						</listitem>
+					</itemizedlist>
+				</para>
+			</listitem>
+
+		</itemizedlist>
+
+	</section>
+	
+	 <section>
+		<title>Dimensions for rb_flow</title>
+		 <para>
+			We have the following dimensions:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>application_id_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>biflow_direction</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>client_id</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>client_latlong</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>client_mac</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>client_mac_vendor</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>client_rssi</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>client_rssi_num</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>client_snr</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>client_snr_num</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>conversation</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>coordinates_map</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_category</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_direction</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_protocol</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_score</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_score_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>service_provider_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>service_provider</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>zone</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>direction</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dot11_protocol</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dot11_status</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_as_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_country_code</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_map</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_net_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_port</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_vlan</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>duration</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>engine_id_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>hnbgeolocation</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>hnblocation</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>http_host</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>http_referer_l1</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>http_social_media</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>http_social_user</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>http_user_agent_os</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>input_snmp</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>input_vrf</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>ip_protocol_version</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>l4_proto</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>output_snmp</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>output_vrf</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>rat</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>scatterplot</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_as_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_country_code</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_map</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_net_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_port</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_vlan</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>srv_port</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>tos</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>type</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_id</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_station</literal>
+				</para>
+			</listitem>
+
+		</itemizedlist>
+
+	</section>
+	
+	 <section>
+		<title>Dimensions for rb_event</title>
+		 <para>
+			We have the following dimensions:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>action</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>classification</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>service_provider_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>service_provider</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>client_latlong</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>zone</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>conversation</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_category</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_direction</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_protocol</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_score</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>darklist_score_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>domain_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_as_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_country_code</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_map</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_net_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>dst_port</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>ethdst</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>ethdst_vendor</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>ethlength_range</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>ethsrc</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>ethsrc_vendor</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>file_hostname</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>file_size</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>file_uri</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>group_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>icmptype</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>iplen_range</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>l4_proto</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>msg</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>priority</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>rev</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>scatterplot</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sha256</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sig_generator</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sig_id</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_as_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_country_code</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_map</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_net_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_port</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>tos</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>ttl</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>vlan</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_station</literal>
+				</para>
+			</listitem>
+
+		</itemizedlist>
+
+	</section>
+	
+	 <section>
+		<title>Dimensions for rb_monitor</title>
+		 <para>
+			We have the following dimensions:
+		</para>
+		 <itemizedlist mark="bullet">
+			 <listitem>
+				<para>
+					<literal>service_provider_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>service_provider</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>group_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>instance</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>monitor</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>unit</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>value</literal>
+				</para>
+			</listitem>
+
+		</itemizedlist>
+
+	</section>
+	
+	 <section>
+		<title>Dimensions for rb_social</title>
+		 <para>
+			We have the following dimensions:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>category</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>client_latlong</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>service_provider_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>service_provider</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>hashtags</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>influence</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>language</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>mentions</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>msg</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>msg_send_from</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>picture_url</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sentiment</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>src_country_code</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>type</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>user_from</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>user_id</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>user_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>user_profile_img_https</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>user_screen_name</literal>
+				</para>
+			</listitem>
+
+		</itemizedlist>
+
+	</section>
+	
+	 <section>
+		<title>Dimensions for rb_state</title>
+		 <para>
+			We have the following dimensions:
+		</para>
+		 <itemizedlist mark="bullet">
+			 <listitem>
+				<para>
+					<literal>service_provider_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>service_provider</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>organization</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>namespace</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>deployment</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>market</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_uuid</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_name</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>type</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_admin_state</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_channel</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_mode</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_op_state</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_slot</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_station</literal>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>wireless_tx_power</literal>
+				</para>
+			</listitem>
+
+		</itemizedlist>
+
+	</section>
+	
+	 <section>
+		<title>Filters</title>
+		 <para>
+			A filter is a JSON object indicating which rows of data should be included in the computation for a query. It’s essentially the equivalent of the WHERE clause in SQL. The API supports the following types of filters:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>Selector filter.- </literal> The simplest filter is a selector filter. The selector filter will match a specific dimension with a specific value. Selector filters can be used as the base filters for more complex Boolean expressions of filters. The grammar for a SELECTOR filter is as follows: 
+<screen>{
+    &#34;type&#34;: &#34;selector&#34;,
+    &#34;dimension&#34;: &#34;client_mac&#34;,
+    &#34;value&#34;: &#34;8c:58:77:0b:56:fc&#34;
+}</screen>
+
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>Regular expression filter.- </literal>The regular expression filter is similar to the selector filter, but using regular expressions. It matches the specified dimension with the given pattern. The pattern can be any standard Java regular expression. 
+<screen>{
+    &#34;type&#34;: &#34;regex&#34;,
+    &#34;dimension&#34;: &#34;http_host&#34;,
+    &#34;pattern&#34;: &#34;youtube\.com&#34;            
+}</screen>
+
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>Logical expression filters.- </literal> You can have different logical expression: AND, OR and NOT 
+<screen> {
+    &#34;type&#34;: &#34;and&#34;,
+    &#34;fields&#34;: [
+        {
+            &#34;type&#34;: &#34;selector&#34;,
+            &#34;dimension&#34;: &#34;client_mac&#34;,
+            &#34;value&#34;: &#34;8c:58:77:0b:56:fc&#34;
+        },
+        {
+            &#34;type&#34;: &#34;regex&#34;,
+            &#34;dimension&#34;: &#34;src&#34;,
+            &#34;pattern&#34;: &#34;^10\\.13\\.&#34;
+        }
+    ]
+}</screen>
+					 
+<screen> {
+    &#34;type&#34;: &#34;or&#34;,
+    &#34;fields&#34;: [
+        {
+            &#34;type&#34;: &#34;selector&#34;,
+            &#34;dimension&#34;: &#34;client_mac&#34;,
+            &#34;value&#34;: &#34;8c:58:77:0b:56:fc&#34;
+        },
+        {
+            &#34;type&#34;: &#34;selector&#34;,
+            &#34;dimension&#34;: &#34;client_mac&#34;,
+            &#34;value&#34;: &#34;83:53:44:4b:56:fd&#34;
+        }
+    ]
+}</screen>
+					 
+<screen> {
+    &#34;type&#34;: &#34;not&#34;, 
+    &#34;field&#34;: {
+         &#34;type&#34;: &#34;selector&#34;,
+         &#34;dimension&#34;: &#34;client_mac&#34;,
+         &#34;value&#34;: &#34;8c:58:77:0b:56:fc&#34;
+    }
+}</screen>
+
+				</para>
+			</listitem>
+
+		</itemizedlist>
+
+	</section>
+	
+	 <section>
+		<title>Examples: rb_flow</title>
+		 <para>
+			Show the flows generated on each sensor:
+		</para>
+		 
+<screen>{&#34;queryType&#34;: &#34;topN&#34;, &#34;dataSource&#34;: &#34;rb_flow&#34;, &#34;granularity&#34;: &#34;all&#34;, &#34;dimension&#34;: &#34;sensor_name&#34;, &#34;threshold&#34;: 1000, &#34;metric&#34;: &#34;flows&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;flows&#34;, &#34;fieldName&#34;:&#34;events&#34;}], &#34;intervals&#34;:[&#34;2015-04-30T21:22:00/2015-04-30T23:02:00&#34;] }</screen>
+		 <para>
+			Show the bytes downloaded on each campus:
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_flow&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;queryType&#34;:&#34;groupBy&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;bytes&#34;, &#34;fieldName&#34;:&#34;sum_bytes&#34;}], &#34;dimensions&#34;:[&#34;campus&#34;], &#34;orderBy&#34;:{&#34;type&#34;:&#34;default&#34;, &#34;limit&#34;:25, &#34;columns&#34;:[{&#34;dimension&#34;:&#34;bytes&#34;, &#34;direction&#34;:&#34;DESCENDING&#34;}]}}
+</screen>
+		 <para>
+			Show the bytes downloaded from youtube on each campus:
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_flow&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;filter&#34;:{&#34;type&#34;:&#34;regex&#34;, &#34;dimension&#34;:&#34;http_host&#34;, &#34;pattern&#34;:&#34;(?i)^.*youtube.com.*$&#34;}, &#34;queryType&#34;:&#34;groupBy&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;bytes&#34;, &#34;fieldName&#34;:&#34;sum_bytes&#34;}], &#34;dimensions&#34;:[&#34;campus&#34;], &#34;orderBy&#34;:{&#34;type&#34;:&#34;default&#34;, &#34;limit&#34;:25, &#34;columns&#34;:[{&#34;dimension&#34;:&#34;bytes&#34;, &#34;direction&#34;:&#34;DESCENDING&#34;}]}}
+</screen>
+		 <para>
+			Show the bytes downloaded from youtube or instagram on each campus:
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_flow&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;filter&#34;:{&#34;type&#34;:&#34;or&#34;, &#34;fields&#34;:[{&#34;type&#34;:&#34;regex&#34;, &#34;dimension&#34;:&#34;http_host&#34;, &#34;pattern&#34;:&#34;(?i)^.*youtube.com.*$&#34;}, {&#34;type&#34;:&#34;regex&#34;, &#34;dimension&#34;:&#34;http_host&#34;, &#34;pattern&#34;:&#34;(?i)^.*instagram.*$&#34;}]}, &#34;queryType&#34;:&#34;groupBy&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;bytes&#34;, &#34;fieldName&#34;:&#34;sum_bytes&#34;}], &#34;dimensions&#34;:[&#34;campus&#34;], &#34;orderBy&#34;:{&#34;type&#34;:&#34;default&#34;, &#34;limit&#34;:25, &#34;columns&#34;:[{&#34;dimension&#34;:&#34;bytes&#34;, &#34;direction&#34;:&#34;DESCENDING&#34;}]}}
+</screen>
+		 <para>
+			Show the APs used per minute (active access point) accessing to youtube or instagram
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_flow&#34;, &#34;granularity&#34;:{&#34;type&#34;:&#34;period&#34;, &#34;period&#34;:&#34;pt5m&#34;, &#34;timeZone&#34;:&#34;Europe/Berlin&#34;, &#34;origin&#34;:&#34;2013-12-12T12:00:00.000+01:00&#34;}, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;filter&#34;:{&#34;type&#34;:&#34;or&#34;, &#34;fields&#34;:[{&#34;type&#34;:&#34;regex&#34;, &#34;dimension&#34;:&#34;http_host&#34;, &#34;pattern&#34;:&#34;(?i)^.*youtube.com.*$&#34;}, {&#34;type&#34;:&#34;regex&#34;, &#34;dimension&#34;:&#34;http_host&#34;, &#34;pattern&#34;:&#34;(?i)^.*instagram.*$&#34;}]}, &#34;queryType&#34;:&#34;timeseries&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;cardinality&#34;, &#34;name&#34;:&#34;result&#34;, &#34;fieldNames&#34;:[&#34;wireless_station&#34;]}]}
+</screen>
+		 <para>
+			Show TOP url browsed for on client (MAC: &#34;94:39:e5:74:3e:36&#34;)
+		</para>
+		 
+<screen>{{&#34;dataSource&#34;:&#34;rb_flow&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;filter&#34;:{ &#34;type&#34;:&#34;and&#34;, &#34;fields&#34;: [{&#34;type&#34;: &#34;not&#34;, &#34;field&#34;: {&#34;type&#34;: &#34;selector&#34;, &#34;dimension&#34;: &#34;http_host&#34;, &#34;value&#34;: &#34;&#34;}}, {&#34;type&#34;:&#34;selector&#34;,&#34;dimension&#34;:&#34;client_mac&#34;,&#34;value&#34;:&#34;94:39:e5:74:3e:36&#34;}]}, &#34;queryType&#34;:&#34;groupBy&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;bytes&#34;, &#34;fieldName&#34;:&#34;sum_bytes&#34;}], &#34;dimensions&#34;:[&#34;http_host&#34;], &#34;orderBy&#34;:{&#34;type&#34;:&#34;default&#34;, &#34;limit&#34;:25, &#34;columns&#34;:[{&#34;dimension&#34;:&#34;bytes&#34;, &#34;direction&#34;:&#34;DESCENDING&#34;}]}}</screen>
+
+	</section>
+	
+	 <section>
+		<title>Examples: rb_event</title>
+		 <para>
+			Number of events for all sensors with bucket size 1 minute
+		</para>
+		 
+<screen>{&#34;queryType&#34;: &#34;topN&#34;, &#34;dataSource&#34;: &#34;rb_flow&#34;, &#34;granularity&#34;: &#34;all&#34;, &#34;dimension&#34;: &#34;sensor_name&#34;, &#34;threshold&#34;: 1000, &#34;metric&#34;: &#34;flows&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;flows&#34;, &#34;fieldName&#34;:&#34;events&#34;}], &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;] }
+</screen>
+		 <para>
+			Group by msg (signature of the event) showing the event count per msg. It will show the first 25 Signatures with more events
+		</para>
+		 
+<screen>{{&#34;dataSource&#34;:&#34;rb_event&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;queryType&#34;:&#34;groupBy&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;events&#34;, &#34;fieldName&#34;:&#34;events&#34;}], &#34;dimensions&#34;:[&#34;msg&#34;], &#34;orderBy&#34;:{&#34;type&#34;:&#34;default&#34;, &#34;limit&#34;:25, &#34;columns&#34;:[{&#34;dimension&#34;:&#34;events&#34;, &#34;direction&#34;:&#34;DESCENDING&#34;}]}}
+</screen>
+		 <para>
+			Group by Source IP showing the event count per Source IP. It will show all of them
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_event&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;queryType&#34;:&#34;groupBy&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;events&#34;, &#34;fieldName&#34;:&#34;events&#34;}], &#34;dimensions&#34;:[&#34;src&#34;]}
+</screen>
+		 <para>
+			Show all the destinations using dropbox:
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_event&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;filter&#34;:{&#34;type&#34;:&#34;regex&#34;, &#34;dimension&#34;:&#34;msg&#34;, &#34;pattern&#34;:&#34;(?i)^.*dropbox.*$&#34;}, &#34;queryType&#34;:&#34;timeseries&#34;, &#34;orderBy&#34;:{&#34;type&#34;:&#34;default&#34;, &#34;limit&#34;:100, &#34;columns&#34;:[{&#34;dimension&#34;:&#34;events&#34;, &#34;direction&#34;:&#34;DESCENDING&#34;}]}, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;events&#34;, &#34;fieldName&#34;:&#34;events&#34;}]}
+</screen>
+		 <para>
+			Show all the destinations using dropbox and with the source address 172.23.31.21:
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_event&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;filter&#34;:{&#34;type&#34;:&#34;and&#34;, &#34;fields&#34;:[{&#34;type&#34;:&#34;regex&#34;, &#34;dimension&#34;:&#34;msg&#34;, &#34;pattern&#34;:&#34;(?i)^.*dropbox.*$&#34;}, {&#34;type&#34;:&#34;selector&#34;, &#34;dimension&#34;:&#34;src&#34;, &#34;value&#34;:&#34;172.23.31.21&#34;}]}, &#34;queryType&#34;:&#34;timeseries&#34;, &#34;orderBy&#34;:{&#34;type&#34;:&#34;default&#34;, &#34;limit&#34;:100, &#34;columns&#34;:[{&#34;dimension&#34;:&#34;events&#34;, &#34;direction&#34;:&#34;DESCENDING&#34;}]}, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;events&#34;, &#34;fieldName&#34;:&#34;events&#34;}]}
+</screen>
+		 <para>
+			Show all the sources using dropbox with one of the following destination: 108.160.163.41 or 108.160.162.104
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_event&#34;, &#34;granularity&#34;:&#34;all&#34;, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;filter&#34;:{&#34;type&#34;:&#34;and&#34;, &#34;fields&#34;:[{&#34;type&#34;:&#34;regex&#34;, &#34;dimension&#34;:&#34;msg&#34;, &#34;pattern&#34;:&#34;(?i)^.*dropbox.*$&#34;}, {&#34;type&#34;:&#34;or&#34;, &#34;fields&#34;:[{&#34;type&#34;:&#34;selector&#34;, &#34;dimension&#34;:&#34;dst&#34;, &#34;value&#34;:&#34;108.160.162.104&#34;}, {&#34;type&#34;:&#34;selector&#34;, &#34;dimension&#34;:&#34;dst&#34;, &#34;value&#34;:&#34;108.160.163.41&#34;}]}]}, &#34;queryType&#34;:&#34;groupBy&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;events&#34;, &#34;fieldName&#34;:&#34;events&#34;}], &#34;dimensions&#34;:[&#34;src&#34;], &#34;orderBy&#34;:{&#34;type&#34;:&#34;default&#34;, &#34;limit&#34;:25, &#34;columns&#34;:[{&#34;dimension&#34;:&#34;events&#34;, &#34;direction&#34;:&#34;DESCENDING&#34;}]}}
+</screen>
+		 <para>
+			Show the different signatures (msg) varing in a specific interval:
+		</para>
+		 
+<screen>{&#34;dataSource&#34;:&#34;rb_event&#34;, &#34;granularity&#34;:{&#34;type&#34;:&#34;period&#34;, &#34;period&#34;:&#34;pt1m&#34;, &#34;timeZone&#34;:&#34;Europe/Berlin&#34;, &#34;origin&#34;:&#34;2013-12-13T09:00:00.000+01:00&#34;}, &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;], &#34;queryType&#34;:&#34;timeseries&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;cardinality&#34;, &#34;name&#34;:&#34;result&#34;, &#34;fieldNames&#34;:[&#34;msg&#34;]}]}
+    {&#34;queryType&#34;: &#34;topN&#34;, &#34;dataSource&#34;: &#34;rb_flow&#34;, &#34;granularity&#34;: &#34;all&#34;, &#34;dimension&#34;: &#34;sensor_name&#34;, &#34;threshold&#34;: 1000, &#34;metric&#34;: &#34;flows&#34;, &#34;aggregations&#34;:[{&#34;type&#34;:&#34;longSum&#34;, &#34;name&#34;:&#34;flows&#34;, &#34;fieldName&#34;:&#34;events&#34;}], &#34;intervals&#34;:[&#34;2015-05-04T14:47:00/2015-05-04T14:48:00&#34;] }
+</screen>
+
+	</section>
+
+</chapter>
+

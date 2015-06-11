@@ -1,0 +1,1596 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+]>
+<chapter lang="en-US">
+	<title>Model sharing with rB</title>
+	 <note>
+		<title>NOTE:</title>
+		 <para>
+			The Horama API requires authentication via a valid authentication token submitted as a GET parameter. Said GET parameter receives the name auth_token. The following example demonstrates how to correctly sign a request. For the sake of simplicity suppose abcd is a valid authentication token.
+		</para>
+		 
+<screen>https://hostname/api/v1/request_path?auth_token=abcd</screen>
+		 <para>
+			Every request on this chapter requires this authentication and will accept the indicated GET parameter unless specified otherwise. From now on this parameter will be omitted on the example requests.
+		</para>
+
+	</note>
+	 <note>
+		<title>NOTE:</title>
+		 <para>
+			Every request that returns a JSON response body will return a &#34;query&#34; value set to a boolean. Said boolean stands for the query status, so if it is set to true it means that the query was successful and if it is set to false means that the query was not successful. This value will always be found on the root JSON response object and will always be the actual response sibling.
+		</para>
+
+	</note>
+	 <section>
+		<title>Sensor tree listing</title>
+		 <para>
+			A sensor and all it&#39;s child sensors can be listed by submitting a GET petition to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/:sensor_uuid/tree</screen>
+		 <para>
+			Where :sensor_uuid should be UUID of the root of the tree. If you wish to list all sensors from the submitting user&#39;s top domain and beneath you may submit a GET request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/tree</screen>
+		 <para>
+			If request is successful HTTP 200 OK status code will be returned alongside a nested JSON response describing the requested tree. Currently only JSON is supported as a response format. Format will be the same for both of the requests described above.
+		</para>
+		 <para>
+			On the following lines you may find a real execution example:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/sensors/8726017729975087448/tree?auth_token=xxxxxx
+      
+      Reply:
+        Status Code: 200 OK
+        Response: 
+        {
+          &#34;query&#34;: true,
+          &#34;sensor&#34;: [
+            {
+              &#34;id&#34;: 492,
+              &#34;name&#34;: &#34;Test&#34;,
+              &#34;ip&#34;: null,
+              &#34;latitude&#34;: null,
+              &#34;longitude&#34;: null,
+              &#34;is_deleted&#34;: false,
+              &#34;applied_at&#34;: null,
+              &#34;type&#34;: 1,
+              &#34;real_parent_id&#34;: null,
+              &#34;group_id&#34;: null,
+              &#34;binding_id&#34;: null,
+              &#34;need_apply&#34;: false,
+              &#34;applying&#34;: false,
+              &#34;property&#34;: {
+                &#34;path&#34;: &#34;&#34;
+              },
+              &#34;domain_type&#34;: 1,
+              &#34;unassigned&#34;: false,
+              &#34;policy_id&#34;: null,
+              &#34;reputation_policy_id&#34;: null,
+              &#34;need_reputation_apply&#34;: false,
+              &#34;uuid&#34;: &#34;697893457705749905&#34;,
+              &#34;children&#34;: [
+                {
+                  &#34;id&#34;: 852,
+                  &#34;name&#34;: &#34;Override_brother&#34;,
+                  &#34;ip&#34;: null,
+                  &#34;latitude&#34;: null,
+                  &#34;longitude&#34;: null,
+                  &#34;is_deleted&#34;: false,
+                  &#34;applied_at&#34;: null,
+                  &#34;type&#34;: 1,
+                  &#34;real_parent_id&#34;: null,
+                  &#34;group_id&#34;: null,
+                  &#34;binding_id&#34;: null,
+                  &#34;need_apply&#34;: false,
+                  &#34;applying&#34;: false,
+                  &#34;property&#34;: {},
+                  &#34;domain_type&#34;: 1,
+                  &#34;unassigned&#34;: false,
+                  &#34;policy_id&#34;: null,
+                  &#34;reputation_policy_id&#34;: null,
+                  &#34;need_reputation_apply&#34;: false,
+                  &#34;uuid&#34;: &#34;7106963634872672634&#34;,
+                  &#34;children&#34;: []
+                },
+                {
+                  &#34;id&#34;: 847,
+                  &#34;name&#34;: &#34;Override_parent&#34;,
+                  &#34;ip&#34;: null,
+                  &#34;latitude&#34;: null,
+                  &#34;longitude&#34;: null,
+                  &#34;is_deleted&#34;: false,
+                  &#34;applied_at&#34;: null,
+                  &#34;type&#34;: 1,
+                  &#34;real_parent_id&#34;: null,
+                  &#34;group_id&#34;: null,
+                  &#34;binding_id&#34;: null,
+                  &#34;need_apply&#34;: false,
+                  &#34;applying&#34;: false,
+                  &#34;property&#34;: {},
+                  &#34;domain_type&#34;: 1,
+                  &#34;unassigned&#34;: false,
+                  &#34;policy_id&#34;: null,
+                  &#34;reputation_policy_id&#34;: null,
+                  &#34;need_reputation_apply&#34;: false,
+                  &#34;uuid&#34;: &#34;6575077023887022161&#34;,
+                  &#34;children&#34;: [
+                    {
+                      &#34;id&#34;: 848,
+                      &#34;name&#34;: &#34;Override_child&#34;,
+                      &#34;ip&#34;: null,
+                      &#34;latitude&#34;: null,
+                      &#34;longitude&#34;: null,
+                      &#34;is_deleted&#34;: false,
+                      &#34;applied_at&#34;: null,
+                      &#34;type&#34;: 1,
+                      &#34;real_parent_id&#34;: null,
+                      &#34;group_id&#34;: null,
+                      &#34;binding_id&#34;: null,
+                      &#34;need_apply&#34;: false,
+                      &#34;applying&#34;: false,
+                      &#34;property&#34;: {},
+                      &#34;domain_type&#34;: 1,
+                      &#34;unassigned&#34;: false,
+                      &#34;policy_id&#34;: null,
+                      &#34;reputation_policy_id&#34;: null,
+                      &#34;need_reputation_apply&#34;: false,
+                      &#34;uuid&#34;: &#34;7137236833163733936&#34;,
+                      &#34;children&#34;: []
+                    },
+                    {
+                      &#34;id&#34;: 849,
+                      &#34;name&#34;: &#34;Override_child_2&#34;,
+                      &#34;ip&#34;: null,
+                      &#34;latitude&#34;: null,
+                      &#34;longitude&#34;: null,
+                      &#34;is_deleted&#34;: false,
+                      &#34;applied_at&#34;: null,
+                      &#34;type&#34;: 1,
+                      &#34;real_parent_id&#34;: null,
+                      &#34;group_id&#34;: null,
+                      &#34;binding_id&#34;: null,
+                      &#34;need_apply&#34;: false,
+                      &#34;applying&#34;: false,
+                      &#34;property&#34;: {},
+                      &#34;domain_type&#34;: 1,
+                      &#34;unassigned&#34;: false,
+                      &#34;policy_id&#34;: null,
+                      &#34;reputation_policy_id&#34;: null,
+                      &#34;need_reputation_apply&#34;: false,
+                      &#34;uuid&#34;: &#34;4178223226747106768&#34;,
+                      &#34;children&#34;: [
+                        {
+                          &#34;id&#34;: 851,
+                          &#34;name&#34;: &#34;Override_grandson_2&#34;,
+                          &#34;ip&#34;: null,
+                          &#34;latitude&#34;: null,
+                          &#34;longitude&#34;: null,
+                          &#34;is_deleted&#34;: false,
+                          &#34;applied_at&#34;: null,
+                          &#34;type&#34;: 1,
+                          &#34;real_parent_id&#34;: null,
+                          &#34;group_id&#34;: null,
+                          &#34;binding_id&#34;: null,
+                          &#34;need_apply&#34;: false,
+                          &#34;applying&#34;: false,
+                          &#34;property&#34;: {},
+                          &#34;domain_type&#34;: 101,
+                          &#34;unassigned&#34;: false,
+                          &#34;policy_id&#34;: null,
+                          &#34;reputation_policy_id&#34;: null,
+                          &#34;need_reputation_apply&#34;: false,
+                          &#34;uuid&#34;: &#34;7549459708256671519&#34;,
+                          &#34;access_points&#34;: [],
+                          &#34;children&#34;: []
+                        },
+                        {
+                          &#34;id&#34;: 850,
+                          &#34;name&#34;: &#34;Override_grandson_1&#34;,
+                          &#34;ip&#34;: null,
+                          &#34;latitude&#34;: null,
+                          &#34;longitude&#34;: null,
+                          &#34;is_deleted&#34;: false,
+                          &#34;applied_at&#34;: null,
+                          &#34;type&#34;: 1,
+                          &#34;real_parent_id&#34;: null,
+                          &#34;group_id&#34;: null,
+                          &#34;binding_id&#34;: null,
+                          &#34;need_apply&#34;: false,
+                          &#34;applying&#34;: false,
+                          &#34;property&#34;: {},
+                          &#34;domain_type&#34;: 1,
+                          &#34;unassigned&#34;: false,
+                          &#34;policy_id&#34;: null,
+                          &#34;reputation_policy_id&#34;: null,
+                          &#34;need_reputation_apply&#34;: false,
+                          &#34;uuid&#34;: &#34;8126434584577941831&#34;,
+                          &#34;children&#34;: []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>MSE sensor listing for a domain</title>
+		 <para>
+			MSE sensors can be listed for a given domain by issuing a GET request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/:sensor_uuid/mse</screen>
+		 <para>
+			Where :sensor_uuid should be replaced by the domain UUID you wish to get MSE sensors from. If the specified domain is not found HTTP 404 Not Found status code will be returned. If the requesting user does not have read permissions over the specified domain HTTP 401 Unauthorized will be returned. If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload describing the MSE sensors found. In the following lines you may find an execution example:
+		</para>
+		 
+<screen>
+      
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/sensors/8726017729975087448/mse?auth_token=xxxxxx
+
+      Response:
+        Status Code: 200 OK
+        Body:
+          {
+            &#34;query&#34;: true,
+            &#34;mse&#34;: [
+              {
+                &#34;id&#34;: 854,
+                &#34;name&#34;: &#34;TestMSE&#34;,
+                &#34;ip&#34;: &#34;0.0.0.0&#34;,
+                &#34;latitude&#34;: null,
+                &#34;longitude&#34;: null,
+                &#34;is_deleted&#34;: false,
+                &#34;applied_at&#34;: null,
+                &#34;type&#34;: 8,
+                &#34;real_parent_id&#34;: null,
+                &#34;group_id&#34;: null,
+                &#34;binding_id&#34;: null,
+                &#34;need_apply&#34;: false,
+                &#34;applying&#34;: false,
+                &#34;property&#34;: {},
+                &#34;domain_type&#34;: 1,
+                &#34;unassigned&#34;: false,
+                &#34;policy_id&#34;: null,
+                &#34;reputation_policy_id&#34;: null,
+                &#34;need_reputation_apply&#34;: false,
+                &#34;uuid&#34;: &#34;4297150382216182536&#34;
+              }
+            ]
+          }
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>Domain creation</title>
+		 <para>
+			New sensors can be created by submitting a POST request to following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/create_domain</screen>
+		 <para>
+			A JSON payload should be submitted alongside this request. Allowed payload parameters are:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>uuid</literal> (optional) UUID the new domain will receive on creation. It must not be in use by any existing domain. If not specified an unused random one will be asigned.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>name</literal> Name of the domain.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>domain_type</literal> (optional) A number indicating domain type. By default, the domain type is generic (1). 
+<screen> Available domain types:
+        Generic: 1
+        Organization: 2
+        Market: 3
+        Campus: 4
+        Building: 5
+        Service Provider: 6
+        Deplyment: 7
+        Floor: 101
+</screen>
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>parent_uuid</literal> (optional) UUID of the parent. By default, it&#39;s the top domain of user.
+				</para>
+			</listitem>
+
+		</itemizedlist>
+		 <para>
+			If request is successful HTTP 200 OK status code will be returned alongside a JSON response describing the newly created sensor and a &#39;status&#39; value set to true meaning that the request was successful. Keep in mind that manage permissions for the parent sensor are required in order to create a new sensor. If these permissions are missing HTTP 401 Unauthorized status code will be returned. If an unexistant parent was specified in the request HTTP 404 Not Found status code will be returned.
+		</para>
+		 <para>
+			On the following lines you may find an execution example:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/create_domain?auth_token=xxxxxx
+        Payload: { &#34;domain_type&#34;:&#34;2&#34;, &#34;parent_uuid&#34;:&#34;697893457705749905&#34;, &#34;name&#34;:&#34;new_domain&#34; }
+      
+      Response:
+      {
+        &#34;query&#34;: true,
+        &#34;sensor&#34;: {
+          &#34;id&#34;: 893,
+          &#34;name&#34;: &#34;new_domain&#34;,
+          &#34;type&#34;: 1,
+          &#34;domain_type&#34;: 2,
+          &#34;uuid&#34;: &#34;242113467595288081&#34;
+        }
+      }
+</screen>
+		 <para>
+			In this response &#34;domain_type&#34; is the domain type specified above and &#34;type&#34; is the sensor types. Available sensor types are:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>1</literal> DOMAIN
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>2</literal> IPS
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>3</literal> IPS_GROUP
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>4</literal> IPS_BINDING
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>5</literal> FLOW
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>6</literal> SOCIAL
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>7</literal> GATEWAY: Malware sensor
+				</para>
+			</listitem>
+
+		</itemizedlist>
+
+	</section>
+	
+	 <section>
+		<title>Flow/MSE sensor creation</title>
+		 <para>
+			Flow sensors can be created issuing a POST request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/create/flow</screen>
+		 <para>
+			This request accepts the following payload parameters:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>ip</literal> (Mandatory) IP address of the flow sensor.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>name</literal> (Mandatory) Name given to the flow sensor.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
+				</para>
+			</listitem>
+
+		</itemizedlist>
+		 <para>
+			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new flow sensor.
+		</para>
+		 <para>
+			In the following lines you may find an example response to a successful request:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/create/flow?auth_token=xxxxxx
+        Payload: {&#34;name&#34;:&#34;test_flow&#34;, &#34;parent_uuid&#34;:&#34;7549459708256671519&#34;, &#34;ip&#34;:&#34;10.0.2.10&#34;}
+
+      Response:
+        {
+          &#34;query&#34;: true,
+          &#34;sensor&#34;: {
+            &#34;id&#34;: 901,
+            &#34;uuid&#34;: &#34;894798882298873783&#34;,
+            &#34;name&#34;: &#34;test_flow&#34;,
+            &#34;ip&#34;: &#34;10.0.2.10&#34;
+          }
+        }
+</screen>
+		 <para>
+			MSE sensors can be created issuing a POST request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/create/mse</screen>
+		 <para>
+			This request accepts the following payload parameters:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>stream</literal> (Mandatory) MSE stream name.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>name</literal> (Mandatory) Name given to the mse sensor.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
+				</para>
+			</listitem>
+
+		</itemizedlist>
+		 <para>
+			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new MSE sensor.
+		</para>
+		 <para>
+			In the following lines you may find an example response to a successful request:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/create/mse?auth_token=xxxxxx
+        Payload: {&#34;name&#34;:&#34;test_mse&#34;, &#34;parent_uuid&#34;:&#34;7549459708256671519&#34;, &#34;stream&#34;:&#34;StreamB&#34;}
+
+      Response:
+        {
+          &#34;query&#34;: true,
+          &#34;sensor&#34;: {
+            &#34;id&#34;: 902,
+            &#34;uuid&#34;: &#34;4110689521083459108&#34;,
+            &#34;name&#34;: &#34;test_mse&#34;,
+            &#34;stream&#34;: &#34;StreamB&#34;
+          }
+        }
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>Domain override</title>
+		 <para>
+			If desired a domain (we will refer it as &#34;main sensor&#34;) can be completely overriden with the content given on the request payload. The request payload should be in JSON format. Said JSON must have a single &#34;sensor&#34; root tag describing the content of the &#34;main sensor&#34; to override with. To prevent errors, we can&#39;t change the value of UUID for &#34;main sensor&#34;. Child domains can be set using the &#34;children&#34; value where inheritance applies. Multiple inheritance levels are allowed.
+     </para>
+     <para>
+      If &#34;main sensor&#34; or a child it&#39;s a domain or a sensor flow it can contain a list of associated access points. To describe these access points you may use the &#34;access_points&#34; value. If this value is found in an element that it is not a flow nor a domain it will be ignored. Regular rules apply to access points and domain creation with the exception of parent IDs (sensor_id and switch_id for the access points; parent_id for domains) which are not allowed as inheritance is described by JSON nesting. This request can be executed by issuing a POST request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/:sensor_uuid/override_all?auth_token=xxxxxx</screen>
+		 <para>
+			Where :sensor_uuid should be replaced for the domain UUID to override.
+		</para>
+		 <para>
+			To override a domain the requesting user must have management permissions on the requested domain. If that is not the case HTTP 401 Unauthorized status code will be returned. If the requested domain does not exists HTTP 404 Not Found status code will be returned. If request is successful HTTP 200 OK status code will be returned with &#34;query&#34; set to true. On the following lines you may find an exeution example:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/697893457705749905/override_all?auth_token=xxxxxx
+        Payload: {
+                  &#34;sensor&#34;: {
+                            &#34;name&#34;: &#34;Override_parent&#34;,
+                            &#34;domain_type&#34;: &#34;1&#34;,
+                            &#34;children&#34;: [
+                                {
+                                    &#34;name&#34;: &#34;Override_child&#34;,
+                                    &#34;domain_type&#34;: &#34;1&#34;
+                                },
+                                {
+                                    &#34;name&#34;: &#34;Override_child_2&#34;,
+                                    &#34;domain_type&#34;: &#34;1&#34;,
+                                    &#34;children&#34;: [
+                                        {
+                                            &#34;name&#34;: &#34;Override_grandson_1&#34;,
+                                            &#34;domain_type&#34;: &#34;5&#34;,
+                                            &#34;access_points&#34;: [
+                                                {
+                                                    &#34;mac_address&#34;: &#34;22:ca:cc:dd:ff:11&#34;,
+                                                    &#34;name&#34;: &#34;Demo AP_Flow1&#34;
+                                                },
+                                                {
+                                                    &#34;mac_address&#34;: &#34;11:22:cc:ab:ff:ea&#34;,
+                                                    &#34;name&#34;: &#34;Demo AP_Flow2&#34;
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            &#34;name&#34;: &#34;Override_grandson_2&#34;,
+                                            &#34;domain_type&#34;: &#34;101&#34;,
+                                            &#34;access_points&#34;: [
+                                                {
+                                                    &#34;mac_address&#34;: &#34;bb:ca:cc:bd:af:22&#34;,
+                                                    &#34;name&#34;: &#34;Demo AP1&#34;
+                                                },
+                                                {
+                                                    &#34;mac_address&#34;: &#34;11:22:ac:dd:ff:44&#34;,
+                                                    &#34;name&#34;: &#34;Demo AP2&#34;
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+
+        Response:
+          Status Code: 200 OK
+          Body: {
+                &#34;query&#34;: &#34;true&#34;
+                }
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>Domain Access Point override</title>
+		 <para>
+			This works similar as the Domain Override but it only affects the access points contained on the specified domain and beneath. For this action submit a POST request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/:sensor_uuid/override_aps</screen>
+		 <para>
+			Where :sensor_uuid is the top domain UUID to override from. This request needs to be submitted alongside a non-nested JSON array payload describing the access points the referred domain and subdomains should contain. Said payload should have the &#34;access_points&#34; tag as root tag. Once this request is submitted all access points on the specified domain and subdomains will be erased. Access Points may be positioned on the specified domain subdomain&#39;s by identifying the domain's type (service_provider/organization/deployment/namespace/) that contains them. If no containing domain is specified the access point will be created in the specified top domain. Domains should be identified by it&#39;s UUID and/or name and you may use the &#34;{domain_type}_uuid&#34; or &#34;{domain_type}_name&#34; tags for that purpose. This would be an example of the tags mentioned above: &#34;deployment_uuid&#34;, &#34;deployment_name&#34;, &#34;organization_uuid&#34;, &#34;organization_name&#34;. If the access point is specified to be contained in an unexistant domain said domain will be created. If you supplied a name for this domain it will be created with the supplied name. If no name was supplied it will be created with a name matching &#34;{domain_type}_{uuid}&#34;, for example: &#34;organization_2342356443333123&#34;. If a domain is found by it&#39;s name but the UUID does not match, the supplied one the domain will be updated to match the given one. Also, an enrichment field can be included into the access point's values. If the specified top domain does not exists HTTP 404 Not Found will be returned. If the requesting user does not have manage permissions over the top domain HTTP 401 Unauthorized will be returned. In the following lines you may find an execution example:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/697893457705749905/override_aps?auth_token=xxxxxx
+        Payload: 
+          {
+            &#34;access_points&#34;: [
+              {
+                &#34;mac_address&#34;: &#34;ab:be:ef:22:11:33&#34;,
+                &#34;name&#34;: &#34;AP_with_alredy_created_structure&#34;,
+                &#34;deployment_uuid&#34;: &#34;8001483930459605430&#34;
+              },
+              {
+                &#34;mac_address&#34;: &#34;ab:be:ef:12:21:33&#34;,
+                &#34;name&#34;: &#34;AP_create_structure&#34;,
+                &#34;deployment_uuid&#34;: &#34;8001483943659605430&#34;
+              },
+              {
+                &#34;mac_address&#34;: &#34;ab:12:ef:12:21:33&#34;,
+                &#34;name&#34;: &#34;AP_create_structure_with_name&#34;,
+                &#34;deployment_uuid&#34;: &#34;8001483943459605430&#34;,
+                &#34;deployment_name&#34;: &#34;Deployment_APs&#34;
+              },
+              {
+                &#34;mac_address&#34;: &#34;ab:be:ef:f2:aa:33&#34;,
+                &#34;name&#34;: &#34;AP_with_given_existing_name&#34;,
+                &#34;deployment_name&#34;: &#34;Deployment_APs&#34;
+              },
+              {
+                &#34;mac_address&#34;: &#34;ab:be:ef:be:ef:33&#34;,
+                &#34;name&#34;: &#34;AP_with_complex_hierarchy_partially_existent&#34;,
+                &#34;deployment_uuid&#34;: &#34;8301483941239605130&#34;,
+                &#34;deployment_name&#34;: &#34;Deployment_APs&#34;,
+                &#34;enrichment&#34;: {&#34;market_uuid&#34;: &#34;3189960848665445691&#34;}
+              },
+              {
+                &#34;mac_address&#34;: &#34;ab:22:ef:33:ef:13&#34;,
+                &#34;name&#34;: &#34;AP_with_complex_hierarchy_completely_unexistant&#34;,
+                &#34;deployment_uuid&#34;: &#34;8301483941239605130&#34;,
+                &#34;deployment_name&#34;: &#34;Deployment_APs&#34;,
+                &#34;enrichment&#34;: {&#34;market_uuid&#34;: &#34;3189234848665445691&#34;,&#34;building_name&#34;: &#34;NewBuilding&#34;,}
+              }
+            ]
+          }
+
+          Response:
+            Status Code: 200 OK
+            Body: { &#34;query&#34;:&#34;true&#34; }
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>Sensor elimination</title>
+		 <para>
+			Sensor elimination on user request. The user is able to specify which sensor to delete by its UUID. The requesting user should have manage permissions on the specified sensor. If that is not the case HTTP 401 Unauthorized will be returned. If the provided UUID does not match any sensor UUID HTTP 404 Not Found status code will be returned. If the request is successful the sensor and all its children will be erased. In this case HTTP 200 OK status code will be returned with no payload data. The sensor UUID is supplied via a GET parameter. Requests can be made to either of the following URIs:
+		</para>
+		 
+<screen>HTTP Verb: DELETE
+			URI: https://hostname/api/v1/sensors/:uuid
+
+			HTTP Verb: GET
+			URI: https:/hostname/api/v1/sensors/:uuid/delete</screen>
+		 <para>
+			Where :uuid should be replaced for the sensor UUID to delete
+		</para>
+		 <para>
+			On the following lines you may find an execution example:
+		</para>
+		 
+<screen>
+        Request:
+          HTTP Verb: DELETE
+          URI: https://hostname/api/v1/sensors/463693457705745932?auth_token=xxxxxx
+
+        Response:
+          Status Code: 200 OK
+          No response body
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>Access Point listing</title>
+		 <para>
+			It is possible to get a list of all access points that a user has permission by issuing a GET request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/access_points(.format)</screen>
+		 <para>
+			Where (.format) should be replaced by the desired response format. Available formats are CSV and JSON.
+		</para>
+		 <para>
+			It is also possible to filter access points by mac address, status, name and ip address. Said filtering can be done by submitting additional GET parameters, these parameters are:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>mac_address</literal> MAC address of the access point to filter by.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>status</literal> Integer representation of the access point status. 0 stands for down and 1 stands for up.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>name</literal> Name of the access point.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>ip_address</literal> IP address of the access point to filter by.
+				</para>
+			</listitem>
+
+		</itemizedlist>
+		 <para>
+			The response will have the following data in the corresponding format:
+		</para>
+		 
+<screen>Servide Provider ID, Organization ID, Market ID, Deployment ID, Building ID, Floor ID, AP MAC address</screen>
+		 <para>
+			On the following example we will request a listing of all the access points that are online in JSON and CSV format:
+		</para>
+		 
+<screen>
+      Request:
+    	 HTTP Verb: GET
+    	 URI: https://hostname/api/v1/access_points?auth_token=xxxxxx
+
+      Response:
+		  {
+        &#34;query&#34;: true,
+        &#34;access_points&#34;: [
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;12:15:14:16:15:aa&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:aa:aa:cc:cc:cc&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:ee&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:fe&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;organization&#34;: null,
+            &#34;market_uuid&#34;: null,
+            &#34;market&#34;: null,
+            &#34;building_uuid&#34;: null,
+            &#34;building&#34;: null,
+            &#34;campus_uuid&#34;: null,
+            &#34;campus&#34;: null,
+            &#34;floor_uuid&#34;: &#34;8001483943659605430&#34;,
+            &#34;mac_address&#34;: &#34;ab:be:ef:12:21:33&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;organization&#34;: null,
+            &#34;market_uuid&#34;: null,
+            &#34;market&#34;: null,
+            &#34;building_uuid&#34;: null,
+            &#34;building&#34;: null,
+            &#34;campus_uuid&#34;: null,
+            &#34;campus&#34;: null,
+            &#34;floor_uuid&#34;: &#34;8001483943459605430&#34;,
+            &#34;mac_address&#34;: &#34;ab:12:ef:12:21:33&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;market_uuid&#34;: null,
+            &#34;building_uuid&#34;: null,
+            &#34;campus_uuid&#34;: null,
+            &#34;floor_uuid&#34;: null,
+            &#34;mac_address&#34;: &#34;aa:aa:aa:aa:aa:aa&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;market_uuid&#34;: null,
+            &#34;building_uuid&#34;: null,
+            &#34;campus_uuid&#34;: null,
+            &#34;floor_uuid&#34;: null,
+            &#34;mac_address&#34;: &#34;aa:aa:aa:aa:aa:bb&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;market_uuid&#34;: null,
+            &#34;building_uuid&#34;: null,
+            &#34;campus_uuid&#34;: null,
+            &#34;floor_uuid&#34;: null,
+            &#34;mac_address&#34;: &#34;aa:aa:aa:aa:aa:cc&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;organization&#34;: null,
+            &#34;market_uuid&#34;: &#34;3189960848665445691&#34;,
+            &#34;market&#34;: &#34;Bay Area&#34;,
+            &#34;building_uuid&#34;: null,
+            &#34;building&#34;: null,
+            &#34;campus_uuid&#34;: null,
+            &#34;campus&#34;: null,
+            &#34;floor_uuid&#34;: &#34;8301483941239605130&#34;,
+            &#34;mac_address&#34;: &#34;ab:be:ef:be:ef:33&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:ee:33&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;organization&#34;: null,
+            &#34;market_uuid&#34;: null,
+            &#34;market&#34;: null,
+            &#34;building_uuid&#34;: &#34;4811388934080740875&#34;,
+            &#34;building&#34;: &#34;Hyatt&#34;,
+            &#34;campus_uuid&#34;: &#34;4269493721092289739&#34;,
+            &#34;campus&#34;: &#34;SantaClara Convention&#34;,
+            &#34;floor_uuid&#34;: &#34;788434622707693044&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:ab&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:ee&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:ee&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:fe&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;organization&#34;: null,
+            &#34;market_uuid&#34;: &#34;3189960848665445691&#34;,
+            &#34;market&#34;: &#34;Bay Area&#34;,
+            &#34;building_uuid&#34;: null,
+            &#34;building&#34;: null,
+            &#34;campus_uuid&#34;: null,
+            &#34;campus&#34;: null,
+            &#34;floor_uuid&#34;: &#34;8001483930459605430&#34;,
+            &#34;mac_address&#34;: &#34;ab:be:ef:22:11:33&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;organization&#34;: null,
+            &#34;market_uuid&#34;: &#34;3189960848665445691&#34;,
+            &#34;market&#34;: &#34;Bay Area&#34;,
+            &#34;building_uuid&#34;: null,
+            &#34;building&#34;: null,
+            &#34;campus_uuid&#34;: null,
+            &#34;campus&#34;: null,
+            &#34;floor_uuid&#34;: &#34;8001483930459605430&#34;,
+            &#34;mac_address&#34;: &#34;ab:be:ef:f2:aa:33&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: null,
+            &#34;organization&#34;: null,
+            &#34;market_uuid&#34;: &#34;2080930526821473860&#34;,
+            &#34;market&#34;: &#34;market_3189234848665445691&#34;,
+            &#34;building_uuid&#34;: &#34;1327513633662331506&#34;,
+            &#34;building&#34;: &#34;NewBuilding&#34;,
+            &#34;campus_uuid&#34;: null,
+            &#34;campus&#34;: null,
+            &#34;floor_uuid&#34;: &#34;8301483941239605130&#34;,
+            &#34;mac_address&#34;: &#34;ab:22:ef:33:ef:13&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:aa:ce:dd:ff&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:ff&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:aa&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          },
+          {
+            &#34;service_provider_uuid&#34;: null,
+            &#34;service_provider&#34;: null,
+            &#34;deployment_uuid&#34;: null,
+            &#34;deployment&#34;: null,
+            &#34;organization_uuid&#34;: &#34;9201452791072897388&#34;,
+            &#34;organization&#34;: &#34;Eneo&#34;,
+            &#34;market_uuid&#34;: &#34;6396049722605916538&#34;,
+            &#34;market&#34;: &#34;Spain&#34;,
+            &#34;building_uuid&#34;: &#34;6913104531464819392&#34;,
+            &#34;building&#34;: &#34;Aljarafe Center&#34;,
+            &#34;campus_uuid&#34;: &#34;3118246207405350091&#34;,
+            &#34;campus&#34;: &#34;SVQ&#34;,
+            &#34;floor_uuid&#34;: &#34;9032532605146231448&#34;,
+            &#34;mac_address&#34;: &#34;aa:bb:cc:dd:bb&#34;,
+            &#34;status&#34;: 0,
+            &#34;last_check_in&#34;: null
+          }
+        ]
+      }
+
+      Request:
+       HTTP Verb: GET
+       URI: https://hostname/api/v1/access_points.csv?auth_token=xxxxxx
+
+      Response:
+        service_provider_uuid,service_provider,deployment_uuid,deployment,organization_uuid,organization,market_uuid,market,building_uuid,building,campus_uuid,campus,floor_uuid,mac_address,status,last_check_in
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,12:15:14:16:15:aa,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:aa:aa:cc:cc:cc,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ee,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:fe,0,null
+        null,null,null,null,null,null,null,null,null,null,null,null,8001483943659605430,ab:be:ef:12:21:33,0,null
+        null,null,null,null,null,null,null,null,null,null,null,null,8001483943459605430,ab:12:ef:12:21:33,0,null
+        null,null,null,null,null,null,null,aa:aa:aa:aa:aa:aa,0,null
+        null,null,null,null,null,null,null,aa:aa:aa:aa:aa:bb,0,null
+        null,null,null,null,null,null,null,aa:aa:aa:aa:aa:cc,0,null
+        null,null,null,null,null,null,3189960848665445691,Bay Area,null,null,null,null,8301483941239605130,ab:be:ef:be:ef:33,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ee:33,0,null
+        null,null,null,null,null,null,null,null,4811388934080740875,Hyatt,4269493721092289739,SantaClara Convention,788434622707693044,aa:bb:cc:dd:ab,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ee,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ee,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:fe,0,null
+        null,null,null,null,null,null,3189960848665445691,Bay Area,null,null,null,null,8001483930459605430,ab:be:ef:22:11:33,0,null
+        null,null,null,null,null,null,3189960848665445691,Bay Area,null,null,null,null,8001483930459605430,ab:be:ef:f2:aa:33,0,null
+        null,null,null,null,null,null,2080930526821473860,market_3189234848665445691,1327513633662331506,NewBuilding,null,null,8301483941239605130,ab:22:ef:33:ef:13,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:aa:ce:dd:ff,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ff,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:aa,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:bb,0,null
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>Access Point creation</title>
+		 <para>
+			It is possible to create a new Access Point by submitting a POST request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/access_points</screen>
+		 <para>
+			To successfully create a new access point it is required to provide a sensor_uuid (sensor UUID of which the newly created AP will be descendant). If said parameter is not given a HTTP 404 Not Found status code will be returned. It is also required that the user submitting the request can manage the sensor specified. If the user does not have permission a HTTP 401 Unauthorized status code will be returned. APs validate name and mac_address on creation thus making said parameters mandatory. If either of these parameters are missing a HTTP 422 Unprocessable Entity status code will be returned along with the specific error on the requested format.
+		</para>
+		 <para>
+			The following parameters are also accepted on the request payload:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>ip_address</literal> IP address of the new access point.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>mac_address</literal> (mandatory) MAC address of the access point.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>name</literal> (mandatory) Name given to the access point.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>status</literal> Status of the access point supplied as an integer. 0 stands for down or offline; 1 stands for up or online
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>latitude</literal> Latitude coordinate to locate the access point
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>longitude</literal> Longitude coordinate to locate the access point
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>x</literal> Integer representig the abscissa coordinate in a floor map locating the access point
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>y</literal> Integer representig the ordinate coordinate in a floor map locating the access point
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_uuid</literal> (mandatory) Parent sensor UUID. It should always be a domain.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>flow_uuid</literal> Associated flow sensor UUID.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>description</literal> Description of the newly created access point.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>enrichment</literal> Explained below.
+				</para>
+			</listitem>
+
+		</itemizedlist>
+		 <para>
+			You may also provide the access point enrichment parameters as a JSON object for the &#34;enrichment&#34; tag. The enrichment tag allows four possible values, these are:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>market_uuid</literal> UUID of the market the access point belongs to.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>campus_uuid</literal> UUID of the campus the access point belongs to.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>building_uuid</literal> UUID of the building the access point belongs to.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>floor_uuid</literal> UUID of the floor the access point belongs to.
+				</para>
+			</listitem>
+
+		</itemizedlist>
+		 <para>
+			An example request can be found on the following lines:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: POST
+      	URI: https://hostname/api/v1/access_points.json?auth_token=xxxxxx
+      	Payload: { &#34;mac_address&#34;:&#34;ed:f4:22:45:ff&#34;,&#34;enrichment&#34;: {
+				  &#34;campus_uuid&#34;: &#34;84758975876475&#34;,
+				  &#34;floor_uuid&#34;: &#34;8001483943459605430&#34;
+				}, &#34;sensor_uuid&#34;:&#34;5654545586888876551&#34;, &#34;name&#34;:&#34;Demo_AP6&#34;, &#34;flow_uuid&#34;:&#34;89479888298873783&#34;}
+
+      Response:
+		{
+		    &#34;query&#34;: true,
+		    &#34;ap&#34;: {
+		        &#34;id&#34;: 776,
+		        &#34;ip_address&#34;: null,
+		        &#34;mac_address&#34;: &#34;ed:f4:25:45:ff&#34;,
+		        &#34;name&#34;: &#34;Demo_Access_Point&#34;,
+		        &#34;switch_name&#34;: null,
+		        &#34;switch_id&#34;: null,
+		        &#34;latitude&#34;: null,
+		        &#34;longitude&#34;: null,
+		        &#34;x&#34;: null,
+		        &#34;y&#34;: null,
+		        &#34;sensor_id&#34;: 265,
+		        &#34;created_at&#34;: &#34;2015-06-02T11:33:54.841+02:00&#34;,
+		        &#34;updated_at&#34;: &#34;2015-06-02T11:33:54.841+02:00&#34;,
+		        &#34;description&#34;: null,
+		        &#34;status&#34;: 0,
+		        &#34;last_check_in&#34;: null,
+		        &#34;clients&#34;: 0,
+		        &#34;uptime&#34;: 0,
+		        &#34;enrichment&#34;: {
+		            &#34;campus_uuid&#34;: &#34;84758975876475&#34;,
+		            &#34;floor_uuid&#34;: &#34;8001483943459605430&#34;
+		        },
+		        &#34;sensor_name&#34;: &#34;Restaurant&#34;,
+		        &#34;sensor_uuid&#34;: &#34;5654545586888876551&#34;
+		    }
+		}
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>Access Point Modification</title>
+		 <para>
+			It is possible to modify an existing access point by submitting a PATCH or a PUT request to the followings URIs:
+		</para>
+		 
+<screen>
+      https://hostname/api/v1/access_points/:id
+      https://hostname/api/v1/access_points/:mac_address
+</screen>
+		 <para>
+			Where :id is the ID of the access point which data needs to be modified. It is also possible to identify the access point using it&#39;s mac address instead of the ID.
+		</para>
+		 <para>
+			Permitted parameters on the request payload for the update are:
+		</para>
+		 <itemizedlist mark="bullet">
+			<listitem>
+				<para>
+					<literal>ip_address</literal> IP address of the new access point.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>mac_address</literal> MAC address of the access point.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>name</literal> (Mandatory) Name given to the access point.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>status</literal> Status of the access point supplied as an integer. 0 stands for down or offline; 1 stands for up or online
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>latitude</literal> Latitude coordinate to locate the access point
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>longitude</literal> Longitude coordinate to locate the access point
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>x</literal> Integer representig the abscissa coordinate in a floor map locating the access point
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>y</literal> Integer representig the ordinate coordinate in a floor map locating the access point
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>sensor_uuid</literal> Parent sensor UUID.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>switch_uuid</literal> Associated flow sensor UUID.
+				</para>
+			</listitem>
+			 <listitem>
+				<para>
+					<literal>description</literal> Description of the newly created access point.
+				</para>
+			</listitem>
+
+		</itemizedlist>
+		 <para>
+			If the request was successful HTTP 200 OK status code will be returned along a JSON payload describing all the values of the modified access point.
+		</para>
+
+	</section>
+	
+	 <section>
+		<title>Access Point destruction</title>
+		 <para>
+			Access Points can be deleted by different actions depending on the user needs. If you wish to delete a list of access points giving their mac address and no matter where they are located in terms of hierarchy you may submit a DELETE request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/access_points</screen>
+		 <para>
+			This request needs to be submitted alongside a JSON payload describing the array of access points you wish to delete. Access points are identified by it&#39;s mac address or by it&#39;s ID To delete an access point you need manage permissions over said access points, if the requesting user does not have manage permissions over some of the specified access points they will not be deleted but no HTTP error code will be returned as there might be other access points that the requesting user is able to delete.
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: DELETE
+        URI: https://hostname/api/v1/access_points?auth_code=xxxxxx
+        Payload:     
+          {
+            &#34;access_points&#34;: [
+              { &#34;mac_address&#34;: &#34;ab:be:e4:22:a1:33&#34; },
+              { &#34;id&#34;: &#34;42&#34; },
+              { &#34;mac_address&#34;: &#34;ab:22:ef:33:ef:13&#34; }
+            ]
+          }
+
+      Response:
+        Status Code: 200 OK
+        Body: { &#34;query&#34;:&#34;true&#34;}
+</screen>
+		 <para>
+			It is also possible to delete all the access points contained in a domain and it&#39;s subdomains by issuing a GET request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/sensors/:sensor_uuid/delete_aps</screen>
+		 <para>
+			Where :sensor_uuid should be replaced by a valid sensor UUID. If the UUID given does not match any domains HTTP 404 Not Found Status code will be returned. To be able to execute this action you should have manage permissions over the specified domain. If that is not the case HTTP 401 Unauthorized status code will be returned. In the following lines you may find an execution example:
+		</para>
+		 
+<screen>
+      Request: 
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/sensors/697893457705749905/delete_aps?auth_code=xxxxxx
+
+      Response:
+        Status Code: 200 OK
+        Body: { &#34;query&#34;:&#34;true&#34; }
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>User listing </title>
+		 <para>
+			The super administrator can request a list of all existing users. For that purpose submit a GET request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/users.format</screen>
+		 <para>
+			Where format should be replaced by the desired response format. JSON and CSV are the supported response formats.
+		</para>
+		 <para>
+			If the submitting user is not super administrator HTTP 401 status code will be returned.
+		</para>
+		 <para>
+			On the following lines you may find an execution example:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: GET    
+        URI: https://hostname/api/v1/users.json?auth_token=eeeeee
+     
+      Response:
+      {
+        &#34;query&#34;: true,
+        &#34;users&#34;: [
+          {
+            &#34;id&#34;: 5,
+            &#34;email&#34;: &#34;user@redborder.net&#34;,
+            &#34;login&#34;: &#34;User&#34;,
+            &#34;admin&#34;: true,
+            &#34;name&#34;: &#34;John Doe&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 472,
+            &#34;sensor_name&#34;: &#34;redBorder&#34;,
+            &#34;sensor_uuid&#34;: &#34;4935760011107548256&#34;
+          },
+          {
+            &#34;id&#34;: 6,
+            &#34;email&#34;: &#34;user@redborder.net&#34;,
+            &#34;login&#34;: &#34;User&#34;,
+            &#34;admin&#34;: true,
+            &#34;name&#34;: &#34;John Doe&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 472,
+            &#34;sensor_name&#34;: &#34;redBorder&#34;,
+            &#34;sensor_uuid&#34;: &#34;4935760011107548256&#34;
+          },
+          {
+            &#34;id&#34;: 7,
+            &#34;email&#34;: &#34;user@redborder.net&#34;,
+            &#34;login&#34;: &#34;User&#34;,
+            &#34;admin&#34;: false,
+            &#34;name&#34;: &#34;User&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 1,
+            &#34;sensor_name&#34;: &#34;root&#34;,
+            &#34;sensor_uuid&#34;: &#34;2584761509592299795&#34;
+          },
+          {
+            &#34;id&#34;: 8,
+            &#34;email&#34;: &#34;user@redborder.net&#34;,
+            &#34;login&#34;: &#34;User&#34;,
+            &#34;admin&#34;: false,
+            &#34;name&#34;: &#34;John Doe&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 6,
+            &#34;sensor_name&#34;: &#34;planta1&#34;,
+            &#34;sensor_uuid&#34;: &#34;9032532605146231448&#34;
+          },
+          {
+            &#34;id&#34;: 11,
+            &#34;email&#34;: &#34;user@redborder.net&#34;,
+            &#34;login&#34;: &#34;User&#34;,
+            &#34;admin&#34;: false,
+            &#34;name&#34;: &#34;John Doe&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 260,
+            &#34;sensor_name&#34;: &#34;Julio&#34;,
+            &#34;sensor_uuid&#34;: &#34;8726017729975087448&#34;
+          },
+          {
+            &#34;id&#34;: 1,
+            &#34;email&#34;: &#34;admin@redborder.net&#34;,
+            &#34;login&#34;: &#34;admin&#34;,
+            &#34;admin&#34;: true,
+            &#34;name&#34;: &#34;Administrator&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 1,
+            &#34;sensor_name&#34;: &#34;root&#34;,
+            &#34;sensor_uuid&#34;: &#34;2584761509592299795&#34;
+          },
+          {
+            &#34;id&#34;: 4,
+            &#34;email&#34;: &#34;user@redborder.net&#34;,
+            &#34;login&#34;: &#34;User&#34;,
+            &#34;admin&#34;: true,
+            &#34;name&#34;: &#34;John Dow&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 1,
+            &#34;sensor_name&#34;: &#34;root&#34;,
+            &#34;sensor_uuid&#34;: &#34;2584761509592299795&#34;
+          },
+          {
+            &#34;id&#34;: 13,
+            &#34;email&#34;: &#34;user@redborder.net&#34;,
+            &#34;login&#34;: &#34;User&#34;,
+            &#34;admin&#34;: true,
+            &#34;name&#34;: &#34;John Dow&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 11,
+            &#34;sensor_name&#34;: &#34;Spain&#34;,
+            &#34;sensor_uuid&#34;: &#34;6396049722605916538&#34;
+          },
+          {
+            &#34;id&#34;: 12,
+            &#34;email&#34;: &#34;user@redborder.net&#34;,
+            &#34;login&#34;: &#34;User&#34;,
+            &#34;admin&#34;: false,
+            &#34;name&#34;: &#34;John Dow&#34;,
+            &#34;enabled&#34;: true,
+            &#34;authentication_token&#34;: &#34;xxxxxx&#34;,
+            &#34;sensor_id&#34;: 2,
+            &#34;sensor_name&#34;: &#34;Adamo&#34;,
+            &#34;sensor_uuid&#34;: &#34;796168482310467136&#34;
+          }
+        ]
+      }
+
+      Request:
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/users.csv?auth_token=eeeeee
+
+      Response:
+        Name,Email,ID,Login,Admin,Enabled,Authentication_token,Sensor_ID
+        John Doe,user@redborder.net,5,User,true,true,xxxxxx,472
+        John Doe,user@redborder.net,6,User,true,true,xxxxxx,472
+        John Doe,user@redborder.net,7,User,false,true,xxxxxx,1
+        John Doe,user@redborder.net,8,User,false,true,xxxxxx,6
+        John Doe,user.ext@redborder.net,11,User,false,true,xxxxxx,260
+        Administrator,admin@redborder.net,1,admin,true,true,xxxxxx,1
+        John Doe,user@redborder.net,4,User,true,true,xxxxxx,1
+        John Doe,user@redborder.net,13,User,true,true,xxxxxx,11
+        John Doe,user@redborder.net,12,User,false,true,xxxxxx,2
+
+</screen>
+
+	</section>
+	
+	 <section>
+		<title>User API key renewal</title>
+		 <para>
+			Users can request to recreate it&#39;s authentication token by issuing a GET request to the following URI:
+		</para>
+		 
+<screen>https://hostname/api/v1/users/:user_id/recreate_api_key</screen>
+		 <para>
+			Where :user_id should be replaced by the ID of the desired user.
+		</para>
+		 <para>
+			If the request is successful a JSON containing the newly created authentication token will be returned alongside HTTP 200 OK status code. In the following lines you may find an example response to a successful request:
+		</para>
+		 
+<screen>
+      Request:
+        HTTP Verb: PATCH
+        URI: https://hostname/api/v1/users/1/recreate_api_key?auth_token=xxxxxx
+
+      Response:
+      { query: true, 
+              auth_token: &#34;abcdabcdabcd&#34; }</screen>
+		 <para>
+			If the requested user does not exist HTTP 404 Not Found status code will be returned. If the requesting users does not have privileges over the requested user HTTP 401 The server also might return HTTP 500 Internal Server Error in case of uncaught exceptions.
+		</para>
+
+	</section>
+
+</chapter>
+

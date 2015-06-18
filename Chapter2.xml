@@ -494,10 +494,40 @@
 	
 	 <section>
 		<title>Domain override</title>
-		 <para>
+		<para>
 			If desired a domain (we will refer it as &#34;main sensor&#34;) can be completely overriden with the content given on the request payload. The request payload should be in JSON format. Said JSON must have a single &#34;sensor&#34; root tag describing the content of the &#34;main sensor&#34; to override with. To prevent errors, we can&#39;t change the value of UUID for &#34;main sensor&#34;. Child domains can be set using the &#34;children&#34; value where inheritance applies. Multiple inheritance levels are allowed.
-     </para>
-     <para>
+    </para>
+    <para>
+      We need to take into account some points:
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <para>
+          If the sensor_uuid is not present at the URL, the sensor will be override is the Top domain of the user.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If a child of main sensor hasn't define UUID, API tries to find a child that coincide on name, domain_type and type params. If API finds a child, it will be updated, else API will create a new sensor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Access Points ignore sensor_name and sensor_uuid params. All APS of a sensor will be added to it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If we need to create a sensor and type or domain_type are not present in JSON, default values are DOMAIN and GENERIC respectively.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If there are an error creating/updating sensors, the app rollback all changes.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
       If &#34;main sensor&#34; or a child it&#39;s a domain or a sensor flow it can contain a list of associated access points. To describe these access points you may use the &#34;access_points&#34; value. If this value is found in an element that it is not a flow nor a domain it will be ignored. Regular rules apply to access points and domain creation with the exception of parent IDs (sensor_id and switch_id for the access points; parent_id for domains) which are not allowed as inheritance is described by JSON nesting. This request can be executed by issuing a POST request to the following URI:
 		</para>
 		 
@@ -505,10 +535,16 @@
 		 <para>
 			Where :sensor_uuid should be replaced for the domain UUID to override.
 		</para>
-		 <para>
-			To override a domain the requesting user must have management permissions on the requested domain. If that is not the case HTTP 401 Unauthorized status code will be returned. If the requested domain does not exists HTTP 404 Not Found status code will be returned. If request is successful HTTP 200 OK status code will be returned with &#34;query&#34; set to true. On the following lines you may find an exeution example:
-		</para>
-		 
+    <para>
+      Another option is not define sensor_uuid. In this case, domain will be override is the top domain of the user with auth_toke equals to xxxxxx.
+    </para>
+
+<screen>https://hostname/api/v1/sensors/override_all?auth_token=xxxxxx</screen>
+
+    <para>
+      To override a domain the requesting user must have management permissions on the requested domain. If that is not the case HTTP 401 Unauthorized status code will be returned. If the requested domain does not exists HTTP 404 Not Found status code will be returned. If request is successful HTTP 200 OK status code will be returned with &#34;query&#34; set to true. On the following lines you may find an exeution example:
+    </para>
+
 <screen>
       Request:
         HTTP Verb: POST

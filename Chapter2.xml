@@ -937,6 +937,43 @@
 </screen>
 
 	</section>
+
+  <section>
+    <title>Forward to client elimination</title>
+    <para>
+      Forward to client elimination on user request. The user is able to specify which forward to client to delete by its sensor UUID and its service name. The requesting user should have manage permissions on the specified forward to client. If that is not the case HTTP 401 Unauthorized will be returned. If the provided UUID does not match any sensor UUID HTTP 404 Not Found status code will be returned. If the request is successful the forward to client will be erased. In this case HTTP 200 OK status code will be returned with the list of forward to clients for this sensor. Requests can be made to the following URI:
+    </para>
+
+    <screen>
+      HTTP Verb: DELETE
+      URI: https://hostname/api/v1/sensors/:sensor_uuid/forwards_to_client/:service
+    </screen>
+    <para>
+      Where :sensor_uuid should be replaced for the sensor UUID to delete
+    </para>
+    <para>
+      On the following lines you may find an execution example:
+    </para>
+     
+    <screen>
+      Request:
+        HTTP Verb: DELETE
+        URI: https://hostname/api/v1/sensors/5340147418033167707/forwards_to_client/test?auth_token=xxxxxx
+
+      Response:
+        Status Code: 200 OK
+        {
+          &#34;query&#34;: true
+          &#34;forwards_to_client&#34;: {
+            &#34;ftc1&#34;: {
+              &#34;protocol&#34;: &#34;tcp&#34;
+              &#34;port&#34;: &#34;13002&#34;
+              &#34;remote_host&#34;: null
+            }
+          }
+        }
+    </screen>
+  </section>
 	
 	 <section>
 		<title>Access Point listing</title>

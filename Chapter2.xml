@@ -486,7 +486,11 @@
       Request:
         HTTP Verb: POST
         URI: https://hostname/api/v1/sensors/create/mse?auth_token=xxxxxx
-        Payload: {&#34;name&#34;:&#34;test_mse&#34;, &#34;parent_uuid&#34;:&#34;7549459708256671519&#34;, &#34;stream&#34;:&#34;StreamB&#34;, &#34;mse_version&#34;:&#34;8&#34;, &#34;port&#34;:&#34;xxxx&#34;}
+        Payload: { &#34;name&#34;: &#34;test_mse&#34;,
+                   &#34;parent_uuid&#34;: &#34;7549459708256671519&#34;,
+                   &#34;stream&#34;: &#34;StreamB&#34;,
+                   &#34;mse_version&#34;: &#34;8&#34;,
+                   &#34;port&#34;:&#34;xxxx&#34; }
 
       Response:
         {
@@ -532,7 +536,7 @@
       Request:
         HTTP Verb: POST
         URI: https://hostname/api/v1/sensors/create/pi?auth_token=xxxxxx
-        Payload: {&#34;name&#34;:&#34;test_pi&#34;, &#34;parent_uuid&#34;:&#34;5520558294118779201&#34;}
+        Payload: { &#34;name&#34;: &#34;test_pi&#34;, &#34;parent_uuid&#34;: &#34;5520558294118779201&#34; }
 
       Response:
         {
@@ -575,7 +579,7 @@
           Request:
             HTTP Verb: POST
             URI: https://hostname/api/v1/sensors/cloud_proxy?auth_token=xxxxxx
-            Payload: {&#34;name&#34;:&#34;test_cloud_proxy&#34;}
+            Payload: { &#34;name&#34;: &#34;test_cloud_proxy&#34; }
 
           Response:
             {
@@ -631,7 +635,10 @@
           Request:
             HTTP Verb: POST
             URI: https://hostname/api/v1/sensors/create_secure_gateway?auth_token=xxxxxx
-            Payload: {&#34;name&#34;:&#34;test_secure_gateway&#34;, &#34;ip&#34;:&#34;10.0.0.5&#34;, &#34;password&#34;:&#34;xxxxxx&#34;, &#34;parent_uuid&#34;:&#34;2455390813087131698&#34;}
+            Payload: { &#34;name&#34;: &#34;test_secure_gateway&#34;,
+                       &#34;ip&#34;:&#34;10.0.0.5&#34;,
+                       &#34;password&#34;:&#34;xxxxxx&#34;,
+                       &#34;parent_uuid&#34;:&#34;2455390813087131698&#34; }
 
           Response:
             {
@@ -695,7 +702,15 @@
           Request:
             HTTP Verb: POST
             URI: https://hostname/api/v1/sensors/5340147418033167707/forwards_to_client?auth_token=xxxxxx
-            Payload: {&#34;forwards_to_client&#34;: {&#34;test_fc&#34;:{&#34;service&#34;:&#34;test_fc&#34;, &#34;protocol&#34;:&#34;tcp&#34;, &#34;port&#34;:13003}}}
+            Payload:  { 
+                        &#34;forwards_to_client&#34;: {
+                          &#34;test_fc&#34;: {
+                            &#34;service&#34;: &#34;test_fc&#34;,
+                            &#34;protocol&#34;: &#34;tcp&#34;,
+                            &#34;port&#34;:13003
+                          }
+                        }
+                      }
 
           Response:
             {

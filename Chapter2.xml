@@ -274,6 +274,45 @@
 </screen>
 
 	</section>
+
+  <section>
+    <title>Forward to client listing for a secure gateway sensor</title>
+    <para>
+      Forward to clients can be listed for a given secure gateway sensor by issuing a GET request to the following URI:
+    </para>
+     
+    <screen>https://hostname/api/v1/sensors/:sensor_uuid/forwards_to_client</screen>
+    <para>
+      Where :sensor_uuid should be replaced by the secure gateway sensor UUID you wish to get forward to clients from. If the specified secure gateway sensor is not found HTTP 404 Not Found status code will be returned. If the requesting user does not have read permissions over the specified secure gateway sensor HTTP 401 Unauthorized will be returned. If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload describing the forward clients found. In the following lines you may find an execution example:
+    </para>
+     
+    <screen>
+      
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/sensors/5340147418033167707/forwards_to_client?auth_token=xxxxxx
+
+      Response:
+        Status Code: 200 OK
+        Body:
+          {
+            &#34;query&#34;: true
+            &#34;forwards_to_client&#34;: {
+              &#34;api&#34;: {
+                &#34;protocol&#34;: &#34;tcp&#34;
+                &#34;port&#34;: &#34;13002&#34;
+                &#34;remote_host&#34;: null
+              }
+              &#34;test: {
+                &#34;protocol&#34;: &#34;tcp&#34;
+                &#34;port&#34;: &#34;13004&#34;
+                &#34;remote_host&#34;: null
+                &#34;remote_port&#34;: &#34;&#34;
+              }
+            }
+          }
+    </screen>
+
+  </section>
 	
 	 <section>
 		<title>Domain creation</title>

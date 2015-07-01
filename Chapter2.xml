@@ -388,7 +388,7 @@
 	</section>
 	
 	 <section>
-		<title>Flow/MSE sensor creation</title>
+		<title>Flow/MSE/PI sensor creation</title>
 		 <para>
 			Flow sensors can be created issuing a POST request to the following URI:
 		</para>
@@ -458,11 +458,21 @@
 					<literal>name</literal> (Mandatory) Name given to the mse sensor.
 				</para>
 			</listitem>
-			 <listitem>
+			<listitem>
 				<para>
 					<literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
 				</para>
 			</listitem>
+      <listitem>
+        <para>
+          <literal>mse_version</literal> (Optional) Specifies the mse version. If none is specified it defaults to MSE value.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>port</literal> (Optional) Specifies the sensor port.
+        </para>
+      </listitem>
 
 		</itemizedlist>
 		 <para>
@@ -476,22 +486,237 @@
       Request:
         HTTP Verb: POST
         URI: https://hostname/api/v1/sensors/create/mse?auth_token=xxxxxx
-        Payload: {&#34;name&#34;:&#34;test_mse&#34;, &#34;parent_uuid&#34;:&#34;7549459708256671519&#34;, &#34;stream&#34;:&#34;StreamB&#34;}
+        Payload: {&#34;name&#34;:&#34;test_mse&#34;, &#34;parent_uuid&#34;:&#34;7549459708256671519&#34;, &#34;stream&#34;:&#34;StreamB&#34;, &#34;mse_version&#34;:&#34;8&#34;, &#34;port&#34;:&#34;xxxx&#34;}
 
       Response:
         {
           &#34;query&#34;: true,
           &#34;sensor&#34;: {
-            &#34;id&#34;: 902,
-            &#34;uuid&#34;: &#34;4110689521083459108&#34;,
-            &#34;name&#34;: &#34;test_mse&#34;,
+            &#34;id&#34;: 902
+            &#34;uuid&#34;: &#34;4110689521083459108&#34;
+            &#34;name&#34;: &#34;test_mse&#34;
             &#34;stream&#34;: &#34;StreamB&#34;
+            &#34;mse_version&#34;: &#34;8&#34;
           }
         }
 </screen>
+     <para>
+      PI sensors can be created issuing a POST request to the following URI:
+    </para>
+     
+<screen>https://hostname/api/v1/sensors/create/pi</screen>
+     <para>
+      This request accepts the following payload parameters:
+    </para>
+     <itemizedlist mark="bullet">
+       <listitem>
+        <para>
+          <literal>name</literal> (Mandatory) Name given to the pi sensor.
+        </para>
+      </listitem>
+       <listitem>
+        <para>
+          <literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. It must refer to a secure gateway sensor.
+        </para>
+      </listitem>
+
+    </itemizedlist>
+     <para>
+      If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new PI sensor.
+    </para>
+     <para>
+      In the following lines you may find an example response to a successful request:
+    </para>
+     
+<screen>
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/create/pi?auth_token=xxxxxx
+        Payload: {&#34;name&#34;:&#34;test_pi&#34;, &#34;parent_uuid&#34;:&#34;5520558294118779201&#34;}
+
+      Response:
+        {
+          &#34;query&#34;: true,
+          &#34;sensor&#34;: {
+            &#34;id&#34;: 1453,
+            &#34;uuid&#34;: &#34;7863792898933251169&#34;,
+            &#34;name&#34;: &#34;test_pi&#34;
+          }
+        }
+</screen>  
 
 	</section>
-	
+
+  <section>
+    <title>Cloud Proxy creation</title>
+    <para>
+      Cloud proxies can be created issuing a POST request to the following URI:
+    </para>
+     
+    <screen>https://hostname/api/v1/sensors/create_cloud_proxy</screen>
+    <para>
+      This request accepts the following payload parameters:
+    </para>
+     <itemizedlist mark="bullet">
+       <listitem>
+        <para>
+          <literal>name</literal> (Mandatory) Name given to the cloud proxy.
+        </para>
+      </listitem>
+    </itemizedlist>
+     <para>
+      If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new cloud proxy sensor.
+    </para>
+     <para>
+      In the following lines you may find an example response to a successful request:
+    </para>
+     
+    <screen>
+          Request:
+            HTTP Verb: POST
+            URI: https://hostname/api/v1/sensors/cloud_proxy?auth_token=xxxxxx
+            Payload: {&#34;name&#34;:&#34;test_cloud_proxy&#34;}
+
+          Response:
+            {
+              &#34;query&#34;: true,
+              &#34;sensor&#34;: {
+                &#34;id&#34;: 1349,
+                &#34;name&#34;: &#34;test_cloud_proxy&#34;
+              }
+            }
+    </screen>
+  </section>
+
+  <section>
+    <title>Secure Gateway creation</title>
+    <para>
+      Secure gateways can be created issuing a POST request to the following URI:
+    </para>
+     
+    <screen>https://hostname/api/v1/sensors/create_secure_gateway</screen>
+    <para>
+      This request accepts the following payload parameters:
+    </para>
+     <itemizedlist mark="bullet">
+       <listitem>
+        <para>
+          <literal>name</literal> (Mandatory) Name given to the secure gateway.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>ip</literal> (Mandatory) IP address of the secure gateway.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>password</literal> (Mandatory) Password of the secure gateway.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
+        </para>
+      </listitem>
+    </itemizedlist>
+     <para>
+      If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new secure gateway.
+    </para>
+     <para>
+      In the following lines you may find an example response to a successful request:
+    </para>
+     
+    <screen>
+          Request:
+            HTTP Verb: POST
+            URI: https://hostname/api/v1/sensors/create_secure_gateway?auth_token=xxxxxx
+            Payload: {&#34;name&#34;:&#34;test_secure_gateway&#34;, &#34;ip&#34;:&#34;10.0.0.5&#34;, &#34;password&#34;:&#34;xxxxxx&#34;, &#34;parent_uuid&#34;:&#34;2455390813087131698&#34;}
+
+          Response:
+            {
+              &#34;query&#34;: true,
+              &#34;sensor&#34;: {
+                &#34;id&#34;: 1469
+                &#34;name&#34;: &#34;test_secure_gateway&#34;
+                &#34;type&#34;: 11
+                &#34;domain_type&#34;: 1
+                &#34;uuid&#34;: &#34;2889927619494857813&#34;
+              }
+            }
+    </screen>
+  </section>
+
+  <section>
+    <title>Forward to Client creation</title>
+    <para>
+      Forward to clients can be created issuing a POST request to the following URI:
+    </para>
+     
+    <screen>https://hostname/api/v1/sensors/:sensor_uuid/forwards_to_client</screen>
+    <para>
+      This request accepts the following payload parameters:
+    </para>
+     <itemizedlist mark="bullet">
+       <listitem>
+        <para>
+          <literal>service</literal> (Mandatory) Name given to the forward to client.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>protocol</literal> (Mandatory) Protocol of the forward to client.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>port</literal> (Mandatory) Port of the forward to client.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>remote_host</literal> (Optional) Remote host of the forward to client.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>remote_port</literal> (Optional) Remote port of the forward to client.
+        </para>
+      </listitem>
+    </itemizedlist>
+     <para>
+      If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new forward to client.
+    </para>
+     <para>
+      In the following lines you may find an example response to a successful request:
+    </para>
+     
+    <screen>
+          Request:
+            HTTP Verb: POST
+            URI: https://hostname/api/v1/sensors/5340147418033167707/forwards_to_client?auth_token=xxxxxx
+            Payload: {&#34;forwards_to_client&#34;: {&#34;test_fc&#34;:{&#34;service&#34;:&#34;test_fc&#34;, &#34;protocol&#34;:&#34;tcp&#34;, &#34;port&#34;:13003}}}
+
+          Response:
+            {
+              &#34;query&#34;: true
+              &#34;forwards_to_client&#34;: {
+                &#34;api&#34;: {
+                  &#34;protocol&#34;: &#34;tcp&#34;
+                  &#34;port&#34;: 13002
+                  &#34;remote_host&#34;: null
+                }
+                &#34;test_fc&#34;: {
+                  &#34;protocol&#34;: &#34;tcp&#34;
+                  &#34;port&#34;: &#34;13003&#34;
+                  &#34;remote_host&#34;: null
+                  &#34;remote_port&#34;: &#34; &#34;
+                }
+              }
+            }
+    </screen>
+  </section>
+
 	 <section>
 		<title>Domain override</title>
 		<para>

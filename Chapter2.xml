@@ -427,7 +427,7 @@
 	</section>
 	
 	 <section>
-		<title>Flow/MSE/PI sensor creation</title>
+		<title>Flow/MSE/PI/Meraki sensor creation</title>
 		 <para>
 			Flow sensors can be created issuing a POST request to the following URI:
 		</para>

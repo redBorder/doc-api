@@ -593,6 +593,63 @@
         }
 </screen>  
 
+    <para>
+      Meraki sensors can be created issuing a POST request to the following URI:
+    </para>     
+    <screen>https://hostname/api/v1/sensors/create/meraki</screen>
+    <para>
+      This request accepts the following payload parameters:
+    </para>
+    <itemizedlist mark="bullet">
+      <listitem>
+        <para>
+          <literal>ip/domain</literal> (Mandatory) IP/Domain address of the meraki sensor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>name</literal> (Mandatory) Name given to the meraki sensor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>meraki_validator</literal> (Mandatory) Specifies the sensor validator.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new meraki sensor.
+    </para>
+    <para>
+      In the following lines you may find an example response to a successful request:
+    </para>     
+    <screen>
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/create/meraki?auth_token=xxxxxx
+        Payload: { &#34;name&#34;:&#34;test_meraki&#34;,
+                   &#34;parent_uuid&#34;:&#34;6396049722605916538&#34;,
+                   &#34;ip&#34;:&#34;10.0.2.10&#34;,
+                   &#34;validator&#34;: &#34;validator_frase&#34;}
+
+      Response:
+        {
+          &#34;query&#34;: true
+          &#34;sensor&#34;: {
+            &#34;id&#34;: 1501
+            &#34;uuid&#34;: &#34;4486950571500705295&#34;
+            &#34;name&#34;: &#34;test_meraki&#34;
+            &#34;ip&#34;: &#34;10.0.2.10&#34;
+            &#34;secret&#34;: &#34;52bcf9fa1666053ecd5d0e0c8528627a43ece6be&#34;
+          }
+        }
+    </screen>
+
 	</section>
 
   <section>
@@ -669,7 +726,7 @@
       </listitem>
       <listitem>
         <para>
-          <literal>parent_uuid</literal> (Mandatory) Specifies the parent sensor UUID. It must refer to a cloud proxy. If none is specified it defaults to root sensor.
+          <literal>parent_uuid</literal> (Mandatory) Specifies the parent sensor UUID. It must refer to a cloud proxy.
         </para>
       </listitem>
     </itemizedlist>

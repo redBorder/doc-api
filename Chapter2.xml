@@ -439,7 +439,7 @@
 		 <itemizedlist mark="bullet">
 			<listitem>
 				<para>
-					<literal>ip</literal> (Mandatory) IP address of the flow sensor.
+					<literal>ip</literal> (Optional if it's sensor parent is a secure gateway. Mandatory if not.) IP address of the flow sensor.
 				</para>
 			</listitem>
 			 <listitem>
@@ -452,6 +452,11 @@
 					<literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
 				</para>
 			</listitem>
+      <listitem>
+        <para>
+          <literal>port</literal> (Mandatory if it's sensor parent is a secure gateway. Optional if not.) Specifies the sensor port.
+        </para>
+      </listitem>
 
 		</itemizedlist>
 		 <para>
@@ -509,7 +514,7 @@
       </listitem>
       <listitem>
         <para>
-          <literal>port</literal> (Optional) Specifies the sensor port.
+          <literal>port</literal> (Mandatory if it's sensor parent is a secure gateway. Optional if not.) Specifies the sensor port.
         </para>
       </listitem>
 
@@ -606,6 +611,11 @@
           <literal>name</literal> (Mandatory) Name given to the cloud proxy.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          <literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to the user top domain sensor.
+        </para>
+      </listitem>
     </itemizedlist>
      <para>
       If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new cloud proxy sensor.
@@ -659,7 +669,7 @@
       </listitem>
       <listitem>
         <para>
-          <literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
+          <literal>parent_uuid</literal> (Mandatory) Specifies the parent sensor UUID. It must refer to a cloud proxy. If none is specified it defaults to root sensor.
         </para>
       </listitem>
     </itemizedlist>
@@ -721,12 +731,12 @@
       </listitem>
       <listitem>
         <para>
-          <literal>remote_host</literal> (Optional) Remote host of the forward to client.
+          <literal>remote_host</literal> (Optional) Remote host of the forward to client. If none is specified it defaults to the secure gateway host.
         </para>
       </listitem>
       <listitem>
         <para>
-          <literal>remote_port</literal> (Optional) Remote port of the forward to client.
+          <literal>remote_port</literal> (Optional) Remote port of the forward to client. If none is specified it defaults to the forward to client port.
         </para>
       </listitem>
     </itemizedlist>

@@ -618,7 +618,7 @@
       </listitem>
       <listitem>
         <para>
-          <literal>meraki_validator</literal> (Mandatory) Specifies the sensor validator.
+          <literal>validator</literal> (Mandatory) Specifies the sensor validator.
         </para>
       </listitem>
     </itemizedlist>

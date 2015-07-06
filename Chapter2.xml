@@ -426,28 +426,28 @@
 
 	</section>
 	
-	 <section>
-		<title>Flow/MSE/PI/Meraki sensor creation</title>
-		 <para>
+	<section>
+		<title>Flow sensor creation</title>
+		<para>
 			Flow sensors can be created issuing a POST request to the following URI:
 		</para>
 		 
-<screen>https://hostname/api/v1/sensors/create/flow</screen>
-		 <para>
+    <screen>https://hostname/api/v1/sensors/create/flow</screen>
+		<para>
 			This request accepts the following payload parameters:
 		</para>
-		 <itemizedlist mark="bullet">
+		<itemizedlist mark="bullet">
 			<listitem>
 				<para>
 					<literal>ip</literal> (Optional if it's sensor parent is a secure gateway. Mandatory if not.) IP address of the flow sensor.
 				</para>
 			</listitem>
-			 <listitem>
+			<listitem>
 				<para>
 					<literal>name</literal> (Mandatory) Name given to the flow sensor.
 				</para>
 			</listitem>
-			 <listitem>
+			<listitem>
 				<para>
 					<literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
 				</para>
@@ -457,16 +457,15 @@
           <literal>port</literal> (Mandatory if it's sensor parent is a secure gateway. Optional if not.) Specifies the sensor port.
         </para>
       </listitem>
-
 		</itemizedlist>
-		 <para>
+		<para>
 			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new flow sensor.
 		</para>
-		 <para>
+		<para>
 			In the following lines you may find an example response to a successful request:
 		</para>
 		 
-<screen>
+    <screen>
       Request:
         HTTP Verb: POST
         URI: https://hostname/api/v1/sensors/create/flow?auth_token=xxxxxx
@@ -482,22 +481,26 @@
             &#34;ip&#34;: &#34;10.0.2.10&#34;
           }
         }
-</screen>
-		 <para>
+    </screen>
+  </section> 
+  
+  <section>
+    <title>MSE sensor creation</title>
+		<para>
 			MSE sensors can be created issuing a POST request to the following URI:
 		</para>
 		 
-<screen>https://hostname/api/v1/sensors/create/mse</screen>
-		 <para>
+    <screen>https://hostname/api/v1/sensors/create/mse</screen>
+		<para>
 			This request accepts the following payload parameters:
 		</para>
-		 <itemizedlist mark="bullet">
+		<itemizedlist mark="bullet">
 			<listitem>
 				<para>
 					<literal>stream</literal> (Mandatory) MSE stream name.
 				</para>
 			</listitem>
-			 <listitem>
+			<listitem>
 				<para>
 					<literal>name</literal> (Mandatory) Name given to the mse sensor.
 				</para>
@@ -517,16 +520,15 @@
           <literal>port</literal> (Mandatory if it's sensor parent is a secure gateway. Optional if not.) Specifies the sensor port.
         </para>
       </listitem>
-
 		</itemizedlist>
-		 <para>
+		<para>
 			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new MSE sensor.
 		</para>
-		 <para>
+		<para>
 			In the following lines you may find an example response to a successful request:
 		</para>
 		 
-<screen>
+    <screen>
       Request:
         HTTP Verb: POST
         URI: https://hostname/api/v1/sensors/create/mse?auth_token=xxxxxx
@@ -547,36 +549,39 @@
             &#34;mse_version&#34;: &#34;8&#34;
           }
         }
-</screen>
-     <para>
+    </screen>
+  </section> 
+  
+  <section>
+    <title>PI sensor creation</title>
+    <para>
       PI sensors can be created issuing a POST request to the following URI:
     </para>
      
-<screen>https://hostname/api/v1/sensors/create/pi</screen>
-     <para>
+    <screen>https://hostname/api/v1/sensors/create/pi</screen>
+    <para>
       This request accepts the following payload parameters:
     </para>
-     <itemizedlist mark="bullet">
-       <listitem>
+    <itemizedlist mark="bullet">
+      <listitem>
         <para>
           <literal>name</literal> (Mandatory) Name given to the pi sensor.
         </para>
       </listitem>
-       <listitem>
+      <listitem>
         <para>
           <literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. It must refer to a secure gateway sensor.
         </para>
       </listitem>
-
     </itemizedlist>
-     <para>
+    <para>
       If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new PI sensor.
     </para>
-     <para>
+    <para>
       In the following lines you may find an example response to a successful request:
     </para>
      
-<screen>
+    <screen>
       Request:
         HTTP Verb: POST
         URI: https://hostname/api/v1/sensors/create/pi?auth_token=xxxxxx
@@ -591,8 +596,11 @@
             &#34;name&#34;: &#34;test_pi&#34;
           }
         }
-</screen>  
+    </screen>
+  </section> 
 
+  <section>
+    <title>Meraki sensor creation</title>
     <para>
       Meraki sensors can be created issuing a POST request to the following URI:
     </para>     

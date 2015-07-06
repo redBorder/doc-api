@@ -362,12 +362,7 @@
 					<literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
 				</para>
 			</listitem>
-      <listitem>
-        <para>
-          <literal>port</literal> (Optional) Specifies the sensor port.
-        </para>
-      </listitem>
-		</itemizedlist>
+    </itemizedlist>
 		<para>
 			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new flow sensor.
 		</para>
@@ -485,12 +480,7 @@
           <literal>mse_version</literal> (Optional) Specifies the mse version. If none is specified it defaults to MSE value.
         </para>
       </listitem>
-      <listitem>
-        <para>
-          <literal>port</literal> (Optional) Specifies the sensor port.
-        </para>
-      </listitem>
-		</itemizedlist>
+    </itemizedlist>
 		<para>
 			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new MSE sensor.
 		</para>
@@ -604,7 +594,7 @@
   <section>
     <title>Cloud Proxy configuration</title>
     <para>
-      Cloud proxies configuration:
+      In this section you can see how to configure a cloud proxy.
     </para>
 
     <section>
@@ -905,7 +895,7 @@
         </listitem>
         <listitem>
           <para>
-            <literal>port</literal> (Mandatory if it's sensor parent is a secure gateway. Optional if not.) Specifies the sensor port.
+            <literal>port</literal> (Mandatory) Specifies the sensor port.
           </para>
         </listitem>
       </itemizedlist>
@@ -968,7 +958,7 @@
         </listitem>
         <listitem>
           <para>
-            <literal>port</literal> (Mandatory if it's sensor parent is a secure gateway. Optional if not.) Specifies the sensor port.
+            <literal>port</literal> (Mandatory) Specifies the sensor port.
           </para>
         </listitem>
       </itemizedlist>

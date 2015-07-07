@@ -1862,7 +1862,7 @@
 			</listitem>
 		  <listitem>
 				<para>
-					<literal>name</literal> (Mandatory) Name given to the access point.
+					<literal>name</literal> (Optional) Name given to the access point.
 				</para>
 			</listitem>
 		  <listitem>

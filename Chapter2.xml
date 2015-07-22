@@ -1147,7 +1147,7 @@
     <screen>
         Request:
           HTTP Verb: PATCH
-          URI: https://hostname/api/v1/sensors/86486451468453456478645/flow?auth_token=xxxxxxxxxxx
+          URI: https://hostname/api/v1/sensors/86348645/flow?auth_token=xxxx
           Payload: { &#34;name&#34;: &#34;flow_new&#34;, &#34;nmsp&#34;: &#34;1&#34;, &#34;spanport&#34;: &#34;0&#34; }
 
         Response:

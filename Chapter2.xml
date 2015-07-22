@@ -1134,6 +1134,32 @@
     </section> 
   </section>
 
+  <section>
+    <title>Update Flow, MSE and Meraki sensors</title>
+    <para>
+      Flow, MSE or Meraki sensors update receive the same parameters when we create them. The request payload must be in JSON format. All sensor properties will be updated with new values. Use following URL to update a sensor. Type parameters refer to the type of sensor (flow, mse or meraki values are available).
+    </para>
+    <screen>[PATCH] https://hostname/api/v1/sensors/:sensor_uuid/:type?auth_token=xxxxxxxxxxx</screen>
+    <para>
+      An example to update a Flow sensor:
+    </para>
+
+    <screen>
+        Request:
+          HTTP Verb: PATCH
+          URI: https://hostname/api/v1/sensors/86486451468453456478645/flow?auth_token=xxxxxxxxxxx
+          Payload: { &#34;name&#34;: &#34;flow_new&#34;, &#34;nmsp&#34;: &#34;1&#34;, &#34;spanport&#34;: &#34;0&#34; }
+
+        Response:
+          {
+            &#34;query&#34;: true,
+            &#34;sensor&#34;: {
+              ...
+            }
+          }
+      </screen>
+  </section>
+
 	<section>
 		<title>Domain override</title>
 		<para>

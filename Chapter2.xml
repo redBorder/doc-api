@@ -991,6 +991,66 @@
             <literal>port</literal> (Mandatory) Specifies the sensor port.
           </para>
         </listitem>
+        <listitem>
+          <para>
+            <literal>snmp_community</literal> (Optional) Specifies the community name for SNMP.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>snmp_version</literal> (Optional) Specifies the community version for SNMP. Allowed versions are: 1, 2c.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>spanport</literal> (Optional) Enable or disable SPAN Port. Allowed values are: "1" to enable and "0" to disable.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>nmsp</literal> (Optional) Enable or disable NMSP. Allowed values are: "1" to enable and "0" to disable.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>nmsp_wireless_health</literal> (Optional) Enable or disable NMSP Wireless Health. Allowed values are: "1" to enable and "0" to disable.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>nmsp_client_stats</literal> (Optional) Enable or disable NMSP Client Stats. Allowed values are: "1" to enable and "0" to disable.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>homenets</literal> (Optional) Set multiple Home Networks to this sensor. This parameters contains an array with the following format:
+            <screen>
+              {
+                ...
+                "homenets": [
+                  { "name" : "NameOfHomenet", "value" : "192.168.1.0/24" },
+                  { "name" : "NameOfHomenet2", "value" : "192.168.2.0/24" },
+                  ...
+                ]
+              }
+            </screen>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>router_macs</literal> (Optional) Set Router's MAC addresses of this sensor. This parameters contains an array with the following format:
+            <screen>
+              {
+                ...
+                "router_macs": [
+                  { "name" : "Interface1", "value" : "aa:bb:cc:dd:ee:ff" },
+                  { "name" : "Interface2", "value" : "ff:bb:aa:cc:bb:dd" },
+                  ...
+                ]
+              }
+            </screen>
+          </para>
+        </listitem>
       </itemizedlist>
       <para>
         If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new flow sensor.
@@ -1046,12 +1106,37 @@
         </listitem>
         <listitem>
           <para>
-            <literal>mse_version</literal> (Optional) Specifies the mse version. If none is specified it defaults to MSE value.
+            <literal>port</literal> (Mandatory) Specifies the sensor port.
           </para>
         </listitem>
         <listitem>
           <para>
-            <literal>port</literal> (Mandatory) Specifies the sensor port.
+            <literal>version_mse</literal> (Optional) Specifies the version of MSE. If none is specified it defaults to MSE value.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>snmp_community</literal> (Optional) Specifies the community name for SNMP.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>snmp_version</literal> (Optional) Specifies the community version for SNMP. Allowed versions are: 1, 2c.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>homenets</literal> (Optional) Set multiple Home Networks to this sensor. This parameters contains an array with the following format:
+            <screen>
+              {
+                ...
+                "homenets": [
+                  { "name" : "NameOfHomenet", "value" : "192.168.1.0/24" },
+                  { "name" : "NameOfHomenet2", "value" : "192.168.2.0/24" },
+                  ...
+                ]
+              }
+            </screen>
           </para>
         </listitem>
       </itemizedlist>
@@ -1137,7 +1222,10 @@
   <section>
     <title>Update Flow, MSE and Meraki sensors</title>
     <para>
-      Flow, MSE or Meraki sensors update receive the same parameters when we create them. The request payload must be in JSON format. All sensor properties will be updated with new values. Use following URL to update a sensor. Type parameters refer to the type of sensor (flow, mse or meraki values are available).
+      Flow, MSE or Meraki sensors update receive same parameters when we create them. All sensor properties will be updated with new values. The request payload must be in JSON format.
+    </para>
+    <para>
+      Use following URL to update a sensor. Type parameter refers to the type of sensor (flow, mse or meraki values are available).
     </para>
     <screen>[PATCH] https://hostname/api/v1/sensors/:sensor_uuid/:type?auth_token=xxxxxxxxxxx</screen>
     <para>

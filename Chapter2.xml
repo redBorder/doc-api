@@ -264,6 +264,11 @@
 					<literal>parent_uuid</literal> (optional) UUID of the parent. By default, it&#39;s the top domain of user.
 				</para>
 			</listitem>
+      <listitem>
+        <para>
+          <literal>mac_hashing_salt</literal> (optional) String with MAC Hashing Salt for a Service Provider domain. If the domain_type is not equal to 6 (Service Provider), this parameter will be ignored.
+        </para>
+      </listitem>
 
 		</itemizedlist>
 		<para>
@@ -1217,6 +1222,35 @@
           }
       </screen>
     </section> 
+  </section>
+
+  <section>
+    <title>Update a Domain sensor</title>
+    <para>
+      Domain sensors update receive same parameters when we create them. We can update name, type, domain type, uuid and MAC Hashing salt (only for Service Providers). The request payload must be in JSON format.
+    </para>
+    <para>
+      Use following URL to update a domain sensor. Sensor UUID parameter refers the UUID of sensor you want update.
+    </para>
+    <screen>[PATCH] https://hostname/api/v1/sensors/:sensor_uuid?auth_token=xxxxxxxxxxx</screen>
+    <para>
+      An example to update a domain sensor:
+    </para>
+    <screen>
+      Request:
+        HTTP Verb: PATCH
+        URI: https://hostname/api/v1/sensors/86348645?auth_token=xxxx
+        Payload: { &#34;name&#34;: &#34;new_name&#34;, &#34;domain_type&#34;: &#34;4&#34; }
+
+      Response:
+        {
+          &#34;query&#34;: true,
+          &#34;sensor&#34;: {
+            &#34;name&#34;: &#34;new_name&#34;,
+            ...
+          }
+        }
+    </screen>
   </section>
 
   <section>

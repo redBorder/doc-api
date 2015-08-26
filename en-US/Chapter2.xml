@@ -397,6 +397,16 @@
       </listitem>
       <listitem>
         <para>
+          <literal>dns_ptr_client</literal> (Optional) Enable or disable client DNS resolution. Allowed values are: "1" to enable and "0" to disable.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>dns_ptr_target</literal> (Optional) Enable or disable target DNS resolution. Allowed values are: "1" to enable and "0" to disable.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           <literal>homenets</literal> (Optional) Set multiple Home Networks to this sensor. This parameters contains an array with the following format:
           <screen>
             {
@@ -1024,6 +1034,16 @@
         <listitem>
           <para>
             <literal>nmsp_client_stats</literal> (Optional) Enable or disable NMSP Client Stats. Allowed values are: "1" to enable and "0" to disable.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>dns_ptr_client</literal> (Optional) Enable or disable client DNS resolution. Allowed values are: "1" to enable and "0" to disable.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>dns_ptr_target</literal> (Optional) Enable or disable target DNS resolution. Allowed values are: "1" to enable and "0" to disable.
           </para>
         </listitem>
         <listitem>

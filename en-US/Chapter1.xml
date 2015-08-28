@@ -12,7 +12,7 @@
 <screen>{
     &#34;dataSource&#34;: &#34;rb_flow&#34;,
     &#34;granularity&#34;: &#34;all&#34;,
-    &#34;namespaces&#34;: [&#34;2584761509592299795&#34;],
+    &#34;namespace_uuids&#34;: [&#34;2584761509592299795&#34;],
     &#34;intervals&#34;:[&#34;2013-11-21T19:07/2013-11-21T19:30&#34;],
     &#34;queryType&#34;: &#34;groupBy&#34;,
     &#34;aggregations&#34;: [
@@ -163,7 +163,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					<literal>namespaces.-</literal> (optional) array of one or more values. It should be the uuids of the namespaces where the data is going to be searched. If this value is not indicated, the dataSource used will be the default.
+					<literal>namespace_uuids.-</literal> (optional) array of one or more values. It should be the uuids of the namespace where the data is going to be searched. If this value is not indicated, the dataSource used will be the default.
 				</para>
 			</listitem>
 			 <listitem>

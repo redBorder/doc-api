@@ -865,7 +865,7 @@
       <itemizedlist mark="bullet">
         <listitem>
           <para>
-            <literal>PSK mode</literal>:
+            PSK mode:
             <itemizedlist mark="bullet">
               <listitem>
                 <para>
@@ -877,7 +877,7 @@
         </listitem>
         <listitem>
           <para>
-            <literal>PSK-XAUTH mode</literal>:
+            PSK-XAUTH mode:
             <itemizedlist mark="bullet">
               <listitem>
                 <para>
@@ -904,7 +904,7 @@
         </listitem>
         <listitem>
           <para>
-            <literal>Cert mode</literal>:
+            Cert mode:
             <itemizedlist mark="bullet">
               <listitem>
                 <para>

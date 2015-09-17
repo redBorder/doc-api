@@ -726,7 +726,42 @@
             <literal>parent_uuid</literal> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to the user top domain sensor.
           </para>
         </listitem>
+        <listitem>
+          <para>
+            <literal>cp_cert</literal> certificate of Cloud Proxy.
+          </para>
+        </listitem>
       </itemizedlist>
+
+      <para>There are another group of optional parameters. These five parameters must be filled if you want to save them in Cloud Proxy. If some of these parameters are empty, they will be ignored.</para>
+      <itemizedlist mark="bullet">
+        <listitem>
+          <para>
+            <literal>aws_access_key</literal> (Optional) Access key to access to AWS services.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>aws_secret_key</literal> (Optional) Secret key to access to AWS services.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>cdomain</literal> (Optional) Allow to associate a domain to a clsuter. With this option, nodes register with their own hostname in AWS Route 53 service.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>region</literal> (Optional) Region of AWS. Selected region must be the same in the cluster. Available values: us-east-1, us-west-2, us-west-1, eu-west-1, eu-central-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, sa-east-1.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>logwatchg</literal> (Optional) AWS Logwatch group name.
+          </para>
+        </listitem>
+      </itemizedlist>
+
       <para>
         If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new cloud proxy sensor.
       </para>
@@ -783,15 +818,104 @@
         </listitem>
         <listitem>
           <para>
-            <literal>password</literal> (Mandatory) Password of the secure gateway.
+            <literal>parent_uuid</literal> (Mandatory) Specifies the parent sensor UUID. It must refer to a cloud proxy.
           </para>
         </listitem>
         <listitem>
           <para>
-            <literal>parent_uuid</literal> (Mandatory) Specifies the parent sensor UUID. It must refer to a cloud proxy.
+            <literal>leftid</literal> (Mandatory) Identifier of the left node in the secure tunnel.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>rightid</literal> (Mandatory) Identifier of the right node in the secure tunnel.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>internal_subnet</literal> (Mandatory) Subnet of internal network.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>gw_mode</literal> (Mandatory) Secure tunnel authentication mode. This field define te way to authenticate nodes in secure tunnel. Available modes are:
+            <itemizedlist mark="bullet">
+              <listitem>
+                <para>
+                  <literal>psk</literal> Both nodes are authenticated by PSK.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>psk_xauth</literal> Left node authenticated by PSK. Right node is authenticated by X-AUTH.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>cert</literal> Secure tunnel uses a certificate.
+                </para>
+              </listitem>
+            </itemizedlist>
           </para>
         </listitem>
       </itemizedlist>
+
+      <para>Every authentication mode has its own parameters, some fields must be filled depending on mode selected. The following list enumerate these fields.</para>
+
+      <itemizedlist mark="bullet">
+        <listitem>
+          <para>
+            <literal>PSK mode</literal>:
+            <itemizedlist mark="bullet">
+              <listitem>
+                <para>
+                  <literal>password</literal> (Mandatory) Password to authenticate both nodes the secure gateway.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>PSK-XAUTH mode</literal>:
+            <itemizedlist mark="bullet">
+              <listitem>
+                <para>
+                  <literal>password</literal> (Mandatory) Password to authenticate both nodes the secure gateway.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>xauth_virtual_ip</literal> (Mandatory) Virtual IP of right node.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>xauth_identity</literal> (Mandatory) Identifier of right node.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>xauth_password</literal> (Mandatory) Password of right node.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>Cert mode</literal>:
+            <itemizedlist mark="bullet">
+              <listitem>
+                <para>
+                  <literal>gw_cert</literal> (Mandatory) Certificate of secure gateway.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+      </itemizedlist>
+
       <para>
         If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new secure gateway.
       </para>

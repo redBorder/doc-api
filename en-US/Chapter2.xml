@@ -229,8 +229,18 @@
 			New sensors can be created by submitting a POST request to following URI:
 		</para>
 		 
-    <screen>https://hostname/api/v1/sensors/create_domain</screen>
-		<para>
+    <screen>
+      HTTP Verb: POST
+      https://hostname/api/v1/sensors/domain
+    </screen>
+
+    <screen>
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      https://hostname/api/v1/sensors/create_domain
+    </screen>
+
+    <para>
 			A JSON payload should be submitted alongside this request. Allowed payload parameters are:
 		</para>
 		<itemizedlist mark="bullet">
@@ -281,7 +291,7 @@
     <screen>
       Request:
         HTTP Verb: POST
-        URI: https://hostname/api/v1/sensors/create_domain?auth_token=xxxxxx
+        URI: https://hostname/api/v1/sensors/domain?auth_token=xxxxxx
         Payload: { &#34;domain_type&#34;:&#34;2&#34;, &#34;parent_uuid&#34;:&#34;697893457705749905&#34;, &#34;name&#34;:&#34;new_domain&#34; }
       
       Response:
@@ -345,8 +355,18 @@
 			Flow sensors can be created issuing a POST request to the following URI:
 		</para>
 		 
-    <screen>https://hostname/api/v1/sensors/create/flow</screen>
-		<para>
+    <screen>
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/flow
+    </screen>
+
+    <screen>
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/create/flow
+    </screen>
+		
+    <para>
 			This request accepts the following payload parameters:
 		</para>
 		<itemizedlist mark="bullet">
@@ -446,7 +466,7 @@
     <screen>
       Request:
         HTTP Verb: POST
-        URI: https://hostname/api/v1/sensors/create/flow?auth_token=xxxxxx
+        URI: https://hostname/api/v1/sensors/flow?auth_token=xxxxxx
         Payload: {&#34;name&#34;:&#34;test_flow&#34;, &#34;parent_uuid&#34;:&#34;7549459708256671519&#34;, &#34;ip&#34;:&#34;10.0.2.10&#34;}
 
       Response:
@@ -467,7 +487,18 @@
     <para>
       Meraki sensors can be created issuing a POST request to the following URI:
     </para>     
-    <screen>https://hostname/api/v1/sensors/create/meraki</screen>
+    
+    <screen>
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/meraki
+    </screen>
+
+    <screen>
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/create/meraki
+    </screen>
+    
     <para>
       This request accepts the following payload parameters:
     </para>
@@ -512,7 +543,7 @@
     <screen>
       Request:
         HTTP Verb: POST
-        URI: https://hostname/api/v1/sensors/create/meraki?auth_token=xxxxxx
+        URI: https://hostname/api/v1/sensors/meraki?auth_token=xxxxxx
         Payload: { &#34;name&#34;:&#34;test_meraki&#34;,
                    &#34;parent_uuid&#34;:&#34;6396049722605916538&#34;,
                    &#34;ip&#34;:&#34;10.0.2.10&#34;,
@@ -537,9 +568,19 @@
 		<para>
 			MSE sensors can be created issuing a POST request to the following URI:
 		</para>
+
+    <screen>
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/mse
+    </screen>
 		 
-    <screen>https://hostname/api/v1/sensors/create/mse</screen>
-		<para>
+    <screen>
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/create/mse
+    </screen>
+		
+    <para>
 			This request accepts the following payload parameters:
 		</para>
 		<itemizedlist mark="bullet">
@@ -599,7 +640,7 @@
     <screen>
       Request:
         HTTP Verb: POST
-        URI: https://hostname/api/v1/sensors/create/mse?auth_token=xxxxxx
+        URI: https://hostname/api/v1/sensors/mse?auth_token=xxxxxx
         Payload: { &#34;name&#34;: &#34;test_mse&#34;,
                    &#34;parent_uuid&#34;: &#34;7549459708256671519&#34;,
                    &#34;stream&#34;: &#34;StreamB&#34;,
@@ -675,9 +716,13 @@
       Sensor elimination on user request. The user is able to specify which sensor to delete by its UUID. The requesting user should have manage permissions on the specified sensor. If that is not the case HTTP 401 Unauthorized will be returned. If the provided UUID does not match any sensor UUID HTTP 404 Not Found status code will be returned. If the request is successful the sensor and all its children will be erased. In this case HTTP 200 OK status code will be returned with no payload data. The sensor UUID is supplied via a GET parameter. Requests can be made to either of the following URIs:
     </para>
      
-    <screen>HTTP Verb: DELETE
+    <screen>
+      HTTP Verb: DELETE
       URI: https://hostname/api/v1/sensors/:uuid
+    </screen>
 
+    <screen>
+      STATUS: DEPRECATED
       HTTP Verb: GET
       URI: https:/hostname/api/v1/sensors/:uuid/delete
     </screen>
@@ -1551,15 +1596,25 @@
 			This works similar as the Domain Override but it only affects the access points contained on the specified domain and beneath. For this action submit a POST request to the following URI:
 		</para>
 		 
-    <screen>https://hostname/api/v1/sensors/:sensor_uuid/override_aps</screen>
-		<para>
+    <screen>
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/:sensor_uuid/access_points/override
+    </screen>
+
+    <screen>
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/:sensor_uuid/override_aps
+    </screen>
+
+    <para>
 			Where :sensor_uuid is the top domain UUID to override from. This request needs to be submitted alongside a non-nested JSON array payload describing the access points the referred domain and subdomains should contain. Said payload should have the &#34;access_points&#34; tag as root tag. Once this request is submitted all access points on the specified domain and subdomains will be erased. Access Points may be positioned on the specified domain subdomain&#39;s by identifying the domain's type (service_provider/organization/deployment/namespace/) that contains them. If no containing domain is specified the access point will be created in the specified top domain. Domains should be identified by it&#39;s UUID and/or name and you may use the &#34;{domain_type}_uuid&#34; or &#34;{domain_type}_name&#34; tags for that purpose. This would be an example of the tags mentioned above: &#34;deployment_uuid&#34;, &#34;deployment_name&#34;, &#34;organization_uuid&#34;, &#34;organization_name&#34;. If the access point is specified to be contained in an unexistant domain said domain will be created. If you supplied a name for this domain it will be created with the supplied name. If no name was supplied it will be created with a name matching &#34;{domain_type}_{uuid}&#34;, for example: &#34;organization_2342356443333123&#34;. If a domain is found by it&#39;s name but the UUID does not match, the supplied one the domain will be updated to match the given one. Also, an enrichment field can be included into the access point's values. If the specified top domain does not exists HTTP 404 Not Found will be returned. If the requesting user does not have manage permissions over the top domain HTTP 401 Unauthorized will be returned. In the following lines you may find an execution example:
 		</para>
 		 
     <screen>
       Request:
         HTTP Verb: POST
-        URI: https://hostname/api/v1/sensors/697893457705749905/override_aps?auth_token=xxxxxx
+        URI: https://hostname/api/v1/sensors/697893457705749905/access_points/override?auth_token=xxxxxx
         Payload: 
           {
             &#34;access_points&#34;: [
@@ -2335,16 +2390,26 @@
 		<para>
 			It is also possible to delete all the access points contained in a domain and it&#39;s subdomains by issuing a GET request to the following URI:
 		</para>
-		 
-    <screen>https://hostname/api/v1/sensors/:sensor_uuid/delete_aps</screen>
-		<para>
+		
+    <screen>
+      HTTP Verb: DELETE
+      URI: https://hostname/api/v1/sensors/:sensor_uuid/access_points
+    </screen>
+
+    <screen>
+      STATUS: DEPRECATED
+      HTTP Verb: GET
+      URI: https://hostname/api/v1/sensors/:sensor_uuid/delete_aps
+    </screen>
+		
+    <para>
 			Where :sensor_uuid should be replaced by a valid sensor UUID. If the UUID given does not match any domains HTTP 404 Not Found Status code will be returned. To be able to execute this action you should have manage permissions over the specified domain. If that is not the case HTTP 401 Unauthorized status code will be returned. In the following lines you may find an execution example:
 		</para>
 		 
     <screen>
       Request: 
-        HTTP Verb: GET
-        URI: https://hostname/api/v1/sensors/697893457705749905/delete_aps?auth_code=xxxxxx
+        HTTP Verb: DELETE
+        URI: https://hostname/api/v1/sensors/697893457705749905/access_points?auth_code=xxxxxx
 
       Response:
         Status Code: 200 OK

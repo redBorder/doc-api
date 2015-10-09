@@ -1467,7 +1467,12 @@
 					<literal>wireless_slot</literal>
 				</para>
 			</listitem>
-			 <listitem>
+			<listitem>
+				<para>
+					<literal>wireless_station_name</literal>
+				</para>
+			</listitem>
+			<listitem>
 				<para>
 					<literal>wireless_station</literal>
 				</para>
@@ -1475,6 +1480,11 @@
 			 <listitem>
 				<para>
 					<literal>wireless_tx_power</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>status</literal>
 				</para>
 			</listitem>
 

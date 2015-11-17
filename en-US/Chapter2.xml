@@ -756,7 +756,7 @@
         Cloud proxies can be created issuing a POST request to the following URI:
       </para>
        
-      <screen>https://hostname/api/v1/sensors/create_cloud_proxy</screen>
+      <screen>https://hostname/api/v1/sensors/cloud_proxy</screen>
       <para>
         This request accepts the following payload parameters:
       </para>
@@ -845,8 +845,18 @@
       <para>
         Secure gateways can be created issuing a POST request to the following URI:
       </para>
-       
-      <screen>https://hostname/api/v1/sensors/create_secure_gateway</screen>
+
+      <screen>
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/secure_gateway
+      </screen>
+
+      <screen>
+        STATUS: DEPRECATED
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/create_secure_gateway
+      </screen>
+
       <para>
         This request accepts the following payload parameters:
       </para>
@@ -879,6 +889,11 @@
         <listitem>
           <para>
             <literal>internal_subnet</literal> (Mandatory) Subnet of internal network.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>virtual_ip</literal> Virtual IP of right node.
           </para>
         </listitem>
         <listitem>
@@ -931,17 +946,17 @@
               </listitem>
               <listitem>
                 <para>
-                  <literal>xauth_virtual_ip</literal> (Mandatory) Virtual IP of right node.
-                </para>
-              </listitem>
-              <listitem>
-                <para>
                   <literal>xauth_identity</literal> (Mandatory) Identifier of right node.
                 </para>
               </listitem>
               <listitem>
                 <para>
                   <literal>xauth_password</literal> (Mandatory) Password of right node.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>right_subnet</literal> (Mandatory) Right Subnet
                 </para>
               </listitem>
             </itemizedlist>

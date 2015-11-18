@@ -878,11 +878,6 @@
         </listitem>
         <listitem>
           <para>
-            <literal>leftid</literal> (Mandatory) Identifier of the left node in the secure tunnel.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <literal>rightid</literal> (Mandatory) Identifier of the right node in the secure tunnel.
           </para>
         </listitem>
@@ -932,6 +927,11 @@
                   <literal>password</literal> (Mandatory) Password to authenticate both nodes the secure gateway.
                 </para>
               </listitem>
+              <listitem>
+                <para>
+                  <literal>lefit</literal> (Mandatory) Identifier of the left node in the secure tunnel.
+                </para>
+              </listitem>
             </itemizedlist>
           </para>
         </listitem>
@@ -942,6 +942,11 @@
               <listitem>
                 <para>
                   <literal>password</literal> (Mandatory) Password to authenticate both nodes the secure gateway.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>lefit</literal> (Mandatory) Identifier of the left node in the secure tunnel.
                 </para>
               </listitem>
               <listitem>
@@ -969,6 +974,65 @@
               <listitem>
                 <para>
                   <literal>gw_cert</literal> (Mandatory) Certificate of secure gateway.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>lefit</literal> (Mandatory) Identifier of the left node in the secure tunnel.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            PSK Ikev2 mode:
+            <itemizedlist mark="bullet">
+              <listitem>
+                <para>
+                  <literal>password</literal> (Mandatory) Password to authenticate both nodes the secure gateway.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>lefit</literal> (Mandatory) Identifier of the left node in the secure tunnel.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>right_subnet</literal> (Mandatory) Right Subnet.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>left password</literal> (Mandatory) Password to authenticate left node.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Cisco IOS Cert mode:
+            <itemizedlist mark="bullet">
+              <listitem>
+                <para>
+                  <literal>right_subnet</literal> (Mandatory) Right Subnet.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>gw_cert</literal> (Mandatory) Private Key Certificate of secure gateway.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>gw_key</literal> (Mandatory) Public Key Certificate of secure gateway.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>gw_customer_certs</literal> (Mandatory) Array of a maximum of 4 Customer Certificates.
                 </para>
               </listitem>
             </itemizedlist>

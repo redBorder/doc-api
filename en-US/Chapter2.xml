@@ -910,6 +910,11 @@
                   <literal>cert</literal> Secure tunnel uses a certificate.
                 </para>
               </listitem>
+              <listitem>
+                <para>
+                  <literal>cisco_cert</literal> Cisco IOS Cert.
+                </para>
+              </listitem>
             </itemizedlist>
           </para>
         </listitem>
@@ -929,7 +934,7 @@
               </listitem>
               <listitem>
                 <para>
-                  <literal>lefit</literal> (Mandatory) Identifier of the left node in the secure tunnel.
+                  <literal>leftid</literal> (Mandatory) Identifier of the left node in the secure tunnel.
                 </para>
               </listitem>
             </itemizedlist>
@@ -946,7 +951,7 @@
               </listitem>
               <listitem>
                 <para>
-                  <literal>lefit</literal> (Mandatory) Identifier of the left node in the secure tunnel.
+                  <literal>leftid</literal> (Mandatory) Identifier of the left node in the secure tunnel.
                 </para>
               </listitem>
               <listitem>
@@ -978,7 +983,7 @@
               </listitem>
               <listitem>
                 <para>
-                  <literal>lefit</literal> (Mandatory) Identifier of the left node in the secure tunnel.
+                  <literal>leftid</literal> (Mandatory) Identifier of the left node in the secure tunnel.
                 </para>
               </listitem>
             </itemizedlist>
@@ -995,7 +1000,7 @@
               </listitem>
               <listitem>
                 <para>
-                  <literal>lefit</literal> (Mandatory) Identifier of the left node in the secure tunnel.
+                  <literal>leftid</literal> (Mandatory) Identifier of the left node in the secure tunnel.
                 </para>
               </listitem>
               <listitem>
@@ -1022,12 +1027,12 @@
               </listitem>
               <listitem>
                 <para>
-                  <literal>gw_cert</literal> (Mandatory) Private Key Certificate of secure gateway.
+                  <literal>gw_key</literal> (Mandatory) Private Key Certificate of secure gateway.
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <literal>gw_key</literal> (Mandatory) Public Key Certificate of secure gateway.
+                  <literal>gw_cert</literal> (Mandatory) Public Key Certificate of secure gateway.
                 </para>
               </listitem>
               <listitem>

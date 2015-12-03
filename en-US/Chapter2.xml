@@ -1245,11 +1245,6 @@
       <itemizedlist mark="bullet">
         <listitem>
           <para>
-            <literal>ip</literal> (Optional if it's sensor parent is a secure gateway. Mandatory if not.) IP address of the flow sensor.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <literal>name</literal> (Mandatory) Name given to the flow sensor.
           </para>
         </listitem>
@@ -1372,11 +1367,6 @@
         This request accepts the following payload parameters:
       </para>
       <itemizedlist mark="bullet">
-        <listitem>
-          <para>
-            <literal>stream</literal> (Mandatory) MSE stream name.
-          </para>
-        </listitem>
         <listitem>
           <para>
             <literal>name</literal> (Mandatory) Name given to the mse sensor.

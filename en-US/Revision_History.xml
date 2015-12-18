@@ -57,6 +57,7 @@
 				<revdescription>
 					<simplelist>
 						<member>Fixed update AP parameters</member>
+						<member>Fixed meraki validator parameter</member>
 					</simplelist>
 				</revdescription>
 			</revision>

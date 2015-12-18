@@ -2097,11 +2097,11 @@
 					<literal>sensor_uuid</literal> Parent sensor UUID.
 				</para>
 			</listitem>
-			<listitem>
-				<para>
-					<literal>switch_uuid</literal> Associated flow sensor UUID.
-				</para>
-			</listitem>
+      <listitem>
+        <para>
+          <literal>flow_uuid</literal> Associated flow sensor UUID.
+        </para>
+      </listitem>
 			<listitem>
 				<para>
 					<literal>description</literal> Description of the newly created access point.

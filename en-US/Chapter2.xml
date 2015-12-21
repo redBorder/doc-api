@@ -547,7 +547,7 @@
         Payload: { &#34;name&#34;:&#34;test_meraki&#34;,
                    &#34;parent_uuid&#34;:&#34;6396049722605916538&#34;,
                    &#34;ip&#34;:&#34;10.0.2.10&#34;,
-                   &#34;validator&#34;: &#34;validator_frase&#34;}
+                   &#34;meraki_validator&#34;: &#34;validator_frase&#34;}
 
       Response:
         {
@@ -557,6 +557,7 @@
             &#34;uuid&#34;: &#34;4486950571500705295&#34;
             &#34;name&#34;: &#34;test_meraki&#34;
             &#34;ip&#34;: &#34;10.0.2.10&#34;
+            &#34;meraki_validator&#34;: &#34;validator_frase&#34;
             &#34;secret&#34;: &#34;52bcf9fa1666053ecd5d0e0c8528627a43ece6be&#34;
           }
         }

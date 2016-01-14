@@ -1301,6 +1301,11 @@
         </listitem>
         <listitem>
           <para>
+            <literal>nmsp_managed_cp</literal> (Optional) If enabled the cloud proxy will connect to the NMSP server. Otherwise it will be the cluster itself that will connect. Allowed values are: "1" to enable and "0" to disable.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
             <literal>homenets</literal> (Optional) Set multiple Home Networks to this sensor. This parameters contains an array with the following format:
             <screen>
               {

@@ -8,7 +8,7 @@
 		<para>
 			The Horama API requires authentication via a valid authentication token submitted as a GET parameter. Said GET parameter receives the name auth_token. The following example demonstrates how to correctly sign a request. For the sake of simplicity suppose abcd is a valid authentication token.
 		</para>
-		 
+
     <screen>https://hostname/api/v1/request_path?auth_token=abcd</screen>
 	  <para>
 			Every request on this chapter requires this authentication and will accept the indicated GET parameter unless specified otherwise. From now on this parameter will be omitted on the example requests.
@@ -27,12 +27,12 @@
 		<para>
 			A sensor and all it&#39;s child sensors can be listed by submitting a GET petition to the following URI:
 		</para>
-		 
+
     <screen>https://hostname/api/v1/sensors/:sensor_uuid/tree</screen>
 		<para>
 			Where :sensor_uuid should be UUID of the root of the tree. If you wish to list all sensors from the submitting user&#39;s top domain and beneath you may submit a GET request to the following URI:
 		</para>
-		 
+
     <screen>https://hostname/api/v1/sensors/tree</screen>
 		<para>
 			If request is successful HTTP 200 OK status code will be returned alongside a nested JSON response describing the requested tree. Currently only JSON is supported as a response format. Format will be the same for both of the requests described above.
@@ -40,15 +40,15 @@
 		<para>
 			On the following lines you may find a real execution example:
 		</para>
-		 
+
     <screen>
       Request:
         HTTP Verb: GET
         URI: https://hostname/api/v1/sensors/8726017729975087448/tree?auth_token=xxxxxx
-      
+
       Reply:
         Status Code: 200 OK
-        Response: 
+        Response:
         {
           &#34;query&#34;: true,
           &#34;sensor&#34;: {
@@ -222,13 +222,13 @@
     </screen>
 
 	</section>
-	
+
 	<section>
 		<title>Domain creation</title>
 		<para>
 			New sensors can be created by submitting a POST request to following URI:
 		</para>
-		 
+
     <screen>
       HTTP Verb: POST
       https://hostname/api/v1/sensors/domain
@@ -256,7 +256,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					<literal>domain_type</literal> (optional) A number indicating domain type. By default, the domain type is generic (1). 
+					<literal>domain_type</literal> (optional) A number indicating domain type. By default, the domain type is generic (1).
           <screen> Available domain types:
             Generic: 1
             Organization: 2
@@ -287,13 +287,13 @@
 		<para>
 			On the following lines you may find an execution example:
 		</para>
-		 
+
     <screen>
       Request:
         HTTP Verb: POST
         URI: https://hostname/api/v1/sensors/domain?auth_token=xxxxxx
         Payload: { &#34;domain_type&#34;:&#34;2&#34;, &#34;parent_uuid&#34;:&#34;697893457705749905&#34;, &#34;name&#34;:&#34;new_domain&#34; }
-      
+
       Response:
       {
         &#34;query&#34;: true,
@@ -348,13 +348,13 @@
 		</itemizedlist>
 
 	</section>
-	
+
 	<section>
 		<title>Flow sensor creation</title>
 		<para>
 			Flow sensors can be created issuing a POST request to the following URI:
 		</para>
-		 
+
     <screen>
       HTTP Verb: POST
       URI: https://hostname/api/v1/sensors/flow
@@ -365,7 +365,7 @@
       HTTP Verb: POST
       URI: https://hostname/api/v1/sensors/create/flow
     </screen>
-		
+
     <para>
 			This request accepts the following payload parameters:
 		</para>
@@ -462,7 +462,7 @@
 		<para>
 			In the following lines you may find an example response to a successful request:
 		</para>
-		 
+
     <screen>
       Request:
         HTTP Verb: POST
@@ -480,14 +480,14 @@
           }
         }
     </screen>
-  </section> 
-  
+  </section>
+
   <section>
     <title>Meraki sensor creation</title>
     <para>
       Meraki sensors can be created issuing a POST request to the following URI:
-    </para>     
-    
+    </para>
+
     <screen>
       HTTP Verb: POST
       URI: https://hostname/api/v1/sensors/meraki
@@ -498,7 +498,7 @@
       HTTP Verb: POST
       URI: https://hostname/api/v1/sensors/create/meraki
     </screen>
-    
+
     <para>
       This request accepts the following payload parameters:
     </para>
@@ -539,7 +539,7 @@
     </para>
     <para>
       In the following lines you may find an example response to a successful request:
-    </para>     
+    </para>
     <screen>
       Request:
         HTTP Verb: POST
@@ -574,13 +574,13 @@
       HTTP Verb: POST
       URI: https://hostname/api/v1/sensors/mse
     </screen>
-		 
+
     <screen>
       STATUS: DEPRECATED
       HTTP Verb: POST
       URI: https://hostname/api/v1/sensors/create/mse
     </screen>
-		
+
     <para>
 			This request accepts the following payload parameters:
 		</para>
@@ -637,7 +637,7 @@
 		<para>
 			In the following lines you may find an example response to a successful request:
 		</para>
-		 
+
     <screen>
       Request:
         HTTP Verb: POST
@@ -667,14 +667,14 @@
     <para>
       MSE sensors can be listed for a given domain by issuing a GET request to the following URI:
     </para>
-     
+
     <screen>https://hostname/api/v1/sensors/:sensor_uuid/mse</screen>
     <para>
       Where :sensor_uuid should be replaced by the domain UUID you wish to get MSE sensors from. If the specified domain is not found HTTP 404 Not Found status code will be returned. If the requesting user does not have read permissions over the specified domain HTTP 401 Unauthorized will be returned. If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload describing the MSE sensors found. In the following lines you may find an execution example:
     </para>
-     
+
     <screen>
-      
+
         HTTP Verb: GET
         URI: https://hostname/api/v1/sensors/8726017729975087448/mse?auth_token=xxxxxx
 
@@ -716,7 +716,7 @@
     <para>
       Sensor elimination on user request. The user is able to specify which sensor to delete by its UUID. The requesting user should have manage permissions on the specified sensor. If that is not the case HTTP 401 Unauthorized will be returned. If the provided UUID does not match any sensor UUID HTTP 404 Not Found status code will be returned. If the request is successful the sensor and all its children will be erased. In this case HTTP 200 OK status code will be returned with no payload data. The sensor UUID is supplied via a GET parameter. Requests can be made to either of the following URIs:
     </para>
-     
+
     <screen>
       HTTP Verb: DELETE
       URI: https://hostname/api/v1/sensors/:uuid
@@ -733,7 +733,7 @@
     <para>
       On the following lines you may find an execution example:
     </para>
-     
+
     <screen>
       Request:
         HTTP Verb: DELETE
@@ -756,7 +756,7 @@
       <para>
         Cloud proxies can be created issuing a POST request to the following URI:
       </para>
-       
+
       <screen>https://hostname/api/v1/sensors/cloud_proxy</screen>
       <para>
         This request accepts the following payload parameters:
@@ -814,7 +814,7 @@
       <para>
         In the following lines you may find an example response to a successful request:
       </para>
-       
+
       <screen>
         Request:
           HTTP Verb: POST
@@ -1052,7 +1052,7 @@
       <para>
         In the following lines you may find an example response to a successful request:
       </para>
-       
+
       <screen>
         Request:
           HTTP Verb: POST
@@ -1085,7 +1085,7 @@
       <para>
         Forward to clients can be created issuing a POST request to the following URI:
       </para>
-       
+
       <screen>https://hostname/api/v1/sensors/:sensor_uuid/forwards_to_client</screen>
       <para>
         This request accepts the following payload parameters:
@@ -1123,12 +1123,12 @@
       <para>
         In the following lines you may find an example response to a successful request:
       </para>
-       
+
       <screen>
         Request:
           HTTP Verb: POST
           URI: https://hostname/api/v1/sensors/5340147418033167707/forwards_to_client?auth_token=xxxxxx
-          Payload:  { 
+          Payload:  {
                       &#34;forwards_to_client&#34;: {
                         &#34;test_fc&#34;: {
                           &#34;service&#34;: &#34;test_fc&#34;,
@@ -1163,14 +1163,14 @@
       <para>
         Forward to clients can be listed for a given secure gateway sensor by issuing a GET request to the following URI:
       </para>
-       
+
       <screen>https://hostname/api/v1/sensors/:sensor_uuid/forwards_to_client</screen>
       <para>
         Where :sensor_uuid should be replaced by the secure gateway sensor UUID you wish to get forward to clients from. If the specified secure gateway sensor is not found HTTP 404 Not Found status code will be returned. If the requesting user does not have read permissions over the specified secure gateway sensor HTTP 401 Unauthorized will be returned. If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload describing the forward clients found. In the following lines you may find an execution example:
       </para>
-       
+
       <screen>
-        
+
           HTTP Verb: GET
           URI: https://hostname/api/v1/sensors/5340147418033167707/forwards_to_client?auth_token=xxxxxx
 
@@ -1195,7 +1195,7 @@
             }
       </screen>
     </section>
-  
+
     <section>
       <title>Forward to client elimination</title>
       <para>
@@ -1212,7 +1212,7 @@
       <para>
         On the following lines you may find an execution example:
       </para>
-       
+
       <screen>
         Request:
           HTTP Verb: DELETE
@@ -1238,7 +1238,7 @@
       <para>
         Flow sensors can be created issuing a POST request to the following URI:
       </para>
-       
+
       <screen>https://hostname/api/v1/sensors/create/flow</screen>
       <para>
         This request accepts the following payload parameters:
@@ -1341,7 +1341,7 @@
       <para>
         In the following lines you may find an example response to a successful request:
       </para>
-       
+
       <screen>
         Request:
           HTTP Verb: POST
@@ -1360,14 +1360,14 @@
             }
           }
       </screen>
-    </section> 
-    
+    </section>
+
     <section>
       <title>MSE sensor creation</title>
       <para>
         MSE sensors can be created issuing a POST request to the following URI:
       </para>
-       
+
       <screen>https://hostname/api/v1/sensors/create/mse</screen>
       <para>
         This request accepts the following payload parameters:
@@ -1430,7 +1430,7 @@
       <para>
         In the following lines you may find an example response to a successful request:
       </para>
-       
+
       <screen>
         Request:
           HTTP Verb: POST
@@ -1456,14 +1456,14 @@
             }
           }
       </screen>
-    </section> 
-    
+    </section>
+
     <section>
       <title>PI sensor creation</title>
       <para>
         PI sensors can be created issuing a POST request to the following URI:
       </para>
-       
+
       <screen>https://hostname/api/v1/sensors/create/pi</screen>
       <para>
         This request accepts the following payload parameters:
@@ -1486,7 +1486,7 @@
       <para>
         In the following lines you may find an example response to a successful request:
       </para>
-       
+
       <screen>
         Request:
           HTTP Verb: POST
@@ -1503,7 +1503,33 @@
             }
           }
       </screen>
-    </section> 
+    </section>
+
+    <section>
+      <title>Obtain NMSP params</title>
+      <para>
+        NMSP params can be obtained issuing a GET request to the following URI:
+      </para>
+
+      <screen>https://hostname/api/v1/sensors/:sensor_uuid/nmsp_info</screen>
+      <para>
+        Where :sensor_uuid should be replaced by the sensor UUID you wish to get. If the specified sensor is not found or it has not got any information, HTTP 404 Not Found status code will be returned. If the requesting user does not have read permissions over the specified sensor HTTP 422 Unprocessable Entity will be returned. If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload with the NMSP requested params. In the following lines you may find an execution example:
+      </para>
+
+      <screen>
+        Request:
+          HTTP Verb: GET
+          URI: https://hostname/api/v1/sensors/6965556475495491516/nmsp_info?auth_token=xxxxxx
+
+        Response:
+          Status Code: 200 OK
+          {
+            &#34;macAddress&#34;: &#34;00:50:56:82:65:d4&#34;
+            &#34;keyHashHex&#34;: &#34;d79eb05cfb49e02d770716256e31a032df2eac25&#34;
+            &#34;sha2KeyHashHex&#34;: &#34;d79eb05cfb49e02d770716256e31a032df2eac25&#34;
+          }
+      </screen>
+    </section>
   </section>
 
   <section>
@@ -1602,7 +1628,7 @@
     <para>
       If &#34;main sensor&#34; or a child it&#39;s a domain or a sensor flow it can contain a list of associated access points. To describe these access points you may use the &#34;access_points&#34; value. If this value is found in an element that it is not a flow nor a domain it will be ignored. Regular rules apply to access points and domain creation with the exception of parent IDs (sensor_id and switch_id for the access points; parent_id for domains) which are not allowed as inheritance is described by JSON nesting. This request can be executed by issuing a POST request to the following URI:
 		</para>
-		 
+
     <screen>https://hostname/api/v1/sensors/:sensor_uuid/override_all?auth_token=xxxxxx</screen>
 		<para>
 			Where :sensor_uuid should be replaced for the domain UUID to override.
@@ -1676,13 +1702,13 @@
     </screen>
 
 	</section>
-	
+
 	<section>
 		<title>Domain Access Point override</title>
 	  <para>
 			This works similar as the Domain Override but it only affects the access points contained on the specified domain and beneath. For this action submit a POST request to the following URI:
 		</para>
-		 
+
     <screen>
       HTTP Verb: POST
       URI: https://hostname/api/v1/sensors/:sensor_uuid/access_points/override
@@ -1697,12 +1723,12 @@
     <para>
 			Where :sensor_uuid is the top domain UUID to override from. This request needs to be submitted alongside a non-nested JSON array payload describing the access points the referred domain and subdomains should contain. Said payload should have the &#34;access_points&#34; tag as root tag. Once this request is submitted all access points on the specified domain and subdomains will be erased. Access Points may be positioned on the specified domain subdomain&#39;s by identifying the domain's type (service_provider/organization/deployment/namespace/) that contains them. If no containing domain is specified the access point will be created in the specified top domain. Domains should be identified by it&#39;s UUID and/or name and you may use the &#34;{domain_type}_uuid&#34; or &#34;{domain_type}_name&#34; tags for that purpose. This would be an example of the tags mentioned above: &#34;deployment_uuid&#34;, &#34;deployment_name&#34;, &#34;organization_uuid&#34;, &#34;organization_name&#34;. If the access point is specified to be contained in an unexistant domain said domain will be created. If you supplied a name for this domain it will be created with the supplied name. If no name was supplied it will be created with a name matching &#34;{domain_type}_{uuid}&#34;, for example: &#34;organization_2342356443333123&#34;. If a domain is found by it&#39;s name but the UUID does not match, the supplied one the domain will be updated to match the given one. Also, an enrichment field can be included into the access point's values. If the specified top domain does not exists HTTP 404 Not Found will be returned. If the requesting user does not have manage permissions over the top domain HTTP 401 Unauthorized will be returned. In the following lines you may find an execution example:
 		</para>
-		 
+
     <screen>
       Request:
         HTTP Verb: POST
         URI: https://hostname/api/v1/sensors/697893457705749905/access_points/override?auth_token=xxxxxx
-        Payload: 
+        Payload:
           {
             &#34;access_points&#34;: [
               {
@@ -1749,13 +1775,13 @@
     </screen>
 
 	</section>
-		
+
 	<section>
 		<title>Access Point listing</title>
 	  <para>
 			It is possible to get a list of all access points that a user has permission by issuing a GET request to the following URI:
 		</para>
-		 
+
     <screen>https://hostname/api/v1/access_points(.format)</screen>
 		<para>
 			Where (.format) should be replaced by the desired response format. Available formats are CSV and JSON.
@@ -1789,12 +1815,12 @@
 		<para>
 			The response will have the following data in the corresponding format:
 		</para>
-		 
+
     <screen>Servide Provider ID, Organization ID, Market ID, Deployment ID, Building ID, Floor ID, AP MAC address</screen>
 		<para>
 			On the following example we will request a listing of all the access points that are online in JSON and CSV format:
 		</para>
-		 
+
     <screen>
       Request:
     	 HTTP Verb: GET
@@ -1898,13 +1924,13 @@
     </screen>
 
 	</section>
-	
+
 	<section>
 		<title>Access Point creation</title>
     <para>
 			It is possible to create a new Access Point by submitting a POST request to the following URI:
 		</para>
-		 
+
     <screen>https://hostname/api/v1/access_points</screen>
 		<para>
 			To successfully create a new access point it is required to provide a sensor_uuid (sensor UUID of which the newly created AP will be descendant). If said parameter is not given a HTTP 404 Not Found status code will be returned. It is also required that the user submitting the request can manage the sensor specified. If the user does not have permission a HTTP 401 Unauthorized status code will be returned. APs validate name and mac_address on creation thus making said parameters mandatory. If either of these parameters are missing a HTTP 422 Unprocessable Entity status code will be returned along with the specific error on the requested format.
@@ -2004,7 +2030,7 @@
 		<para>
 			An example request can be found on the following lines:
 		</para>
-		 
+
     <screen>
       Request:
         HTTP Verb: POST
@@ -2047,13 +2073,13 @@
     </screen>
 
 	</section>
-	
+
 	<section>
 		<title>Access Point Modification</title>
 	  <para>
 			It is possible to modify an existing access point by submitting a PATCH or a PUT request to the followings URIs:
 		</para>
-		 
+
     <screen>
       https://hostname/api/v1/access_points/:id
       https://hostname/api/v1/access_points/:mac_address
@@ -2127,23 +2153,23 @@
 		</para>
 
 	</section>
-	
+
 	<section>
 		<title>Access Point destruction</title>
 	  <para>
 			Access Points can be deleted by different actions depending on the user needs. If you wish to delete a list of access points giving their mac address and no matter where they are located in terms of hierarchy you may submit a DELETE request to the following URI:
 		</para>
-		 
+
     <screen>https://hostname/api/v1/access_points</screen>
 		<para>
 			This request needs to be submitted alongside a JSON payload describing the array of access points you wish to delete. Access points are identified by it&#39;s mac address or by it&#39;s ID To delete an access point you need manage permissions over said access points, if the requesting user does not have manage permissions over some of the specified access points they will not be deleted but no HTTP error code will be returned as there might be other access points that the requesting user is able to delete.
 		</para>
-		 
+
     <screen>
       Request:
         HTTP Verb: DELETE
         URI: https://hostname/api/v1/access_points?auth_code=xxxxxx
-        Payload:     
+        Payload:
           {
             &#34;access_points&#34;: [
               { &#34;mac_address&#34;: &#34;ab:be:e4:22:a1:33&#34; },
@@ -2159,7 +2185,7 @@
 		<para>
 			It is also possible to delete all the access points contained in a domain and it&#39;s subdomains by issuing a GET request to the following URI:
 		</para>
-		
+
     <screen>
       HTTP Verb: DELETE
       URI: https://hostname/api/v1/sensors/:sensor_uuid/access_points
@@ -2170,13 +2196,13 @@
       HTTP Verb: GET
       URI: https://hostname/api/v1/sensors/:sensor_uuid/delete_aps
     </screen>
-		
+
     <para>
 			Where :sensor_uuid should be replaced by a valid sensor UUID. If the UUID given does not match any domains HTTP 404 Not Found Status code will be returned. To be able to execute this action you should have manage permissions over the specified domain. If that is not the case HTTP 401 Unauthorized status code will be returned. In the following lines you may find an execution example:
 		</para>
-		 
+
     <screen>
-      Request: 
+      Request:
         HTTP Verb: DELETE
         URI: https://hostname/api/v1/sensors/697893457705749905/access_points?auth_code=xxxxxx
 
@@ -2186,13 +2212,13 @@
     </screen>
 
 	</section>
-	
+
 	<section>
 		<title>User listing </title>
 	  <para>
 			The super administrator can request a list of all existing users. For that purpose submit a GET request to the following URI:
 		</para>
-		 
+
     <screen>https://hostname/api/v1/users.format</screen>
 		<para>
 			Where format should be replaced by the desired response format. JSON and CSV are the supported response formats.
@@ -2203,12 +2229,12 @@
 		<para>
 			On the following lines you may find an execution example:
 		</para>
-		 
+
     <screen>
       Request:
-        HTTP Verb: GET    
+        HTTP Verb: GET
         URI: https://hostname/api/v1/users.json?auth_token=eeeeee
-     
+
       Response:
       {
         &#34;query&#34;: true,
@@ -2343,13 +2369,13 @@
     </screen>
 
 	</section>
-	
+
 	<section>
 		<title>User API key renewal</title>
 	  <para>
 			Users can request to recreate it&#39;s authentication token by issuing a GET request to the following URI:
 		</para>
-		 
+
     <screen>https://hostname/api/v1/users/:user_id/recreate_api_key</screen>
 		<para>
 			Where :user_id should be replaced by the ID of the desired user.
@@ -2357,14 +2383,14 @@
 		<para>
 			If the request is successful a JSON containing the newly created authentication token will be returned alongside HTTP 200 OK status code. In the following lines you may find an example response to a successful request:
 		</para>
-		 
+
     <screen>
       Request:
         HTTP Verb: PATCH
         URI: https://hostname/api/v1/users/1/recreate_api_key?auth_token=xxxxxx
 
       Response:
-      { query: true, 
+      { query: true,
               auth_token: &#34;abcdabcdabcd&#34; }
     </screen>
 		<para>
@@ -2374,4 +2400,3 @@
 	</section>
 
 </chapter>
-

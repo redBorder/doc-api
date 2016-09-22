@@ -287,7 +287,16 @@
           If the domain_type is not equal to 6 (Service Provider), this parameter will be ignored.
         </para>
       </listitem>
-
+      <listitem>
+        <para>
+          <literal>visualization_range</literal> (optional) Limit the days users can visualize the data of an organization. If the domain_type is not equal to 2 (Organization), this parameter will be ignored.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <literal>megabytes_limit</literal> (optional) Limit the megabytes of storage for the data of an Organization. If the domain_type is not equal to 2 (Organization), this parameter will be ignored.
+        </para>
+      </listitem>
 		</itemizedlist>
 		<para>
 			If request is successful HTTP 200 OK status code will be returned alongside a JSON response describing the newly created sensor and a &#39;status&#39; value set 

@@ -12,7 +12,7 @@
 				<date>Friday December 14, 2013</date>
 				<author>
 					<firstname>Eneo Tecnología</firstname>
-					<email>info@redborder.net</email>
+					<email>info@redborder.com</email>
 				</author>
 				<revdescription>
 					<simplelist>
@@ -25,7 +25,7 @@
 				<date>Thursday November 19, 2015</date>
 				<author>
 					<firstname>Eneo Tecnología</firstname>
-					<email>info@redborder.net</email>
+					<email>info@redborder.com</email>
 				</author>
 				<revdescription>
 					<simplelist>
@@ -39,7 +39,7 @@
 				<date>Thursday November 23, 2015</date>
 				<author>
 					<firstname>Eneo Tecnología</firstname>
-					<email>info@redborder.net</email>
+					<email>info@redborder.com</email>
 				</author>
 				<revdescription>
 					<simplelist>
@@ -52,7 +52,7 @@
 				<date>Friday December 18, 2015</date>
 				<author>
 					<firstname>Eneo Tecnología</firstname>
-					<email>info@redborder.net</email>
+					<email>info@redborder.com</email>
 				</author>
 				<revdescription>
 					<simplelist>
@@ -66,7 +66,7 @@
 				<date>Monday December 21, 2015</date>
 				<author>
 					<firstname>Eneo Tecnología</firstname>
-					<email>info@redborder.net</email>
+					<email>info@redborder.com</email>
 				</author>
 				<revdescription>
 					<simplelist>
@@ -79,11 +79,24 @@
 				<date>Thursday January 14, 2016</date>
 				<author>
 					<firstname>Eneo Tecnología</firstname>
-					<email>info@redborder.net</email>
+					<email>info@redborder.com</email>
 				</author>
 				<revdescription>
 					<simplelist>
 						<member>Added nmsp_managed_cp attribute for Flow sensors that belongs to Cloud Proxies</member>
+					</simplelist>
+				</revdescription>
+			</revision>
+			<revision>
+				<revnumber>3.1.63-6</revnumber>
+				<date>Wednesday April 4, 2016</date>
+				<author>
+					<firstname>Eneo Tecnología</firstname>
+					<email>info@redborder.com</email>
+				</author>
+				<revdescription>
+					<simplelist>
+						<member>Product name reviewed</member>
 					</simplelist>
 				</revdescription>
 			</revision>

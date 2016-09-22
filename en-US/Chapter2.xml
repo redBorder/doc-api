@@ -6,19 +6,23 @@
 	<note>
 		<title>NOTE:</title>
 		<para>
-			The Horama API requires authentication via a valid authentication token submitted as a GET parameter. Said GET parameter receives the name auth_token. The following example demonstrates how to correctly sign a request. For the sake of simplicity suppose abcd is a valid authentication token.
+			The redborder API requires authentication via a valid authentication token submitted as a GET parameter. Said GET parameter receives the name auth_token. 
+			The following example demonstrates how to correctly sign a request. For the sake of simplicity suppose abcd is a valid authentication token.
 		</para>
 
     <screen>https://hostname/api/v1/request_path?auth_token=abcd</screen>
 	  <para>
-			Every request on this chapter requires this authentication and will accept the indicated GET parameter unless specified otherwise. From now on this parameter will be omitted on the example requests.
+			Every request on this chapter requires this authentication and will accept the indicated GET parameter unless specified otherwise. 
+			From now on this parameter will be omitted on the example requests.
 		</para>
 
 	</note>
 	<note>
 		<title>NOTE:</title>
 	  <para>
-			Every request that returns a JSON response body will return a &#34;query&#34; value set to a boolean. Said boolean stands for the query status, so if it is set to true it means that the query was successful and if it is set to false means that the query was not successful. This value will always be found on the root JSON response object and will always be the actual response sibling.
+			Every request that returns a JSON response body will return a &#34;query&#34; value set to a boolean. 
+			Said boolean stands for the query status, so if it is set to true it means that the query was successful and if 
+			it is set to false means that the query was not successful. This value will always be found on the root JSON response object and will always be the actual response sibling.
 		</para>
 
 	</note>
@@ -30,12 +34,14 @@
 
     <screen>https://hostname/api/v1/sensors/:sensor_uuid/tree</screen>
 		<para>
-			Where :sensor_uuid should be UUID of the root of the tree. If you wish to list all sensors from the submitting user&#39;s top domain and beneath you may submit a GET request to the following URI:
+			Where :sensor_uuid should be UUID of the root of the tree. If you wish to list all sensors from the submitting user&#39;s top 
+			domain and beneath you may submit a GET request to the following URI:
 		</para>
 
     <screen>https://hostname/api/v1/sensors/tree</screen>
 		<para>
-			If request is successful HTTP 200 OK status code will be returned alongside a nested JSON response describing the requested tree. Currently only JSON is supported as a response format. Format will be the same for both of the requests described above.
+			If request is successful HTTP 200 OK status code will be returned alongside a nested JSON response describing the requested tree. 
+			Currently only JSON is supported as a response format. Format will be the same for both of the requests described above.
 		</para>
 		<para>
 			On the following lines you may find a real execution example:
@@ -246,7 +252,8 @@
 		<itemizedlist mark="bullet">
 			<listitem>
 				<para>
-					<literal>uuid</literal> (optional) UUID the new domain will receive on creation. It must not be in use by any existing domain. If not specified an unused random one will be asigned.
+					<literal>uuid</literal> (optional) UUID the new domain will receive on creation. It must not be in use by any existing domain. 
+					If not specified an unused random one will be asigned.
 				</para>
 			</listitem>
 			<listitem>
@@ -276,13 +283,15 @@
 			</listitem>
       <listitem>
         <para>
-          <literal>mac_hashing_salt</literal> (optional) String with MAC Hashing Salt for a Service Provider domain. If the domain_type is not equal to 6 (Service Provider), this parameter will be ignored.
+          <literal>mac_hashing_salt</literal> (optional) String with MAC Hashing Salt for a Service Provider domain. 
+          If the domain_type is not equal to 6 (Service Provider), this parameter will be ignored.
         </para>
       </listitem>
 
 		</itemizedlist>
 		<para>
-			If request is successful HTTP 200 OK status code will be returned alongside a JSON response describing the newly created sensor and a &#39;status&#39; value set to true meaning that the request was successful. Keep in mind that manage permissions for the parent sensor are required in order to create a new sensor. If these permissions are missing HTTP 401 Unauthorized status code will be returned. If an unexistant parent was specified in the request HTTP 404 Not Found status code will be returned.
+			If request is successful HTTP 200 OK status code will be returned alongside a JSON response describing the newly created sensor and a &#39;status&#39; value set 
+			to true meaning that the request was successful. Keep in mind that manage permissions for the parent sensor are required in order to create a new sensor. If these permissions are missing HTTP 401 Unauthorized status code will be returned. If an unexistant parent was specified in the request HTTP 404 Not Found status code will be returned.
 		</para>
 		<para>
 			On the following lines you may find an execution example:
@@ -714,7 +723,8 @@
   <section>
     <title>Sensor elimination</title>
     <para>
-      Sensor elimination on user request. The user is able to specify which sensor to delete by its UUID. The requesting user should have manage permissions on the specified sensor. If that is not the case HTTP 401 Unauthorized will be returned. If the provided UUID does not match any sensor UUID HTTP 404 Not Found status code will be returned. If the request is successful the sensor and all its children will be erased. In this case HTTP 200 OK status code will be returned with no payload data. The sensor UUID is supplied via a GET parameter. Requests can be made to either of the following URIs:
+      Sensor elimination on user request. The user is able to specify which sensor to delete by its UUID. The requesting user should have manage permissions on the specified sensor. 
+      If that is not the case HTTP 401 Unauthorized will be returned. If the provided UUID does not match any sensor UUID HTTP 404 Not Found status code will be returned. If the request is successful the sensor and all its children will be erased. In this case HTTP 200 OK status code will be returned with no payload data. The sensor UUID is supplied via a GET parameter. Requests can be made to either of the following URIs:
     </para>
 
     <screen>
@@ -798,7 +808,8 @@
         </listitem>
         <listitem>
           <para>
-            <literal>region</literal> (Optional) Region of AWS. Selected region must be the same in the cluster. Available values: us-east-1, us-west-2, us-west-1, eu-west-1, eu-central-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, sa-east-1.
+            <literal>region</literal> (Optional) Region of AWS. Selected region must be the same in the cluster. 
+            Available values: us-east-1, us-west-2, us-west-1, eu-west-1, eu-central-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, sa-east-1.
           </para>
         </listitem>
         <listitem>
@@ -1166,7 +1177,10 @@
 
       <screen>https://hostname/api/v1/sensors/:sensor_uuid/forwards_to_client</screen>
       <para>
-        Where :sensor_uuid should be replaced by the secure gateway sensor UUID you wish to get forward to clients from. If the specified secure gateway sensor is not found HTTP 404 Not Found status code will be returned. If the requesting user does not have read permissions over the specified secure gateway sensor HTTP 401 Unauthorized will be returned. If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload describing the forward clients found. In the following lines you may find an execution example:
+        Where :sensor_uuid should be replaced by the secure gateway sensor UUID you wish to get forward to clients from. 
+        If the specified secure gateway sensor is not found HTTP 404 Not Found status code will be returned.
+        If the requesting user does not have read permissions over the specified secure gateway sensor HTTP 401 Unauthorized will be returned. 
+        If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload describing the forward clients found. In the following lines you may find an execution example:
       </para>
 
       <screen>
@@ -1199,7 +1213,10 @@
     <section>
       <title>Forward to client elimination</title>
       <para>
-        Forward to client elimination on user request. The user is able to specify which forward to client to delete by its sensor UUID and its service name. The requesting user should have manage permissions on the specified forward to client. If that is not the case HTTP 401 Unauthorized will be returned. If the provided UUID does not match any sensor UUID HTTP 404 Not Found status code will be returned. If the request is successful the forward to client will be erased. In this case HTTP 200 OK status code will be returned with the list of forward to clients for this sensor. Requests can be made to the following URI:
+        Forward to client elimination on user request. The user is able to specify which forward to client to delete by its sensor UUID and its service name. 
+        The requesting user should have manage permissions on the specified forward to client. If that is not the case HTTP 401 Unauthorized will be returned. 
+        If the provided UUID does not match any sensor UUID HTTP 404 Not Found status code will be returned. If the request is successful the forward to client will be erased. 
+        In this case HTTP 200 OK status code will be returned with the list of forward to clients for this sensor. Requests can be made to the following URI:
       </para>
 
       <screen>
@@ -1301,7 +1318,8 @@
         </listitem>
         <listitem>
           <para>
-            <literal>nmsp_managed_cp</literal> (Optional) If enabled the cloud proxy will connect to the NMSP server. Otherwise it will be the cluster itself that will connect. Allowed values are: "1" to enable and "0" to disable.
+            <literal>nmsp_managed_cp</literal> (Optional) If enabled the cloud proxy will connect to the NMSP server. Otherwise it will be the cluster itself that will connect. 
+            Allowed values are: "1" to enable and "0" to disable.
           </para>
         </listitem>
         <listitem>
@@ -1513,7 +1531,10 @@
 
       <screen>https://hostname/api/v1/sensors/:sensor_uuid/nmsp_info</screen>
       <para>
-        Where :sensor_uuid should be replaced by the sensor UUID you wish to get. If the specified sensor is not found or it has not got any information, HTTP 404 Not Found status code will be returned. If the requesting user does not have read permissions over the specified sensor HTTP 422 Unprocessable Entity will be returned. If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload with the NMSP requested params. In the following lines you may find an execution example:
+        Where :sensor_uuid should be replaced by the sensor UUID you wish to get. 
+        If the specified sensor is not found or it has not got any information, HTTP 404 Not Found status code will be returned. 
+        If the requesting user does not have read permissions over the specified sensor HTTP 422 Unprocessable Entity will be returned. 
+        If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload with the NMSP requested params. In the following lines you may find an execution example:
       </para>
 
       <screen>
@@ -1535,7 +1556,8 @@
   <section>
     <title>Update a Domain sensor</title>
     <para>
-      Domain sensors update receive same parameters when we create them. We can update name, type, domain type, uuid and MAC Hashing salt (only for Service Providers). The request payload must be in JSON format.
+      Domain sensors update receive same parameters when we create them. We can update name, type, domain type, uuid and MAC Hashing salt (only for Service Providers).
+      The request payload must be in JSON format.
     </para>
     <para>
       Use following URL to update a domain sensor. Sensor UUID parameter refers the UUID of sensor you want update.
@@ -1593,7 +1615,10 @@
 	<section>
 		<title>Domain override</title>
 		<para>
-			If desired a domain (we will refer it as &#34;main sensor&#34;) can be completely overriden with the content given on the request payload. The request payload should be in JSON format. Said JSON must have a single &#34;sensor&#34; root tag describing the content of the &#34;main sensor&#34; to override with. To prevent errors, we can&#39;t change the value of UUID for &#34;main sensor&#34;. Child domains can be set using the &#34;children&#34; value where inheritance applies. Multiple inheritance levels are allowed.
+			If desired a domain (we will refer it as &#34;main sensor&#34;) can be completely overriden with the content given on the request payload. 
+			The request payload should be in JSON format. Said JSON must have a single &#34;sensor&#34; root tag describing the content of the &#34;main sensor&#34; to override with. 
+			To prevent errors, we can&#39;t change the value of UUID for &#34;main sensor&#34;. Child domains can be set using the &#34;children&#34; value where inheritance applies. 
+			Multiple inheritance levels are allowed.
     </para>
     <para>
       We need to take into account some points:
@@ -1606,7 +1631,8 @@
       </listitem>
       <listitem>
         <para>
-          If a child of main sensor hasn't define UUID, API tries to find a child that coincide on name, domain_type and type params. If API finds a child, it will be updated, else API will create a new sensor.
+          If a child of main sensor hasn't define UUID, API tries to find a child that coincide on name, domain_type and type params. 
+          If API finds a child, it will be updated, else API will create a new sensor.
         </para>
       </listitem>
       <listitem>
@@ -1626,7 +1652,11 @@
       </listitem>
     </itemizedlist>
     <para>
-      If &#34;main sensor&#34; or a child it&#39;s a domain or a sensor flow it can contain a list of associated access points. To describe these access points you may use the &#34;access_points&#34; value. If this value is found in an element that it is not a flow nor a domain it will be ignored. Regular rules apply to access points and domain creation with the exception of parent IDs (sensor_id and switch_id for the access points; parent_id for domains) which are not allowed as inheritance is described by JSON nesting. This request can be executed by issuing a POST request to the following URI:
+      If &#34;main sensor&#34; or a child it&#39;s a domain or a sensor flow it can contain a list of associated access points. 
+      To describe these access points you may use the &#34;access_points&#34; value. 
+      If this value is found in an element that it is not a flow nor a domain it will be ignored. 
+      Regular rules apply to access points and domain creation with the exception of parent IDs (sensor_id and switch_id for the access points; parent_id for domains) which are not allowed as 
+      inheritance is described by JSON nesting. This request can be executed by issuing a POST request to the following URI:
 		</para>
 
     <screen>https://hostname/api/v1/sensors/:sensor_uuid/override_all?auth_token=xxxxxx</screen>
@@ -1640,7 +1670,9 @@
     <screen>https://hostname/api/v1/sensors/override_all?auth_token=xxxxxx</screen>
 
     <para>
-      To override a domain the requesting user must have management permissions on the requested domain. If that is not the case HTTP 401 Unauthorized status code will be returned. If the requested domain does not exists HTTP 404 Not Found status code will be returned. If request is successful HTTP 200 OK status code will be returned with &#34;query&#34; set to true. On the following lines you may find an exeution example:
+      To override a domain the requesting user must have management permissions on the requested domain. 
+      If that is not the case HTTP 401 Unauthorized status code will be returned. If the requested domain does not exists HTTP 404 Not Found status code will be returned. 
+      If request is successful HTTP 200 OK status code will be returned with &#34;query&#34; set to true. On the following lines you may find an exeution example:
     </para>
 
     <screen>
@@ -1721,7 +1753,18 @@
     </screen>
 
     <para>
-			Where :sensor_uuid is the top domain UUID to override from. This request needs to be submitted alongside a non-nested JSON array payload describing the access points the referred domain and subdomains should contain. Said payload should have the &#34;access_points&#34; tag as root tag. Once this request is submitted all access points on the specified domain and subdomains will be erased. Access Points may be positioned on the specified domain subdomain&#39;s by identifying the domain's type (service_provider/organization/deployment/namespace/) that contains them. If no containing domain is specified the access point will be created in the specified top domain. Domains should be identified by it&#39;s UUID and/or name and you may use the &#34;{domain_type}_uuid&#34; or &#34;{domain_type}_name&#34; tags for that purpose. This would be an example of the tags mentioned above: &#34;deployment_uuid&#34;, &#34;deployment_name&#34;, &#34;organization_uuid&#34;, &#34;organization_name&#34;. If the access point is specified to be contained in an unexistant domain said domain will be created. If you supplied a name for this domain it will be created with the supplied name. If no name was supplied it will be created with a name matching &#34;{domain_type}_{uuid}&#34;, for example: &#34;organization_2342356443333123&#34;. If a domain is found by it&#39;s name but the UUID does not match, the supplied one the domain will be updated to match the given one. Also, an enrichment field can be included into the access point's values. If the specified top domain does not exists HTTP 404 Not Found will be returned. If the requesting user does not have manage permissions over the top domain HTTP 401 Unauthorized will be returned. In the following lines you may find an execution example:
+			Where :sensor_uuid is the top domain UUID to override from. 
+			This request needs to be submitted alongside a non-nested JSON array payload describing the access points the referred domain and subdomains should contain. 
+			Said payload should have the &#34;access_points&#34; tag as root tag. Once this request is submitted all access points on the specified domain and subdomains will be erased. 
+			Access Points may be positioned on the specified domain subdomain&#39;s by identifying the domain's type (service_provider/organization/deployment/namespace/) that contains them.
+			If no containing domain is specified the access point will be created in the specified top domain. 
+			Domains should be identified by it&#39;s UUID and/or name and you may use the &#34;{domain_type}_uuid&#34; or &#34;{domain_type}_name&#34; tags for that purpose. 
+			This would be an example of the tags mentioned above: &#34;deployment_uuid&#34;, &#34;deployment_name&#34;, &#34;organization_uuid&#34;, &#34;organization_name&#34;. 
+			If the access point is specified to be contained in an unexistant domain said domain will be created. If you supplied a name for this domain it will be created with the supplied name. 
+			If no name was supplied it will be created with a name matching &#34;{domain_type}_{uuid}&#34;, for example: &#34;organization_2342356443333123&#34;. 
+			If a domain is found by it&#39;s name but the UUID does not match, the supplied one the domain will be updated to match the given one. 
+			Also, an enrichment field can be included into the access point's values. If the specified top domain does not exists HTTP 404 Not Found will be returned. 
+			If the requesting user does not have manage permissions over the top domain HTTP 401 Unauthorized will be returned. In the following lines you may find an execution example:
 		</para>
 
     <screen>
@@ -1933,7 +1976,10 @@
 
     <screen>https://hostname/api/v1/access_points</screen>
 		<para>
-			To successfully create a new access point it is required to provide a sensor_uuid (sensor UUID of which the newly created AP will be descendant). If said parameter is not given a HTTP 404 Not Found status code will be returned. It is also required that the user submitting the request can manage the sensor specified. If the user does not have permission a HTTP 401 Unauthorized status code will be returned. APs validate name and mac_address on creation thus making said parameters mandatory. If either of these parameters are missing a HTTP 422 Unprocessable Entity status code will be returned along with the specific error on the requested format.
+			To successfully create a new access point it is required to provide a sensor_uuid (sensor UUID of which the newly created AP will be descendant). 
+			If said parameter is not given a HTTP 404 Not Found status code will be returned. It is also required that the user submitting the request can manage the sensor specified. 
+			If the user does not have permission a HTTP 401 Unauthorized status code will be returned. APs validate name and mac_address on creation thus making said parameters mandatory. 
+			If either of these parameters are missing a HTTP 422 Unprocessable Entity status code will be returned along with the specific error on the requested format.
 		</para>
 		<para>
 			The following parameters are also accepted on the request payload:
@@ -2157,12 +2203,16 @@
 	<section>
 		<title>Access Point destruction</title>
 	  <para>
-			Access Points can be deleted by different actions depending on the user needs. If you wish to delete a list of access points giving their mac address and no matter where they are located in terms of hierarchy you may submit a DELETE request to the following URI:
+			Access Points can be deleted by different actions depending on the user needs. 
+			If you wish to delete a list of access points giving their mac address and no matter where they are located in terms of hierarchy you may submit a DELETE request to the following URI:
 		</para>
 
     <screen>https://hostname/api/v1/access_points</screen>
 		<para>
-			This request needs to be submitted alongside a JSON payload describing the array of access points you wish to delete. Access points are identified by it&#39;s mac address or by it&#39;s ID To delete an access point you need manage permissions over said access points, if the requesting user does not have manage permissions over some of the specified access points they will not be deleted but no HTTP error code will be returned as there might be other access points that the requesting user is able to delete.
+			This request needs to be submitted alongside a JSON payload describing the array of access points you wish to delete. 
+			Access points are identified by it&#39;s mac address or by it&#39;s ID To delete an access point you need manage permissions over said access points, 
+			if the requesting user does not have manage permissions over some of the specified access points they will not be deleted but no HTTP error code 
+			will be returned as there might be other access points that the requesting user is able to delete.
 		</para>
 
     <screen>
@@ -2198,7 +2248,8 @@
     </screen>
 
     <para>
-			Where :sensor_uuid should be replaced by a valid sensor UUID. If the UUID given does not match any domains HTTP 404 Not Found Status code will be returned. To be able to execute this action you should have manage permissions over the specified domain. If that is not the case HTTP 401 Unauthorized status code will be returned. In the following lines you may find an execution example:
+			Where :sensor_uuid should be replaced by a valid sensor UUID. If the UUID given does not match any domains HTTP 404 Not Found Status code will be returned. 
+			To be able to execute this action you should have manage permissions over the specified domain. If that is not the case HTTP 401 Unauthorized status code will be returned. In the following lines you may find an execution example:
 		</para>
 
     <screen>
@@ -2381,7 +2432,8 @@
 			Where :user_id should be replaced by the ID of the desired user.
 		</para>
 		<para>
-			If the request is successful a JSON containing the newly created authentication token will be returned alongside HTTP 200 OK status code. In the following lines you may find an example response to a successful request:
+			If the request is successful a JSON containing the newly created authentication token will be returned alongside HTTP 200 OK status code.
+			 In the following lines you may find an example response to a successful request:
 		</para>
 
     <screen>
@@ -2394,7 +2446,8 @@
               auth_token: &#34;abcdabcdabcd&#34; }
     </screen>
 		<para>
-			If the requested user does not exist HTTP 404 Not Found status code will be returned. If the requesting users does not have privileges over the requested user HTTP 401 The server also might return HTTP 500 Internal Server Error in case of uncaught exceptions.
+			If the requested user does not exist HTTP 404 Not Found status code will be returned. 
+			If the requesting users does not have privileges over the requested user HTTP 401 The server also might return HTTP 500 Internal Server Error in case of uncaught exceptions.
 		</para>
 
 	</section>

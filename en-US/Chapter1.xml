@@ -100,7 +100,7 @@
 	 <section>
 		<title>Authentication</title>
 		 <para>
-			Horama Rest API uses an Access Key generated with the Web Graphical Interface. Click on the specific user properties and gerenate an Acces Key code. For example:
+			redborder Rest API uses an Access Key generated with the Web Graphical Interface. Click on the specific user properties and gerenate an Acces Key code. For example:
 		</para>
 		 
 <screen>             The user: admin@cisco.com has the Access Key: M4X5c4xhwYbPZ3s5xzHU</screen>
@@ -113,7 +113,8 @@
 			Every query to the REST api must have this Access Key present and the query will have the user permisions belongs the key.
 		</para>
 		 <para>
-			The rest of params must be provided by the POST payload data. The format of the payload must be JSON as we saw in the previous example. For example if we save the last query in a file called data.body, we can do a simple query like this:
+			The rest of params must be provided by the POST payload data. The format of the payload must be JSON as we saw in the previous example. 
+			For example if we save the last query in a file called data.body, we can do a simple query like this:
 		</para>
 		 
 <screen>curl --insecure -X POST &#39;https://hostname/api/data?auth_token=M4X5c4xhwYbPZ3s5xzHU&#39; -H &#39;content-type: application/json&#39; -d @data.body</screen>
@@ -163,18 +164,23 @@
 			</listitem>
 			<listitem>
 				<para>
-					<literal>namespace_uuids.-</literal> (optional) array of one or more values. It should be the uuids of the namespace where the data is going to be searched. If this value is not indicated, the dataSource used will be the default.
+					<literal>namespace_uuids.-</literal> (optional) array of one or more values. 
+					It should be the uuids of the namespace where the data is going to be searched. If this value is not indicated, the dataSource used will be the default.
 				</para>
 			</listitem>
 			 <listitem>
 				<para>
-					<literal>granularity.-</literal> The granularity JSON field specifies the bucket size for values. It could be a built-in time interval like &#34;second&#34;, &#34;minute&#34;, &#34;fifteen_minute&#34;, &#34;thirty_minute&#34;, &#34;hour&#34; or &#34;day&#34;. It can also be an expression like {&#34;type&#34;: &#34;period&#34;, &#34;period&#34;:&#34;PT6m&#34;} meaning &#34;6 minute buckets&#34;. In the example, it is set to the special value &#34;all&#34; which means bucket all data points together into the same time bucket
+					<literal>granularity.-</literal> The granularity JSON field specifies the bucket size for values. 
+					It could be a built-in time interval like &#34;second&#34;, &#34;minute&#34;, &#34;fifteen_minute&#34;, &#34;thirty_minute&#34;, &#34;hour&#34; or &#34;day&#34;. 
+					It can also be an expression like {&#34;type&#34;: &#34;period&#34;, &#34;period&#34;:&#34;PT6m&#34;} meaning &#34;6 minute buckets&#34;. 
+					In the example, it is set to the special value &#34;all&#34; which means bucket all data points together into the same time bucket
 				</para>
 
 			</listitem>
 			 <listitem>
 				<para>
-					<literal>intervals.-</literal> I specify the time range(s) of the query. The interval must be espcified on iso format and it can include the time zone if desired. See http://en.wikipedia.org/wiki/ISO_8601 to get more information.
+					<literal>intervals.-</literal> I specify the time range(s) of the query. 
+					The interval must be espcified on iso format and it can include the time zone if desired. See http://en.wikipedia.org/wiki/ISO_8601 to get more information.
 				</para>
 
 			</listitem>
@@ -205,7 +211,9 @@
 			</listitem>
 			<listitem>
 				<para>
-					<literal>aggregations.-</literal> array of elements. These fields applied to the columns specified by fieldName and the output of the aggregations will be named according to the value in the &#34;name&#34; field. There are different aggregators depends of the dataSource used:
+					<literal>aggregations.-</literal> array of elements. 
+					These fields applied to the columns specified by fieldName and the output of the aggregations will be named according to the value in the &#34;name&#34; field. 
+					There are different aggregators depends of the dataSource used:
 					<itemizedlist mark="bullet">
 						<listitem>
 							<para>
@@ -282,12 +290,15 @@
 			</listitem>
 			<listitem>
 				<para>
-					<literal>dimensions.-</literal> (only for groupBy and timeseries queryType) The dimensions JSON field value is an array of zero or more fields. These are used to constrain the grouping. If empty, then one value per time granularity bucket is requested in the groupBy. There are many dimensions available on each dataSource as we will see at the next sections.
+					<literal>dimensions.-</literal> (only for groupBy and timeseries queryType) The dimensions JSON field value is an array of zero or more fields. 
+					These are used to constrain the grouping. If empty, then one value per time granularity bucket is requested in the groupBy. 
+					There are many dimensions available on each dataSource as we will see at the next sections.
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					<literal>dimension.-</literal> (only for topN queryType) The dimension JSON field value is a single value. There are many dimensions available on each dataSource as we will see at the next sections.
+					<literal>dimension.-</literal> (only for topN queryType) The dimension JSON field value is a single value. 
+					There are many dimensions available on each dataSource as we will see at the next sections.
 				</para>
 			</listitem>
 			<listitem>
@@ -1495,12 +1506,14 @@
 	 <section>
 		<title>Filters</title>
 		 <para>
-			A filter is a JSON object indicating which rows of data should be included in the computation for a query. It’s essentially the equivalent of the WHERE clause in SQL. The API supports the following types of filters:
+			A filter is a JSON object indicating which rows of data should be included in the computation for a query. 
+			It’s essentially the equivalent of the WHERE clause in SQL. The API supports the following types of filters:
 		</para>
 		 <itemizedlist mark="bullet">
 			<listitem>
 				<para>
-					<literal>Selector filter.- </literal> The simplest filter is a selector filter. The selector filter will match a specific dimension with a specific value. Selector filters can be used as the base filters for more complex Boolean expressions of filters. The grammar for a SELECTOR filter is as follows: 
+					<literal>Selector filter.- </literal> The simplest filter is a selector filter. 
+					The selector filter will match a specific dimension with a specific value. Selector filters can be used as the base filters for more complex Boolean expressions of filters. The grammar for a SELECTOR filter is as follows: 
 <screen>{
     &#34;type&#34;: &#34;selector&#34;,
     &#34;dimension&#34;: &#34;client_mac&#34;,
@@ -1511,7 +1524,8 @@
 			</listitem>
 			 <listitem>
 				<para>
-					<literal>Regular expression filter.- </literal>The regular expression filter is similar to the selector filter, but using regular expressions. It matches the specified dimension with the given pattern. The pattern can be any standard Java regular expression. 
+					<literal>Regular expression filter.- </literal>The regular expression filter is similar to the selector filter, but using regular expressions. 
+					It matches the specified dimension with the given pattern. The pattern can be any standard Java regular expression. 
 <screen>{
     &#34;type&#34;: &#34;regex&#34;,
     &#34;dimension&#34;: &#34;http_host&#34;,

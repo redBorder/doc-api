@@ -774,7 +774,7 @@
     </screen>
   </section>
 
-  <section>
+  <section condition='with-proxy-and-secure-gateway'>
     <title>Cloud Proxy configuration</title>
     <para>
       In this section you can see how to configure a cloud proxy.

@@ -8,7 +8,7 @@ notifications:
   email: false
 matrix:
   include:
-  - env: LANG="es-ES" MAKE_TARGET_SUFFIX="es"
+  - env: LANG="en-US" MAKE_TARGET_SUFFIX="en"
 script:
 - xmllint --postvalid --noout ${LANG}/Chapter*.xml
 - make pdf-${MAKE_TARGET_SUFFIX}

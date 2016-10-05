@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.11. Domain Access Point override</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s10.html" title="2.10. Domain override" /><link rel="next" href="ch02s12.html" title="2.12. Access Point listing" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s10.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s12.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820263145008"></a>2.11. Domain Access Point override</h2></div></div></div><div class="para">
+			This works similar as the Domain Override but it only affects the access points contained on the specified domain and beneath. For this action submit a POST request to the following URI:
+		</div><pre class="screen">
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/:sensor_uuid/access_points/override
+</pre><pre class="screen">
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/:sensor_uuid/override_aps
+</pre><div class="para">
+			Where :sensor_uuid is the top domain UUID to override from. This request needs to be submitted alongside a non-nested JSON array payload describing the access points the referred domain and subdomains should contain. Said payload should have the "access_points" tag as root tag. Once this request is submitted all access points on the specified domain and subdomains will be erased. Access Points may be positioned on the specified domain subdomain's by identifying the domain's type (service_provider/organization/deployment/namespace/) that contains them. If no containing domain is specified the access point will be created in the specified top domain. Domains should be identified by it's UUID and/or name and you may use the "{domain_type}_uuid" or "{domain_type}_name" tags for that purpose. This would be an example of the tags mentioned above: "deployment_uuid", "deployment_name", "organization_uuid", "organization_name". If the access point is specified to be contained in an unexistant domain said domain will be created. If you supplied a name for this domain it will be created with the supplied name. If no name was supplied it will be created with a name matching "{domain_type}_{uuid}", for example: "organization_2342356443333123". If a domain is found by it's name but the UUID does not match, the supplied one the domain will be updated to match the given one. Also, an enrichment field can be included into the access point's values. If the specified top domain does not exists HTTP 404 Not Found will be returned. If the requesting user does not have manage permissions over the top domain HTTP 401 Unauthorized will be returned. In the following lines you may find an execution example:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/697893457705749905/access_points/override?auth_token=xxxxxx
+        Payload:
+          {
+            "access_points": [
+              {
+                "mac_address": "ab:be:ef:22:11:33",
+                "name": "AP_with_alredy_created_structure",
+                "deployment_uuid": "8001483930459605430"
+              },
+              {
+                "mac_address": "ab:be:ef:12:21:33",
+                "name": "AP_create_structure",
+                "deployment_uuid": "8001483943659605430"
+              },
+              {
+                "mac_address": "ab:12:ef:12:21:33",
+                "name": "AP_create_structure_with_name",
+                "deployment_uuid": "8001483943459605430",
+                "deployment_name": "Deployment_APs"
+              },
+              {
+                "mac_address": "ab:be:ef:f2:aa:33",
+                "name": "AP_with_given_existing_name",
+                "deployment_name": "Deployment_APs"
+              },
+              {
+                "mac_address": "ab:be:ef:be:ef:33",
+                "name": "AP_with_complex_hierarchy_partially_existent",
+                "deployment_uuid": "8301483941239605130",
+                "deployment_name": "Deployment_APs",
+                "enrichment": {"market_uuid": "3189960848665445691"}
+              },
+              {
+                "mac_address": "ab:22:ef:33:ef:13",
+                "name": "AP_with_complex_hierarchy_completely_unexistant",
+                "deployment_uuid": "8301483941239605130",
+                "deployment_name": "Deployment_APs",
+                "enrichment": {"market_uuid": "3189234848665445691","building_name": "NewBuilding",}
+              }
+            ]
+          }
+
+          Response:
+            Status Code: 200 OK
+            Body: { "query":"true" }
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s10.html"><strong>Prev</strong>2.10. Domain override</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s12.html"><strong>Next</strong>2.12. Access Point listing</a></li></ul></body></html>

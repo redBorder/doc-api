@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.6. MSE sensor listing for a domain</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s05.html" title="2.5. MSE sensor creation" /><link rel="next" href="ch02s07.html" title="2.7. Sensor elimination" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s05.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s07.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820263177088"></a>2.6. MSE sensor listing for a domain</h2></div></div></div><div class="para">
+			MSE sensors can be listed for a given domain by issuing a GET request to the following URI:
+		</div><pre class="screen">https://hostname/api/v1/sensors/:sensor_uuid/mse</pre><div class="para">
+			Where :sensor_uuid should be replaced by the domain UUID you wish to get MSE sensors from. If the specified domain is not found HTTP 404 Not Found status code will be returned. If the requesting user does not have read permissions over the specified domain HTTP 401 Unauthorized will be returned. If the request is successful HTTP 200 OK status code will be returned alongside a JSON payload describing the MSE sensors found. In the following lines you may find an execution example:
+		</div><pre class="screen">
+
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/sensors/8726017729975087448/mse?auth_token=xxxxxx
+
+      Response:
+        Status Code: 200 OK
+        Body:
+          {
+            "query": true,
+            "mse": [
+              {
+                "id": 854,
+                "name": "TestMSE",
+                "ip": "0.0.0.0",
+                "latitude": null,
+                "longitude": null,
+                "is_deleted": false,
+                "applied_at": null,
+                "type": 8,
+                "real_parent_id": null,
+                "group_id": null,
+                "binding_id": null,
+                "need_apply": false,
+                "applying": false,
+                "property": {},
+                "domain_type": 1,
+                "unassigned": false,
+                "policy_id": null,
+                "reputation_policy_id": null,
+                "need_reputation_apply": false,
+                "uuid": "4297150382216182536"
+              }
+            ]
+          }
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s05.html"><strong>Prev</strong>2.5. MSE sensor creation</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s07.html"><strong>Next</strong>2.7. Sensor elimination</a></li></ul></body></html>

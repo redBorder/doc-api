@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.5. MSE sensor creation</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s04.html" title="2.4. Meraki sensor creation" /><link rel="next" href="ch02s06.html" title="2.6. MSE sensor listing for a domain" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s04.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s06.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820263193456"></a>2.5. MSE sensor creation</h2></div></div></div><div class="para">
+			MSE sensors can be created issuing a POST request to the following URI:
+		</div><pre class="screen">
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/mse
+</pre><pre class="screen">
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/create/mse
+</pre><div class="para">
+			This request accepts the following payload parameters:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">stream</code> (Mandatory) MSE stream name.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">name</code> (Mandatory) Name given to the mse sensor.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">parent_uuid</code> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">version_mse</code> (Optional) Specifies the version of MSE. If none is specified it defaults to MSE value.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">snmp_community</code> (Optional) Specifies the community name for SNMP.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">snmp_version</code> (Optional) Specifies the community version for SNMP. Allowed versions are: 1, 2c.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">homenets</code> (Optional) Set multiple Home Networks to this sensor. This parameters contains an array with the following format: 
+<pre class="screen">
+            {
+              ...
+              "homenets": [
+                { "name" : "NameOfHomenet", "value" : "192.168.1.0/24" },
+                { "name" : "NameOfHomenet2", "value" : "192.168.2.0/24" },
+                ...
+              ]
+            }
+</pre>
+
+				</div></li></ul></div><div class="para">
+			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new MSE sensor.
+		</div><div class="para">
+			In the following lines you may find an example response to a successful request:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/mse?auth_token=xxxxxx
+        Payload: { "name": "test_mse",
+                   "parent_uuid": "7549459708256671519",
+                   "stream": "StreamB",
+                   "mse_version": "8",
+                   "port":"xxxx" }
+
+      Response:
+        {
+          "query": true,
+          "sensor": {
+            "id": 902
+            "uuid": "4110689521083459108"
+            "name": "test_mse"
+            "stream": "StreamB"
+            "mse_version": "8"
+          }
+        }
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s04.html"><strong>Prev</strong>2.4. Meraki sensor creation</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s06.html"><strong>Next</strong>2.6. MSE sensor listing for a domain</a></li></ul></body></html>

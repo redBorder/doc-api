@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.14. Access Point Modification</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s13.html" title="2.13. Access Point creation" /><link rel="next" href="ch02s15.html" title="2.15. Access Point destruction" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s13.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s15.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820266979440"></a>2.14. Access Point Modification</h2></div></div></div><div class="para">
+			It is possible to modify an existing access point by submitting a PATCH or a PUT request to the followings URIs:
+		</div><pre class="screen">
+      https://hostname/api/v1/access_points/:id
+      https://hostname/api/v1/access_points/:mac_address
+</pre><div class="para">
+			Where :id is the ID of the access point which data needs to be modified. It is also possible to identify the access point using it's mac address instead of the ID.
+		</div><div class="para">
+			Permitted parameters on the request payload for the update are:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">ip_address</code> IP address of the new access point.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">mac_address</code> MAC address of the access point.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">name</code> (Optional) Name given to the access point.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">status</code> Status of the access point supplied as an integer. 0 stands for down or offline; 1 stands for up or online
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">latitude</code> Latitude coordinate to locate the access point
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">longitude</code> Longitude coordinate to locate the access point
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">x</code> Integer representig the abscissa coordinate in a floor map locating the access point
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">y</code> Integer representig the ordinate coordinate in a floor map locating the access point
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">sensor_uuid</code> Parent sensor UUID.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">flow_uuid</code> Associated flow sensor UUID.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">description</code> Description of the newly created access point.
+				</div></li></ul></div><div class="para">
+			If the request was successful HTTP 200 OK status code will be returned along a JSON payload describing all the values of the modified access point.
+		</div></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s13.html"><strong>Prev</strong>2.13. Access Point creation</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s15.html"><strong>Next</strong>2.15. Access Point destruction</a></li></ul></body></html>

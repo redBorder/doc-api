@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.3. Flow sensor creation</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s02.html" title="2.2. Domain creation" /><link rel="next" href="ch02s04.html" title="2.4. Meraki sensor creation" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s02.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s04.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820257309744"></a>2.3. Flow sensor creation</h2></div></div></div><div class="para">
+			Flow sensors can be created issuing a POST request to the following URI:
+		</div><pre class="screen">
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/flow
+</pre><pre class="screen">
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/create/flow
+</pre><div class="para">
+			This request accepts the following payload parameters:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">ip</code> (Mandatory) IP address of the flow sensor.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">name</code> (Mandatory) Name given to the flow sensor.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">parent_uuid</code> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">snmp_community</code> (Optional) Specifies the community name for SNMP.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">snmp_version</code> (Optional) Specifies the community version for SNMP. Allowed versions are: 1, 2c.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">spanport</code> (Optional) Enable or disable SPAN Port. Allowed values are: "1" to enable and "0" to disable.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">nmsp</code> (Optional) Enable or disable NMSP. Allowed values are: "1" to enable and "0" to disable.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">nmsp_wireless_health</code> (Optional) Enable or disable NMSP Wireless Health. Allowed values are: "1" to enable and "0" to disable.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">nmsp_client_stats</code> (Optional) Enable or disable NMSP Client Stats. Allowed values are: "1" to enable and "0" to disable.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">dns_ptr_client</code> (Optional) Enable or disable client DNS resolution. Allowed values are: "1" to enable and "0" to disable.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">dns_ptr_target</code> (Optional) Enable or disable target DNS resolution. Allowed values are: "1" to enable and "0" to disable.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">homenets</code> (Optional) Set multiple Home Networks to this sensor. This parameters contains an array with the following format: 
+<pre class="screen">
+            {
+              ...
+              "homenets": [
+                { "name" : "NameOfHomenet", "value" : "192.168.1.0/24" },
+                { "name" : "NameOfHomenet2", "value" : "192.168.2.0/24" },
+                ...
+              ]
+            }
+</pre>
+
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">router_macs</code> (Optional) Set Router's MAC addresses of this sensor. This parameters contains an array with the following format: 
+<pre class="screen">
+            {
+              ...
+              "router_macs": [
+                { "name" : "Interface1", "value" : "aa:bb:cc:dd:ee:ff" },
+                { "name" : "Interface2", "value" : "ff:bb:aa:cc:bb:dd" },
+                ...
+              ]
+            }
+</pre>
+
+				</div></li></ul></div><div class="para">
+			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new flow sensor.
+		</div><div class="para">
+			In the following lines you may find an example response to a successful request:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/flow?auth_token=xxxxxx
+        Payload: {"name":"test_flow", "parent_uuid":"7549459708256671519", "ip":"10.0.2.10"}
+
+      Response:
+        {
+          "query": true,
+          "sensor": {
+            "id": 901,
+            "uuid": "894798882298873783",
+            "name": "test_flow",
+            "ip": "10.0.2.10"
+          }
+        }
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s02.html"><strong>Prev</strong>2.2. Domain creation</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s04.html"><strong>Next</strong>2.4. Meraki sensor creation</a></li></ul></body></html>

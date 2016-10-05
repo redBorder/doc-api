@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>1.9. Filters</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch01.html" title="Chapter 1. Full Application Programming Interface" /><link rel="prev" href="ch01s08.html" title="1.8. Dimensions for rb_state" /><link rel="next" href="ch01s10.html" title="1.10. Examples: rb_flow" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch01s08.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch01s10.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820258584256"></a>1.9. Filters</h2></div></div></div><div class="para">
+			A filter is a JSON object indicating which rows of data should be included in the computation for a query. It’s essentially the equivalent of the WHERE clause in SQL. The API supports the following types of filters:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">Selector filter.- </code> The simplest filter is a selector filter. The selector filter will match a specific dimension with a specific value. Selector filters can be used as the base filters for more complex Boolean expressions of filters. The grammar for a SELECTOR filter is as follows: 
+<pre class="screen">{
+    "type": "selector",
+    "dimension": "client_mac",
+    "value": "8c:58:77:0b:56:fc"
+}</pre>
+
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">Regular expression filter.- </code>The regular expression filter is similar to the selector filter, but using regular expressions. It matches the specified dimension with the given pattern. The pattern can be any standard Java regular expression. 
+<pre class="screen">{
+    "type": "regex",
+    "dimension": "http_host",
+    "pattern": "youtube\.com"            
+}</pre>
+
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">Logical expression filters.- </code> You can have different logical expression: AND, OR and NOT 
+<pre class="screen"> {
+    "type": "and",
+    "fields": [
+        {
+            "type": "selector",
+            "dimension": "client_mac",
+            "value": "8c:58:77:0b:56:fc"
+        },
+        {
+            "type": "regex",
+            "dimension": "src",
+            "pattern": "^10\\.13\\."
+        }
+    ]
+}</pre>
+					 
+<pre class="screen"> {
+    "type": "or",
+    "fields": [
+        {
+            "type": "selector",
+            "dimension": "client_mac",
+            "value": "8c:58:77:0b:56:fc"
+        },
+        {
+            "type": "selector",
+            "dimension": "client_mac",
+            "value": "83:53:44:4b:56:fd"
+        }
+    ]
+}</pre>
+					 
+<pre class="screen"> {
+    "type": "not", 
+    "field": {
+         "type": "selector",
+         "dimension": "client_mac",
+         "value": "8c:58:77:0b:56:fc"
+    }
+}</pre>
+
+				</div></li></ul></div></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch01s08.html"><strong>Prev</strong>1.8. Dimensions for rb_state</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch01s10.html"><strong>Next</strong>1.10. Examples: rb_flow</a></li></ul></body></html>

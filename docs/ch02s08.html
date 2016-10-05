@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.8. Update a Domain sensor</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s07.html" title="2.7. Sensor elimination" /><link rel="next" href="ch02s09.html" title="2.9. Update Flow, MSE and Meraki sensors" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s07.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s09.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820263168192"></a>2.8. Update a Domain sensor</h2></div></div></div><div class="para">
+			Domain sensors update receive same parameters when we create them. We can update name, type, domain type, uuid and MAC Hashing salt (only for Service Providers). The request payload must be in JSON format.
+		</div><div class="para">
+			Use following URL to update a domain sensor. Sensor UUID parameter refers the UUID of sensor you want update.
+		</div><pre class="screen">[PATCH] https://hostname/api/v1/sensors/:sensor_uuid?auth_token=xxxxxxxxxxx</pre><div class="para">
+			An example to update a domain sensor:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: PATCH
+        URI: https://hostname/api/v1/sensors/86348645?auth_token=xxxx
+        Payload: { "name": "new_name", "domain_type": "4" }
+
+      Response:
+        {
+          "query": true,
+          "sensor": {
+            "name": "new_name",
+            ...
+          }
+        }
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s07.html"><strong>Prev</strong>2.7. Sensor elimination</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s09.html"><strong>Next</strong>2.9. Update Flow, MSE and Meraki sensors</a></li></ul></body></html>

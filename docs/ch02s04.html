@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.4. Meraki sensor creation</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s03.html" title="2.3. Flow sensor creation" /><link rel="next" href="ch02s05.html" title="2.5. MSE sensor creation" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s03.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s05.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820292965088"></a>2.4. Meraki sensor creation</h2></div></div></div><div class="para">
+			Meraki sensors can be created issuing a POST request to the following URI:
+		</div><pre class="screen">
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/meraki
+</pre><pre class="screen">
+      STATUS: DEPRECATED
+      HTTP Verb: POST
+      URI: https://hostname/api/v1/sensors/create/meraki
+</pre><div class="para">
+			This request accepts the following payload parameters:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">ip</code> (Mandatory) IP/Domain address of the meraki sensor.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">name</code> (Mandatory) Name given to the meraki sensor.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">parent_uuid</code> (Optional) Specifies the parent sensor UUID. If none is specified it defaults to root sensor.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">meraki_validator</code> (Mandatory) Specifies the sensor validator.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">snmp_community</code> (Optional) Specifies the community name for SNMP.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">snmp_version</code> (Optional) Specifies the community version for SNMP. Allowed versions are: 1, 2c.
+				</div></li></ul></div><div class="para">
+			If request was successful HTTP 200 OK status code will be returned alongside a JSON response describing the new meraki sensor.
+		</div><div class="para">
+			In the following lines you may find an example response to a successful request:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/meraki?auth_token=xxxxxx
+        Payload: { "name":"test_meraki",
+                   "parent_uuid":"6396049722605916538",
+                   "ip":"10.0.2.10",
+                   "meraki_validator": "validator_frase"}
+
+      Response:
+        {
+          "query": true
+          "sensor": {
+            "id": 1501
+            "uuid": "4486950571500705295"
+            "name": "test_meraki"
+            "ip": "10.0.2.10"
+            "meraki_validator": "validator_frase"
+            "secret": "52bcf9fa1666053ecd5d0e0c8528627a43ece6be"
+          }
+        }
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s03.html"><strong>Prev</strong>2.3. Flow sensor creation</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s05.html"><strong>Next</strong>2.5. MSE sensor creation</a></li></ul></body></html>

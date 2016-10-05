@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.13. Access Point creation</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s12.html" title="2.12. Access Point listing" /><link rel="next" href="ch02s14.html" title="2.14. Access Point Modification" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s12.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s14.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820267009824"></a>2.13. Access Point creation</h2></div></div></div><div class="para">
+			It is possible to create a new Access Point by submitting a POST request to the following URI:
+		</div><pre class="screen">https://hostname/api/v1/access_points</pre><div class="para">
+			To successfully create a new access point it is required to provide a sensor_uuid (sensor UUID of which the newly created AP will be descendant). If said parameter is not given a HTTP 404 Not Found status code will be returned. It is also required that the user submitting the request can manage the sensor specified. If the user does not have permission a HTTP 401 Unauthorized status code will be returned. APs validate name and mac_address on creation thus making said parameters mandatory. If either of these parameters are missing a HTTP 422 Unprocessable Entity status code will be returned along with the specific error on the requested format.
+		</div><div class="para">
+			The following parameters are also accepted on the request payload:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">ip_address</code> IP address of the new access point.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">mac_address</code> (mandatory) MAC address of the access point.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">name</code> (mandatory) Name given to the access point.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">status</code> Status of the access point supplied as an integer. 0 stands for down or offline; 1 stands for up or online
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">latitude</code> Latitude coordinate to locate the access point
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">longitude</code> Longitude coordinate to locate the access point
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">x</code> Integer representig the abscissa coordinate in a floor map locating the access point
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">y</code> Integer representig the ordinate coordinate in a floor map locating the access point
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">sensor_uuid</code> (mandatory) Parent sensor UUID. It should always be a domain.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">flow_uuid</code> Associated flow sensor UUID.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">description</code> Description of the newly created access point.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">enrichment</code> Explained below.
+				</div></li></ul></div><div class="para">
+			You may also provide the access point enrichment parameters as a JSON object for the "enrichment" tag. The enrichment tag allows four possible values, these are:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">market_uuid</code> UUID of the market the access point belongs to.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">campus_uuid</code> UUID of the campus the access point belongs to.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">building_uuid</code> UUID of the building the access point belongs to.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">floor_uuid</code> UUID of the floor the access point belongs to.
+				</div></li></ul></div><div class="para">
+			An example request can be found on the following lines:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: POST
+      	URI: https://hostname/api/v1/access_points.json?auth_token=xxxxxx
+      	Payload: { "mac_address":"ed:f4:22:45:ff:ef","enrichment": {
+				  "campus_uuid": "84758975876475",
+				  "floor_uuid": "8001483943459605430"
+				}, "sensor_uuid":"5654545586888876551", "name":"Demo_AP6", "flow_uuid":"89479888298873783"}
+
+      Response:
+		  {
+		    "query": true,
+		    "ap": {
+		        "id": 776,
+		        "ip_address": null,
+		        "mac_address": "ed:f4:22:45:ff:ef",
+		        "name": "Demo_Access_Point",
+		        "switch_name": null,
+		        "switch_id": null,
+		        "latitude": null,
+		        "longitude": null,
+		        "x": null,
+		        "y": null,
+		        "sensor_id": 265,
+		        "created_at": "2015-06-02T11:33:54.841+02:00",
+		        "updated_at": "2015-06-02T11:33:54.841+02:00",
+		        "description": null,
+		        "status": 0,
+		        "last_check_in": null,
+		        "clients": 0,
+		        "uptime": 0,
+		        "enrichment": {
+		            "campus_uuid": "84758975876475",
+		            "floor_uuid": "8001483943459605430"
+		        },
+		        "sensor_name": "Restaurant",
+		        "sensor_uuid": "5654545586888876551"
+		    }
+		  }
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s12.html"><strong>Prev</strong>2.12. Access Point listing</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s14.html"><strong>Next</strong>2.14. Access Point Modification</a></li></ul></body></html>

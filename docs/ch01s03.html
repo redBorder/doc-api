@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>1.3. JSON Params</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch01.html" title="Chapter 1. Full Application Programming Interface" /><link rel="prev" href="ch01s02.html" title="1.2. Authentication" /><link rel="next" href="ch01s04.html" title="1.4. Dimensions for rb_flow" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch01s02.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch01s04.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820257907152"></a>1.3. JSON Params</h2></div></div></div><div class="para">
+			We have the following params:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">dataSource.-</code> You have three posibilities depends on wich database you need to access to: 
+					<div class="itemizedlist"><ul><li class="listitem"><div class="para">
+								<code class="literal">rb_flow.-</code>Netflow/sFlow database
+							</div></li><li class="listitem"><div class="para">
+								<code class="literal">rb_state.-</code>Wireless station health obtained via NMSP
+							</div></li><li class="listitem"><div class="para">
+								<code class="literal">rb_social.-</code>Social data from twitter and instagram sensors
+							</div></li><li class="listitem"><div class="para">
+								<code class="literal">rb_event.-</code>IDS/IPS events database
+							</div></li><li class="listitem"><div class="para">
+								<code class="literal">rb_monitor.-</code>SNMP monitoring database
+							</div></li></ul></div>
+
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">namespace_uuids.-</code> (optional) array of one or more values. It should be the uuids of the namespace where the data is going to be searched. If this value is not indicated, the dataSource used will be the default.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">granularity.-</code> The granularity JSON field specifies the bucket size for values. It could be a built-in time interval like "second", "minute", "fifteen_minute", "thirty_minute", "hour" or "day". It can also be an expression like {"type": "period", "period":"PT6m"} meaning "6 minute buckets". In the example, it is set to the special value "all" which means bucket all data points together into the same time bucket
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">intervals.-</code> I specify the time range(s) of the query. The interval must be espcified on iso format and it can include the time zone if desired. See http://en.wikipedia.org/wiki/ISO_8601 to get more information.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">queryType.-</code> This JSON field identifies which kind of query operator is to be used. You have two posibilities: 
+					<div class="itemizedlist"><ul><li class="listitem"><div class="para">
+								<code class="literal">groupBy.-</code>This the most flexible query, but also has the poorest performance
+							</div></li><li class="listitem"><div class="para">
+								<code class="literal">topN.-</code>This is like a groupBy query but grouping and sorting by a single dimension. This is much faster than groupBy
+							</div></li><li class="listitem"><div class="para">
+								<code class="literal">timeseries.-</code>This is used to generate time series using the specified aggregators.
+							</div></li></ul></div>
+
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">aggregations.-</code> array of elements. These fields applied to the columns specified by fieldName and the output of the aggregations will be named according to the value in the "name" field. There are different aggregators depends of the dataSource used: 
+					<div class="itemizedlist"><ul><li class="listitem"><div class="para">
+								<code class="literal">rb_flow.-</code> <div class="itemizedlist"><ul><li class="listitem"><div class="para">
+											{type: "longSum", name: "events", fieldName: "events"} -&gt; flows count / occurrences
+										</div></li><li class="listitem"><div class="para">
+											{type: "longSum", name: "pkts", fieldName: "sum_pkts"} -&gt; sum of packets
+										</div></li><li class="listitem"><div class="para">
+											{type: "longSum", name: "bytes", fieldName: "sum_bytes"} -&gt; sum of bytes
+										</div></li></ul></div>
+
+							</div></li><li class="listitem"><div class="para">
+								<code class="literal">rb_event.-</code> <div class="itemizedlist"><ul><li class="listitem"><div class="para">
+											{type: "longSum", name: "events", fieldName: "events"} -&gt; IPS/IDS events count / occurrences
+										</div></li></ul></div>
+
+							</div></li><li class="listitem"><div class="para">
+								<code class="literal">rb_monitor.-</code> <div class="itemizedlist"><ul><li class="listitem"><div class="para">
+											{type: "longSum", name: "events", fieldName: "events"} -&gt; monitored element result on the specified interval
+										</div></li><li class="listitem"><div class="para">
+											{type: "min", name: "min", fieldName: "min_value"} -&gt; min value for the monitored param
+										</div></li><li class="listitem"><div class="para">
+											{type: "max", name: "max", fieldName: "max_value"} -&gt; max value for the monitored param
+										</div></li></ul></div>
+
+							</div></li></ul></div>
+
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">metric.-</code> (only for topN queryType) Should be the same value as on the name fields indicated on aggregations. It is used for ordering.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">dimensions.-</code> (only for groupBy and timeseries queryType) The dimensions JSON field value is an array of zero or more fields. These are used to constrain the grouping. If empty, then one value per time granularity bucket is requested in the groupBy. There are many dimensions available on each dataSource as we will see at the next sections.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">dimension.-</code> (only for topN queryType) The dimension JSON field value is a single value. There are many dimensions available on each dataSource as we will see at the next sections.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">filter.-</code> Specifies the filter (the "WHERE" clause in SQL) for the query. We will have an specific section where it will explain the filter format.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">threshold.-</code> (only for topN queryType) value for limit the result of values returned on topN queries.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">orderBy.-</code> (only for groupBy queryType) it has the below fields: 
+					<div class="itemizedlist"><ul><li class="listitem"><div class="para">
+								{ "type": "default", "limit": 25, "columns": [ { "dimension": "bytes", "direction": "DESCENDING" } ] }
+							</div></li></ul></div>
+
+				</div></li></ul></div></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch01s02.html"><strong>Prev</strong>1.2. Authentication</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch01s04.html"><strong>Next</strong>1.4. Dimensions for rb_flow</a></li></ul></body></html>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 2. Model sharing with rB</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="index.html" title="API Guide" /><link rel="prev" href="ch01s11.html" title="1.11. Examples: rb_event" /><link rel="next" href="ch02s02.html" title="2.2. Domain creation" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch01s11.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s02.html"><strong>Next</strong></a></li></ul><div xml:lang="en-US" class="chapter" lang="en-US"><div class="titlepage"><div><div><h1 class="title"><a id="idm139820258009760"></a>Chapter 2. Model sharing with rB</h1></div></div></div><div class="toc"><dl class="toc"><dt><span class="section"><a href="ch02.html#idm139820254493360">2.1. Sensor tree listing</a></span></dt><dt><span class="section"><a href="ch02s02.html">2.2. Domain creation</a></span></dt><dt><span class="section"><a href="ch02s03.html">2.3. Flow sensor creation</a></span></dt><dt><span class="section"><a href="ch02s04.html">2.4. Meraki sensor creation</a></span></dt><dt><span class="section"><a href="ch02s05.html">2.5. MSE sensor creation</a></span></dt><dt><span class="section"><a href="ch02s06.html">2.6. MSE sensor listing for a domain</a></span></dt><dt><span class="section"><a href="ch02s07.html">2.7. Sensor elimination</a></span></dt><dt><span class="section"><a href="ch02s08.html">2.8. Update a Domain sensor</a></span></dt><dt><span class="section"><a href="ch02s09.html">2.9. Update Flow, MSE and Meraki sensors</a></span></dt><dt><span class="section"><a href="ch02s10.html">2.10. Domain override</a></span></dt><dt><span class="section"><a href="ch02s11.html">2.11. Domain Access Point override</a></span></dt><dt><span class="section"><a href="ch02s12.html">2.12. Access Point listing</a></span></dt><dt><span class="section"><a href="ch02s13.html">2.13. Access Point creation</a></span></dt><dt><span class="section"><a href="ch02s14.html">2.14. Access Point Modification</a></span></dt><dt><span class="section"><a href="ch02s15.html">2.15. Access Point destruction</a></span></dt><dt><span class="section"><a href="ch02s16.html">2.16. User listing </a></span></dt><dt><span class="section"><a href="ch02s17.html">2.17. User API key renewal</a></span></dt></dl></div><div class="note"><div class="admonition_header"><p><strong>NOTE:</strong></p></div><div class="admonition"><div class="para">
+			The redborder API requires authentication via a valid authentication token submitted as a GET parameter. Said GET parameter receives the name auth_token. The following example demonstrates how to correctly sign a request. For the sake of simplicity suppose abcd is a valid authentication token.
+		</div><pre class="screen">https://hostname/api/v1/request_path?auth_token=abcd</pre><div class="para">
+			Every request on this chapter requires this authentication and will accept the indicated GET parameter unless specified otherwise. From now on this parameter will be omitted on the example requests.
+		</div></div></div><div class="note"><div class="admonition_header"><p><strong>NOTE:</strong></p></div><div class="admonition"><div class="para">
+			Every request that returns a JSON response body will return a "query" value set to a boolean. Said boolean stands for the query status, so if it is set to true it means that the query was successful and if it is set to false means that the query was not successful. This value will always be found on the root JSON response object and will always be the actual response sibling.
+		</div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820254493360"></a>2.1. Sensor tree listing</h2></div></div></div><div class="para">
+			A sensor and all it's child sensors can be listed by submitting a GET petition to the following URI:
+		</div><pre class="screen">https://hostname/api/v1/sensors/:sensor_uuid/tree</pre><div class="para">
+			Where :sensor_uuid should be UUID of the root of the tree. If you wish to list all sensors from the submitting user's top domain and beneath you may submit a GET request to the following URI:
+		</div><pre class="screen">https://hostname/api/v1/sensors/tree</pre><div class="para">
+			If request is successful HTTP 200 OK status code will be returned alongside a nested JSON response describing the requested tree. Currently only JSON is supported as a response format. Format will be the same for both of the requests described above.
+		</div><div class="para">
+			On the following lines you may find a real execution example:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/sensors/8726017729975087448/tree?auth_token=xxxxxx
+
+      Reply:
+        Status Code: 200 OK
+        Response:
+        {
+          "query": true,
+          "sensor": {
+            "id": 492,
+            "name": "Test",
+            "ip": null,
+            "latitude": null,
+            "longitude": null,
+            "is_deleted": false,
+            "applied_at": null,
+            "type": 1,
+            "real_parent_id": null,
+            "group_id": null,
+            "binding_id": null,
+            "need_apply": false,
+            "applying": false,
+            "property": {
+              "path": ""
+            },
+            "domain_type": 1,
+            "unassigned": false,
+            "policy_id": null,
+            "reputation_policy_id": null,
+            "need_reputation_apply": false,
+            "uuid": "697893457705749905",
+            "children": [
+              {
+                "id": 852,
+                "name": "Override_brother",
+                "ip": null,
+                "latitude": null,
+                "longitude": null,
+                "is_deleted": false,
+                "applied_at": null,
+                "type": 1,
+                "real_parent_id": null,
+                "group_id": null,
+                "binding_id": null,
+                "need_apply": false,
+                "applying": false,
+                "property": {},
+                "domain_type": 1,
+                "unassigned": false,
+                "policy_id": null,
+                "reputation_policy_id": null,
+                "need_reputation_apply": false,
+                "uuid": "7106963634872672634",
+                "children": []
+              },
+              {
+                "id": 847,
+                "name": "Override_parent",
+                "ip": null,
+                "latitude": null,
+                "longitude": null,
+                "is_deleted": false,
+                "applied_at": null,
+                "type": 1,
+                "real_parent_id": null,
+                "group_id": null,
+                "binding_id": null,
+                "need_apply": false,
+                "applying": false,
+                "property": {},
+                "domain_type": 1,
+                "unassigned": false,
+                "policy_id": null,
+                "reputation_policy_id": null,
+                "need_reputation_apply": false,
+                "uuid": "6575077023887022161",
+                "children": [
+                  {
+                    "id": 848,
+                    "name": "Override_child",
+                    "ip": null,
+                    "latitude": null,
+                    "longitude": null,
+                    "is_deleted": false,
+                    "applied_at": null,
+                    "type": 1,
+                    "real_parent_id": null,
+                    "group_id": null,
+                    "binding_id": null,
+                    "need_apply": false,
+                    "applying": false,
+                    "property": {},
+                    "domain_type": 1,
+                    "unassigned": false,
+                    "policy_id": null,
+                    "reputation_policy_id": null,
+                    "need_reputation_apply": false,
+                    "uuid": "7137236833163733936",
+                    "children": []
+                  },
+                  {
+                    "id": 849,
+                    "name": "Override_child_2",
+                    "ip": null,
+                    "latitude": null,
+                    "longitude": null,
+                    "is_deleted": false,
+                    "applied_at": null,
+                    "type": 1,
+                    "real_parent_id": null,
+                    "group_id": null,
+                    "binding_id": null,
+                    "need_apply": false,
+                    "applying": false,
+                    "property": {},
+                    "domain_type": 1,
+                    "unassigned": false,
+                    "policy_id": null,
+                    "reputation_policy_id": null,
+                    "need_reputation_apply": false,
+                    "uuid": "4178223226747106768",
+                    "children": [
+                      {
+                        "id": 851,
+                        "name": "Override_grandson_2",
+                        "ip": null,
+                        "latitude": null,
+                        "longitude": null,
+                        "is_deleted": false,
+                        "applied_at": null,
+                        "type": 1,
+                        "real_parent_id": null,
+                        "group_id": null,
+                        "binding_id": null,
+                        "need_apply": false,
+                        "applying": false,
+                        "property": {},
+                        "domain_type": 101,
+                        "unassigned": false,
+                        "policy_id": null,
+                        "reputation_policy_id": null,
+                        "need_reputation_apply": false,
+                        "uuid": "7549459708256671519",
+                        "access_points": [],
+                        "children": []
+                      },
+                      {
+                        "id": 850,
+                        "name": "Override_grandson_1",
+                        "ip": null,
+                        "latitude": null,
+                        "longitude": null,
+                        "is_deleted": false,
+                        "applied_at": null,
+                        "type": 1,
+                        "real_parent_id": null,
+                        "group_id": null,
+                        "binding_id": null,
+                        "need_apply": false,
+                        "applying": false,
+                        "property": {},
+                        "domain_type": 1,
+                        "unassigned": false,
+                        "policy_id": null,
+                        "reputation_policy_id": null,
+                        "need_reputation_apply": false,
+                        "uuid": "8126434584577941831",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+</pre></div></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch01s11.html"><strong>Prev</strong>1.11. Examples: rb_event</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s02.html"><strong>Next</strong>2.2. Domain creation</a></li></ul></body></html>

@@ -1,5 +1,8 @@
 # API Rest Guide
 
+[![Browse API Guide HTML](https://img.shields.io/badge/browse--EN-API--v3.1.76--0-blue.svg)](https://redborder.github.io/doc-api)
+
+
 [![logo](https://redborder.com/media/download/553)](https://redborder.com/trial)
 
 En esta guía encontrarás explicados los pasos que se deben seguir para usar de manera adecuada la API Rest de redborder.

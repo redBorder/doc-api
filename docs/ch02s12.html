@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.12. Access Point listing</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s11.html" title="2.11. Domain Access Point override" /><link rel="next" href="ch02s13.html" title="2.13. Access Point creation" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s11.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s13.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820263139776"></a>2.12. Access Point listing</h2></div></div></div><div class="para">
+			It is possible to get a list of all access points that a user has permission by issuing a GET request to the following URI:
+		</div><pre class="screen">https://hostname/api/v1/access_points(.format)</pre><div class="para">
+			Where (.format) should be replaced by the desired response format. Available formats are CSV and JSON.
+		</div><div class="para">
+			It is also possible to filter access points by mac address, status, name and ip address. Said filtering can be done by submitting additional GET parameters, these parameters are:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					<code class="literal">mac_address</code> MAC address of the access point to filter by.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">status</code> Integer representation of the access point status. 0 stands for down and 1 stands for up.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">name</code> Name of the access point.
+				</div></li><li class="listitem"><div class="para">
+					<code class="literal">ip_address</code> IP address of the access point to filter by.
+				</div></li></ul></div><div class="para">
+			The response will have the following data in the corresponding format:
+		</div><pre class="screen">Servide Provider ID, Organization ID, Market ID, Deployment ID, Building ID, Floor ID, AP MAC address</pre><div class="para">
+			On the following example we will request a listing of all the access points that are online in JSON and CSV format:
+		</div><pre class="screen">
+      Request:
+    	 HTTP Verb: GET
+    	 URI: https://hostname/api/v1/access_points?auth_token=xxxxxx
+
+      Response:
+		  {
+        "query": true,
+        "access_points": [
+          {
+            "name": "AP1",
+            "service_provider_uuid": null,
+            "service_provider": null,
+            "deployment_uuid": null,
+            "deployment": null,
+            "organization_uuid": "9201452791072897388",
+            "organization": "Eneo",
+            "market_uuid": "6396049722605916538",
+            "market": "Spain",
+            "building_uuid": "6913104531464819392",
+            "building": "Aljarafe Center",
+            "campus_uuid": "3118246207405350091",
+            "campus": "SVQ",
+            "floor_uuid": "9032532605146231448",
+            "mac_address": "12:15:14:16:15:aa",
+            "status": 0,
+            "last_check_in": null,
+            "enrichment": {}
+          },
+          {
+            "name": "AP2",
+            "service_provider_uuid": null,
+            "service_provider": null,
+            "deployment_uuid": null,
+            "deployment": null,
+            "organization_uuid": "9201452791072897388",
+            "organization": "Eneo",
+            "market_uuid": "6396049722605916538",
+            "market": "Spain",
+            "building_uuid": "6913104531464819392",
+            "building": "Aljarafe Center",
+            "campus_uuid": "3118246207405350091",
+            "campus": "SVQ",
+            "floor_uuid": "9032532605146231448",
+            "mac_address": "aa:aa:aa:cc:cc:cc",
+            "status": 0,
+            "last_check_in": null,
+            "enrichment": {}
+          },
+          {
+            "name": "AP3",
+            "service_provider_uuid": null,
+            "service_provider": null,
+            "deployment_uuid": null,
+            "deployment": null,
+            "organization_uuid": "9201452791072897388",
+            "organization": "Eneo",
+            "market_uuid": "6396049722605916538",
+            "market": "Spain",
+            "building_uuid": "6913104531464819392",
+            "building": "Aljarafe Center",
+            "campus_uuid": "3118246207405350091",
+            "campus": "SVQ",
+            "floor_uuid": "9032532605146231448",
+            "mac_address": "aa:bb:cc:dd:ee",
+            "status": 0,
+            "last_check_in": null,
+            "enrichment": {}
+          }
+        ]
+      }
+
+      Request:
+       HTTP Verb: GET
+       URI: https://hostname/api/v1/access_points.csv?auth_token=xxxxxx
+
+      Response:
+        service_provider_uuid,service_provider,deployment_uuid,deployment,organization_uuid,organization,market_uuid,market,building_uuid,building,campus_uuid,campus,floor_uuid,mac_address,status,last_check_in
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,12:15:14:16:15:aa,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:aa:aa:cc:cc:cc,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ee,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:fe,0,null
+        null,null,null,null,null,null,null,null,null,null,null,null,8001483943659605430,ab:be:ef:12:21:33,0,null
+        null,null,null,null,null,null,null,null,null,null,null,null,8001483943459605430,ab:12:ef:12:21:33,0,null
+        null,null,null,null,null,null,null,aa:aa:aa:aa:aa:aa,0,null
+        null,null,null,null,null,null,null,aa:aa:aa:aa:aa:bb,0,null
+        null,null,null,null,null,null,null,aa:aa:aa:aa:aa:cc,0,null
+        null,null,null,null,null,null,3189960848665445691,Bay Area,null,null,null,null,8301483941239605130,ab:be:ef:be:ef:33,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ee:33,0,null
+        null,null,null,null,null,null,null,null,4811388934080740875,Hyatt,4269493721092289739,SantaClara Convention,788434622707693044,aa:bb:cc:dd:ab,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ee,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ee,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:fe,0,null
+        null,null,null,null,null,null,3189960848665445691,Bay Area,null,null,null,null,8001483930459605430,ab:be:ef:22:11:33,0,null
+        null,null,null,null,null,null,3189960848665445691,Bay Area,null,null,null,null,8001483930459605430,ab:be:ef:f2:aa:33,0,null
+        null,null,null,null,null,null,2080930526821473860,market_3189234848665445691,1327513633662331506,NewBuilding,null,null,8301483941239605130,ab:22:ef:33:ef:13,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:aa:ce:dd:ff,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:ff,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:aa,0,null
+        null,null,null,null,9201452791072897388,Eneo,6396049722605916538,Spain,6913104531464819392,Aljarafe Center,3118246207405350091,SVQ,9032532605146231448,aa:bb:cc:dd:bb,0,null
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s11.html"><strong>Prev</strong>2.11. Domain Access Point override</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s13.html"><strong>Next</strong>2.13. Access Point creation</a></li></ul></body></html>

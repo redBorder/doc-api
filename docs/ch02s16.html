@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.16. User listing</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s15.html" title="2.15. Access Point destruction" /><link rel="next" href="ch02s17.html" title="2.17. User API key renewal" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s15.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s17.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820266952144"></a>2.16. User listing </h2></div></div></div><div class="para">
+			The super administrator can request a list of all existing users. For that purpose submit a GET request to the following URI:
+		</div><pre class="screen">https://hostname/api/v1/users.format</pre><div class="para">
+			Where format should be replaced by the desired response format. JSON and CSV are the supported response formats.
+		</div><div class="para">
+			If the submitting user is not super administrator HTTP 401 status code will be returned.
+		</div><div class="para">
+			On the following lines you may find an execution example:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/users.json?auth_token=eeeeee
+
+      Response:
+      {
+        "query": true,
+        "users": [
+          {
+            "id": 5,
+            "email": "user@redborder.net",
+            "login": "User",
+            "admin": true,
+            "name": "John Doe",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 472,
+            "sensor_name": "redBorder",
+            "sensor_uuid": "4935760011107548256"
+          },
+          {
+            "id": 6,
+            "email": "user@redborder.net",
+            "login": "User",
+            "admin": true,
+            "name": "John Doe",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 472,
+            "sensor_name": "redBorder",
+            "sensor_uuid": "4935760011107548256"
+          },
+          {
+            "id": 7,
+            "email": "user@redborder.net",
+            "login": "User",
+            "admin": false,
+            "name": "User",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 1,
+            "sensor_name": "root",
+            "sensor_uuid": "2584761509592299795"
+          },
+          {
+            "id": 8,
+            "email": "user@redborder.net",
+            "login": "User",
+            "admin": false,
+            "name": "John Doe",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 6,
+            "sensor_name": "planta1",
+            "sensor_uuid": "9032532605146231448"
+          },
+          {
+            "id": 11,
+            "email": "user@redborder.net",
+            "login": "User",
+            "admin": false,
+            "name": "John Doe",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 260,
+            "sensor_name": "Julio",
+            "sensor_uuid": "8726017729975087448"
+          },
+          {
+            "id": 1,
+            "email": "admin@redborder.net",
+            "login": "admin",
+            "admin": true,
+            "name": "Administrator",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 1,
+            "sensor_name": "root",
+            "sensor_uuid": "2584761509592299795"
+          },
+          {
+            "id": 4,
+            "email": "user@redborder.net",
+            "login": "User",
+            "admin": true,
+            "name": "John Dow",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 1,
+            "sensor_name": "root",
+            "sensor_uuid": "2584761509592299795"
+          },
+          {
+            "id": 13,
+            "email": "user@redborder.net",
+            "login": "User",
+            "admin": true,
+            "name": "John Dow",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 11,
+            "sensor_name": "Spain",
+            "sensor_uuid": "6396049722605916538"
+          },
+          {
+            "id": 12,
+            "email": "user@redborder.net",
+            "login": "User",
+            "admin": false,
+            "name": "John Dow",
+            "enabled": true,
+            "authentication_token": "xxxxxx",
+            "sensor_id": 2,
+            "sensor_name": "Adamo",
+            "sensor_uuid": "796168482310467136"
+          }
+        ]
+      }
+
+      Request:
+        HTTP Verb: GET
+        URI: https://hostname/api/v1/users.csv?auth_token=eeeeee
+
+      Response:
+        Name,Email,ID,Login,Admin,Enabled,Authentication_token,Sensor_ID
+        John Doe,user@redborder.net,5,User,true,true,xxxxxx,472
+        John Doe,user@redborder.net,6,User,true,true,xxxxxx,472
+        John Doe,user@redborder.net,7,User,false,true,xxxxxx,1
+        John Doe,user@redborder.net,8,User,false,true,xxxxxx,6
+        John Doe,user.ext@redborder.net,11,User,false,true,xxxxxx,260
+        Administrator,admin@redborder.net,1,admin,true,true,xxxxxx,1
+        John Doe,user@redborder.net,4,User,true,true,xxxxxx,1
+        John Doe,user@redborder.net,13,User,true,true,xxxxxx,11
+        John Doe,user@redborder.net,12,User,false,true,xxxxxx,2
+
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s15.html"><strong>Prev</strong>2.15. Access Point destruction</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s17.html"><strong>Next</strong>2.17. User API key renewal</a></li></ul></body></html>

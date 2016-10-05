@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2.10. Domain override</title><link rel="stylesheet" type="text/css" href="Common_Content/css/default.css" /><link rel="stylesheet" media="print" href="Common_Content/css/print.css" type="text/css" /><meta name="generator" content="publican 3.2.1" /><meta name="package" content="redborder_REST-API_Guide-3.0-en-US-0-1" /><link rel="home" href="index.html" title="API Guide" /><link rel="up" href="ch02.html" title="Chapter 2. Model sharing with rB" /><link rel="prev" href="ch02s09.html" title="2.9. Update Flow, MSE and Meraki sensors" /><link rel="next" href="ch02s11.html" title="2.11. Domain Access Point override" /></head><body><p id="title"><a class="left" href="https://fedorahosted.org/publican"><img alt="Product Site" src="Common_Content/images//image_left.png" /></a><a class="right" href="https://fedorahosted.org/publican"><img alt="Documentation Site" src="Common_Content/images//image_right.png" /></a></p><ul class="docnav top"><li class="previous"><a accesskey="p" href="ch02s09.html"><strong>Prev</strong></a></li><li class="home">API Guide</li><li class="next"><a accesskey="n" href="ch02s11.html"><strong>Next</strong></a></li></ul><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="idm139820263160448"></a>2.10. Domain override</h2></div></div></div><div class="para">
+			If desired a domain (we will refer it as "main sensor") can be completely overriden with the content given on the request payload. The request payload should be in JSON format. Said JSON must have a single "sensor" root tag describing the content of the "main sensor" to override with. To prevent errors, we can't change the value of UUID for "main sensor". Child domains can be set using the "children" value where inheritance applies. Multiple inheritance levels are allowed.
+		</div><div class="para">
+			We need to take into account some points:
+		</div><div class="itemizedlist"><ul><li class="listitem"><div class="para">
+					If the sensor_uuid is not present at the URL, the sensor will be override is the Top domain of the user.
+				</div></li><li class="listitem"><div class="para">
+					If a child of main sensor hasn't define UUID, API tries to find a child that coincide on name, domain_type and type params. If API finds a child, it will be updated, else API will create a new sensor.
+				</div></li><li class="listitem"><div class="para">
+					Access Points ignore sensor_name and sensor_uuid params. All APS of a sensor will be added to it.
+				</div></li><li class="listitem"><div class="para">
+					If we need to create a sensor and type or domain_type are not present in JSON, default values are DOMAIN and GENERIC respectively.
+				</div></li><li class="listitem"><div class="para">
+					If there are an error creating/updating sensors, the app rollback all changes.
+				</div></li></ul></div><div class="para">
+			If "main sensor" or a child it's a domain or a sensor flow it can contain a list of associated access points. To describe these access points you may use the "access_points" value. If this value is found in an element that it is not a flow nor a domain it will be ignored. Regular rules apply to access points and domain creation with the exception of parent IDs (sensor_id and switch_id for the access points; parent_id for domains) which are not allowed as inheritance is described by JSON nesting. This request can be executed by issuing a POST request to the following URI:
+		</div><pre class="screen">https://hostname/api/v1/sensors/:sensor_uuid/override_all?auth_token=xxxxxx</pre><div class="para">
+			Where :sensor_uuid should be replaced for the domain UUID to override.
+		</div><div class="para">
+			Another option is not define sensor_uuid. In this case, domain will be override is the top domain of the user with auth_toke equals to xxxxxx.
+		</div><pre class="screen">https://hostname/api/v1/sensors/override_all?auth_token=xxxxxx</pre><div class="para">
+			To override a domain the requesting user must have management permissions on the requested domain. If that is not the case HTTP 401 Unauthorized status code will be returned. If the requested domain does not exists HTTP 404 Not Found status code will be returned. If request is successful HTTP 200 OK status code will be returned with "query" set to true. On the following lines you may find an exeution example:
+		</div><pre class="screen">
+      Request:
+        HTTP Verb: POST
+        URI: https://hostname/api/v1/sensors/697893457705749905/override_all?auth_token=xxxxxx
+        Payload: {
+                  "sensor": {
+                            "name": "Override_parent",
+                            "domain_type": "1",
+                            "children": [
+                                {
+                                    "name": "Override_child",
+                                    "domain_type": "1"
+                                },
+                                {
+                                    "name": "Override_child_2",
+                                    "domain_type": "1",
+                                    "children": [
+                                        {
+                                            "name": "Override_grandson_1",
+                                            "domain_type": "5",
+                                            "access_points": [
+                                                {
+                                                    "mac_address": "22:ca:cc:dd:ff:11",
+                                                    "name": "Demo AP_Flow1"
+                                                },
+                                                {
+                                                    "mac_address": "11:22:cc:ab:ff:ea",
+                                                    "name": "Demo AP_Flow2"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "name": "Override_grandson_2",
+                                            "domain_type": "101",
+                                            "access_points": [
+                                                {
+                                                    "mac_address": "bb:ca:cc:bd:af:22",
+                                                    "name": "Demo AP1"
+                                                },
+                                                {
+                                                    "mac_address": "11:22:ac:dd:ff:44",
+                                                    "name": "Demo AP2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+
+        Response:
+          Status Code: 200 OK
+          Body: {
+                "query": "true"
+                }
+</pre></div><ul class="docnav"><li class="previous"><a accesskey="p" href="ch02s09.html"><strong>Prev</strong>2.9. Update Flow, MSE and Meraki sensors</a></li><li class="up"><a accesskey="u" href="#"><strong>Up</strong></a></li><li class="home"><a accesskey="h" href="index.html"><strong>Home</strong></a></li><li class="next"><a accesskey="n" href="ch02s11.html"><strong>Next</strong>2.11. Domain Access Point override</a></li></ul></body></html>

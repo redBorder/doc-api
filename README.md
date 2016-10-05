@@ -1,5 +1,9 @@
 # API Rest Guide
 
+[![Download API Guide](https://img.shields.io/badge/PDF--EN-REST--API--v3.1.76--0-blue.svg)](https://github.com/redBorder/doc-api/releases/download/3.1.76-0/redborder_REST-3.1.76-API_Guide-en-US.pdf)
+[![Download API Guide](https://img.shields.io/badge/HTML.tgz--EN-REST--API--v3.1.76--0-blue.svg)](https://github.com/redBorder/doc-api/releases/download/3.1.76-0/redborder_REST-3.1.76-API_Guide-en-US.tgz)
+[![Download API Guide](https://img.shields.io/badge/HTML.zip--EN-REST--API--v3.1.76--0-blue.svg)](https://github.com/redBorder/doc-api/releases/download/3.1.76-0/redborder_REST-3.1.76-API_Guide-en-US.zip)
+
 [![Browse API Guide HTML](https://img.shields.io/badge/browse--EN-API--v3.1.76--0-blue.svg)](https://redborder.github.io/doc-api)
 
 

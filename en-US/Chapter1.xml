@@ -180,7 +180,7 @@
 			 <listitem>
 				<para>
 					<literal>intervals.-</literal> I specify the time range(s) of the query. 
-					The interval must be espcified on iso format and it can include the time zone if desired. See http://en.wikipedia.org/wiki/ISO_8601 to get more information.
+					The interval must be especified on iso format and it can include the time zone if desired. See http://en.wikipedia.org/wiki/ISO_8601 to get more information.
 				</para>
 
 			</listitem>

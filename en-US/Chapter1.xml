@@ -129,7 +129,7 @@
 		 <itemizedlist mark="bullet">
 			<listitem>
 				<para>
-					<literal>dataSource.-</literal> You have three posibilities depends on wich database you need to access to: 
+					<literal>dataSource.-</literal> You have three possibilities depending on which database you need to access to: 
 					<itemizedlist mark="bullet">
 						<listitem>
 							<para>
